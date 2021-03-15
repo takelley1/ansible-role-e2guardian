@@ -1,0 +1,29 @@
+---
+
+# Static webserver for serving E2Guardian's public certificate.
+
+- name: WEBSERVER | Package installed
+  ansible.builtin.package:
+    name: nginx
+
+- name: WEBSERVER | Paths configured
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.owner }}"
+    mode: "0755"
+  loop:
+    - path: /var/www/e2guardian
+      owner: www-data
+
+- name: WEBSERVER | Nginx templates deployed
+  template:
+    src: "{{ item }}.j2"
+    dest: /{{ item }}
+    owner: root
+    group: root
+    mode: "0644"
+  loop:
+    - etc/nginx/nginx.conf
+  notify: restart-webserver

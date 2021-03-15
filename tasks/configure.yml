@@ -1,0 +1,42 @@
+---
+
+- name: CONFIGURE | E2Guardian configuration templates deployed
+  template:
+    src: opt/e2guardian/etc/e2guardian/{{ item }}.j2
+    dest: "{{ e2g_install_dir }}/etc/e2guardian/{{ item }}"
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+  loop:
+    - e2guardian.conf
+    - e2guardianf1.conf
+    - e2guardianf2.conf
+    - lists/authplugins/ipgroups
+    - lists/bannedregexurllist
+    - lists/bannedsiteiplist
+    - lists/exceptionphraselist
+    - lists/exceptionsitelist
+    - lists/exceptionurllist
+    - lists/greysitelist
+    - lists/weightedphraseslist
+  notify: restart-e2guardian
+
+- name: CONFIGURE | E2Guardian web templates deployed
+  template:
+    src: opt/e2guardian/share/e2guardian/languages/ukenglish/{{ item }}.j2
+    dest: "{{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/{{ item }}"
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+  loop:
+    - neterr_template.html
+    - template.html
+  notify: restart-e2guardian
+
+- name: CONFIGURE | E2Guardian service enabled and running
+  service:
+    name: e2guardian
+    enabled: true
+    state: started

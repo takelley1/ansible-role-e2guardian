@@ -1,0 +1,13 @@
+---
+
+- name: MAIN | Import install.yml
+  import_tasks: install.yml
+  when: e2g_include_install_tasks
+
+- name: MAIN | Import configure.yml
+  import_tasks: configure.yml
+  when: e2g_include_configure_tasks
+
+- name: MAIN | Import webserver.yml
+  import_tasks: webserver.yml
+  when: e2g_include_webserver_tasks

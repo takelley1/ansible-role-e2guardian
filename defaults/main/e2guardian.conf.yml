@@ -1,0 +1,142 @@
+---
+
+# Logging Settings
+# 0 = none  1 = just denied  2 = all text based  3 = all requests
+e2g_conf_loglevel: 3
+
+# Log Exception Hits
+# Log if an exception (user, ip, URL, phrase) is matched and so
+# the page gets let through.  Can be useful for diagnosing
+# why a site gets through the filter.
+# 0 = never log exceptions
+# 1 = log exceptions, but do not explicitly mark them as such
+# 2 = always log & mark exceptions (default)
+e2g_conf_logexceptionhits: 2
+
+# Log File Format
+# 1 = Dansguardian format (space delimited)
+# 2 = CSV-style format
+# 3 = Squid Log File Format
+# 4 = Tab delimited
+# Protex format type 5 Tab delimited, squid style format with extra fields
+# for filter block/result codes, reasons, filter group, and system name
+# used in arrays so that combined logs show originating server.
+# 5 = Protex format
+# Protex format type 6 Same format as above but system name field is blank
+# used in stand-alone systems.
+# 6 = Protex format with server field blanked
+e2g_conf_logfileformat: 5
+
+# Log file location
+# Defines the log directory and filename.
+e2g_conf_loglocation: /var/log/access.log
+
+# the ports that e2guardian listens to.  Specify one line per filterip
+# line.  If both mapportstoips and mapauthtoports are set to 'on'
+# you can specify different authentication mechanisms per port but
+# only if the mechanisms can co-exist (e.g. basic/proxy auth can't)
+e2g_conf_filterports: 8080
+
+# Proxy timeout
+# Set tcp timeout between the Proxy and e2guardian
+ # This is a connection timeout
+ # If proxy is remote you may need to increase this to 10 or more.
+# Min 5 - Max 100
+e2g_conf_proxytimeout: 5
+
+# Connect timeout
+# Set tcp timeout between the e2guardian and upstream service (proxy or target host)
+ # This is a connection timeout
+ # For remote sites you may need to increase this to 10 or more.
+# Min 1 - Max 100
+# default 3
+e2g_conf_connecttimeout: 5
+
+# Banned image replacement
+# Images that are banned due to domain/url/etc reasons including those
+# in the adverts blacklists can be replaced by an image.  This will,
+# for example, hide images from advert sites and remove broken image
+# icons from banned domains.
+# on (default) | off
+e2g_conf_usecustombannedimage: "on"
+
+# Banned flash replacement
+e2g_conf_usecustombannedflash: "on"
+
+# Filter groups options
+# filtergroups sets the number of filter groups. A filter group is a set of content
+# filtering options you can apply to a group of users.  The value must be 1 or more.
+# e2guardian will automatically look for e2guardianfN.conf where N is the filter
+# group.  To assign users to groups use the filtergroupslist option.  All users default
+# to filter group 1.  You must have some sort of authentication to be able to map users
+# to a group.
+e2g_conf_filtergroups: 1
+
+# Show weighted phrases found
+# If enabled then the phrases found that made up the total which excedes
+# the naughtyness limit will be logged and, if the reporting level is
+# high enough, reported. on | off
+e2g_conf_showweightedfound: "on"
+
+# Weighted phrase mode
+# There are 3 possible modes of operation:
+# 0 = off = do not use the weighted phrase feature.
+# 1 = on, normal = normal weighted phrase operation.
+# 2 = on, singular = each weighted phrase found only counts once on a page.
+#
+# IMPORTANT: Note that setting this to "0" turns off all features which
+# extract phrases from page content, including banned & exception
+# phrases (not just weighted), search term filtering, and scanning for
+# links to banned URLs.
+e2g_conf_weightedphrasemode: 2
+
+# Smart, Raw and Meta/Title phrase content filtering options
+# Smart is where the multiple spaces and HTML are removed before phrase filtering
+# Raw is where the raw HTML including meta tags are phrase filtered
+# Meta/Title is where only meta and title tags are phrase filtered (v. quick)
+# CPU usage can be effectively halved by using setting 0 or 1 compared to 2
+# 0 = raw only
+# 1 = smart only
+# 2 = both of the above (default)
+# 3 = meta/title
+e2g_conf_phrasefiltermode: 2
+
+# sets the number of worker threads to use
+# This figure is the maximum number of concurrent connections.
+# If more connections are made, connections will queue until a worker thread is free.
+# On large site you might want to try 5000 (max value 20000)
+e2g_conf_httpworkers: 500
+
+# Enable SSL support
+# This must be present to enable MITM and/or Cert checking
+# default is off
+e2g_conf_enablessl: "on"
+
+# SSL man in the middle
+# CA certificate path
+# Path to the CA certificate to use as a signing certificate for
+# generated certificates.
+e2g_conf_cacertificatepath: "{{ e2g_install_dir }}/certs/ca-cert.pem"
+
+# CA private key path
+# path to the private key that matches the public key in the CA certificate.
+e2g_conf_caprivatekeypath: "{{ e2g_install_dir }}/certs/ca-cert.key "
+
+# Cert private key path
+# The public / private key pair used by all generated certificates
+# default is blank - required if ssl_mitm is enabled.
+e2g_conf_certprivatekeypath: "{{ e2g_install_dir }}/certs/cert.key"
+
+# Generated cert path
+# The location where generated certificates will be saved for future use.
+# (must be writable by the dg user)
+# default is blank - required if ssl_mitm is enabled.
+e2g_conf_generatedcertpath: "{{ e2g_install_dir }}/certs/generatedcerts"
+
+# Search sitelist for ip sites
+# In v5 a separate set of lists has been introduced for IP sites
+# and normally e2g will no longer check site lists for ip's
+# If you want to keep backward list compatablity then set this to
+# 'on' - but note this incurs an overhead - putting IP in ipsitelists
+# and setting this to off gives the fastest implimentation.
+e2g_conf_searchsitelistforip: "off"

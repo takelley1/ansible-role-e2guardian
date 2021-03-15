@@ -1,0 +1,11 @@
+---
+
+- name: Converge
+  hosts: all
+  become: true
+  vars:
+    build_e2g: true
+  tasks:
+    - name: Include e2guardian
+      include_role:
+        name: ansible-role-e2guardian

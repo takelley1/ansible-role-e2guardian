@@ -1,0 +1,20 @@
+{{ ansible_managed | comment }}
+# vim: ft=conf
+
+#Exception URLs based on Regular Expressions
+#
+# E.g. 'news' would unblock news.bbc.com etc
+#
+# Example
+#news
+#
+# Prevent content scanning of CSS and/or JavaScript files
+#^[^?]*\.css($|\?)
+#^[^?]*\.jsp?($|\?)
+#
+# Allow Facebook plugin applications like
+# http://apps.facebook.com/neighborhoods/Setup.aspx and others.
+
+{% for regex in exceptionregexpurllist %}
+{{ regex }}
+{% endfor %}

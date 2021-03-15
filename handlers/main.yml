@@ -1,0 +1,15 @@
+---
+
+- name: HANDLERS | E2Guardian restarted
+  service:
+    name: e2guardian
+    state: restarted
+    enabled: true
+  listen: restart-e2guardian
+
+- name: HANDLERS | Webserver restarted
+  service:
+    name: nginx
+    state: restarted
+    enabled: true
+  listen: restart-webserver

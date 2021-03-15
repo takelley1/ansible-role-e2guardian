@@ -1,0 +1,30 @@
+---
+
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+platforms:
+  - name: ubuntu-host
+    box: ubuntu/groovy64
+    memory: 2048
+    cpus: 2
+provisioner:
+  name: ansible
+  connection_options:
+    ansible_ssh_user: vagrant
+    ansible_ssh_common_args: -o StrictHostKeyChecking=no
+  inventory:
+    host_vars:
+      ubuntu-host:
+        hostname: ubuntu-host
+        common_include_debian_tasks: true
+        disable_suspend: true
+      freebsd-host:
+        hostname: freebsd-host
+    group_vars:
+      all:
+verifier:
+  name: ansible

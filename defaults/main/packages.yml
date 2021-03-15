@@ -1,0 +1,13 @@
+---
+
+e2g_build_dependencies_ubuntu:
+  - autoconf
+  - automake
+  - g++
+  - make
+  - pkg-config
+e2g_runtime_dependencies_ubuntu:
+  - curl
+  - libssl-dev
+  - libpcre++-dev
+  - zlib1g-dev

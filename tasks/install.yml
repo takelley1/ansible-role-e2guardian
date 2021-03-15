@@ -1,0 +1,83 @@
+---
+
+- name: INSTALL | Packages present
+  block:
+    - name: INSTALL | Necessary packages present (Ubuntu)
+      ansible.builtin.apt:
+        name: "{{ item }}"
+      loop:
+        - "{{ e2g_build_dependencies_ubuntu }}"
+        - "{{ e2g_runtime_dependencies_ubuntu }}"
+      when: ansible_distribution == "Ubuntu"
+
+- name: INSTALL | Group present
+  ansible.builtin.group:
+    name: nobody
+
+- name: INSTALL | User present
+  ansible.builtin.user:
+    name: nobody
+    shell: /usr/sbin/nologin
+    create_home: false
+    group: nobody
+
+- name: INSTALL | Paths configured
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.owner }}"
+    mode: "0755"
+  loop:
+    - path: "{{ e2g_install_dir }}"
+      owner: root
+    - path: "{{ e2g_conf_loglocation }}"
+      owner: nobody
+    - path: /usr/local/var/log/e2guardian
+      owner: nobody
+
+- name: INSTALL | E2Guardian built
+  block:
+    - name: INSTALL | Repo cloned
+      ansible.builtin.git:
+        repo: "{{ e2g_repo_url }}"
+        dest: "{{ e2g_repo_dir }}"
+        accept_hostkey: true
+        version: HEAD
+        depth: 1
+        force: true
+      when: build_e2g
+
+    - name: INSTALL | Build options configured
+      shell:
+        cmd: "{{ item }}"
+        chdir: "{{ e2g_repo_dir }}"
+      loop:
+        - ./autogen.sh
+        - ./configure "{{ build_options }}"
+      when: build_e2g
+
+    - name: INSTALL | Package built
+      community.general.make:
+        chdir: "{{ e2g_repo_dir }}"
+      when: build_e2g
+
+    - name: INSTALL | Package installed
+      shell:
+        cmd: make install
+        chdir: "{{ e2g_repo_dir }}"
+      when: build_e2g
+      notify: restart-e2guardian
+
+- name: INSTALL | Service file deployed
+  block:
+    - name: INSTALL | Service file deployed (Linux)
+      ansible.builtin.copy:
+        src: "{{ e2g_repo_dir }}/data/scripts/e2guardian.service"
+        dest: /etc/systemd/system/e2guardian.service
+        remote_src: true
+        owner: root
+        group: root
+        mode: "0644"
+      when: ansible_system == "Linux"
+  when: build_e2g

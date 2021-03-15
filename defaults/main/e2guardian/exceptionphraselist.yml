@@ -1,0 +1,27 @@
+---
+
+exceptionphraselist:
+  - <anatom><-30>
+  - <apple><-20>
+  - <behav><-20>
+  - <biol><-20>
+  - <educat><-20>
+  - <engin><-50>
+  - < gender ><-20>
+  - <human><-30>
+  - <learn><-30>
+  - <logic><-60>
+  - <intellect><-50>
+  - <medic><-50>
+  - <micro><-20>
+  - < news ><-10>
+  - <nix><-50>
+  - <nux><-50>
+  - <ology><-30>
+  - < sex ed><-20>
+  - < sex-ed><-20>
+  - < sexual ><-10>
+  - < sexuality ><-20>
+  - <socio><-10>
+  - <tech><-30>
+  - <wiki><-80>
