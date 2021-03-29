@@ -1,0 +1,17 @@
+---
+
+e2guardian_filter_groups:
+  - groupname: test_group
+    lists:
+      banned_sitelist:
+        path: "{{ e2g_install_dir }}/etc/e2guardian/lists/bannedsitelist_test_group"
+        content: |
+          google.com
+          youtube.com
+  - groupname: other_test_group
+    lists:
+      banned_sitelist:
+        path: "{{ e2g_install_dir }}/etc/e2guardian/lists/bannedsitelist_other_test_group"
+        content: |
+          google.com
+          youtube.com

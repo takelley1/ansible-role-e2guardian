@@ -10,8 +10,6 @@
     backup: true
   loop:
     - e2guardian.conf
-    - e2guardianf1.conf
-    - e2guardianf2.conf
     - lists/authplugins/ipgroups
     - lists/bannedregexurllist
     - lists/bannedsiteiplist
