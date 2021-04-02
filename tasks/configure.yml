@@ -1,6 +1,6 @@
 ---
 
-- name: CONFIGURE | E2Guardian configuration templates deployed
+- name: CONFIGURE | Configuration templates deployed
   template:
     src: opt/e2guardian/etc/e2guardian/{{ item }}.j2
     dest: "{{ e2g_install_dir }}/etc/e2guardian/{{ item }}"
@@ -20,7 +20,7 @@
     - lists/weightedphraseslist
   notify: restart-e2guardian
 
-- name: CONFIGURE | E2Guardian web templates deployed
+- name: CONFIGURE | Web templates deployed
   template:
     src: opt/e2guardian/share/e2guardian/languages/ukenglish/{{ item }}.j2
     dest: "{{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/{{ item }}"

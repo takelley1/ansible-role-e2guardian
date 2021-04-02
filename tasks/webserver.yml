@@ -2,11 +2,11 @@
 
 # Static webserver for serving E2Guardian's public certificate.
 
-- name: WEBSERVER | Package installed
+- name: WEBSERVER | Nginx package installed
   ansible.builtin.package:
     name: nginx
 
-- name: WEBSERVER | Paths configured
+- name: WEBSERVER | Nginx paths configured
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
