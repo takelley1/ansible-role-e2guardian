@@ -83,8 +83,8 @@ sitelist = 'name=localexception,messageno=662,path={{ item.lists.local_exception
 
 # Uncomment the two lines below if want to only allow extentions/mime types in these lists
 # You will also need to uncomment the checkfiletype function in site.story to enable this
-#fileextlist = 'name=exceptionextension,path=/usr/local/etc/e2guardian/lists/exceptionextensionlist'
-#mimelist = 'name=exceptionmime,path=/usr/local/etc/e2guardian/lists/exceptionmimelist'
+#fileextlist = 'name=exceptionextension,path={{ e2g_install_dir }}/etc/e2guardian/lists/exceptionextensionlist'
+#mimelist = 'name=exceptionmime,path={{ e2g_install_dir }}/etc/e2guardian/lists/exceptionmimelist'
 #
 # Use the following lists to block specific kinds of file downloads.
 #
@@ -114,10 +114,10 @@ maxuploadsize = {{ item.maxuploadsize | default('-1') }}
 # Supply categorised lists here and the category string shall be logged against
 # matching requests, but matching these lists does not perform any filtering
 # action.
-#sitelist = 'name=log,path=/usr/local/etc/e2guardian/lists/logsitelist'
-#ipsitelist = 'name=log,path=/usr/local/etc/e2guardian/lists/logsiteiplist'
-#urllist = 'name=log,path=/usr/local/etc/e2guardian/lists/logurllist'
-#regexpboollist = 'name=log,path=/usr/local/etc/e2guardian/lists/logregexpurllist'
+#sitelist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logsitelist'
+#ipsitelist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logsiteiplist'
+#urllist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logurllist'
+#regexpboollist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logregexpurllist'
 
 # Outgoing HTTP header rules:
 # Optional lists for blocking based on, and modification of, outgoing HTTP
@@ -214,8 +214,8 @@ embeddedurlweight = {{ item.embeddedurlweight | default('0') }}
 
 #  Users will not be able to bypass sites/urls in these lists
 sitelist = 'name=bannedbypass,messageno=500,path={{ item.lists.banned_bypass_sitelist.path | default(e2g_install_dir'/etc/e2guardian/lists/bannedsitelistwithbypass') }}'
-#ipsitelist = 'name=bannedbypass,messageno=500,path=/usr/local/etc/e2guardian/lists/bannedsiteiplistwithbypass'
-#urllist = 'name=bannedbypass,messageno=501,path=/usr/local/etc/e2guardian/lists/bannedurllistwithbypass'
+#ipsitelist = 'name=bannedbypass,messageno=500,path={{ e2g_install_dir }}/etc/e2guardian/lists/bannedsiteiplistwithbypass'
+#urllist = 'name=bannedbypass,messageno=501,path={{ e2g_install_dir }}/etc/e2guardian/lists/bannedurllistwithbypass'
 
 # Infection/Scan Error Bypass
 # Similar to the 'bypass' setting, but specifically for bypassing files scanned and found
@@ -300,12 +300,12 @@ accessdeniedaddress = '{{ item.accessdeniedaddress }}'
 # only used in reporting level 3.
 #
 # The default template file path is <languagedir>/<language>/template.html
-# e.g. /usr/local/share/e2guardian/languages/ukenglish/template.html when using 'ukenglish'
+# e.g. {{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/template.html when using 'ukenglish'
 # language.
 #
 # This option generates a file path of the form:
 # <languagedir>/<language>/<htmltemplate>
-# e.g. /usr/local/share/e2guardian/languages/ukenglish/custom.html
+# e.g. {{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/custom.html
 #
 #htmltemplate = 'custom.html'
 {% if item.htmltemplate is defined %}
@@ -314,7 +314,7 @@ htmltemplate = '{{ item.htmltemplate }}'
 
 #Template for use to report network issues and sites which are not responding
 # The default template file path is <languagedir>/<language>/neterr_template.html
-# e.g. /usr/local/share/e2guardian/languages/ukenglish/neterr_template.html when using 'ukenglish'
+# e.g. {{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/neterr_template.html when using 'ukenglish'
 # language.
 #neterrtemplate = 'custom_neterr_template.html'
 {% if item.neterrtemplate is defined %}

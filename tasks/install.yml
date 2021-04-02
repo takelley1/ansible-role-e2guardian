@@ -33,7 +33,9 @@
       owner: root
     - path: "{{ e2g_conf_loglocation }}"
       owner: nobody
-    - path: /usr/local/var/log/e2guardian
+    - path: "{{ e2g_install_dir }}/var/log/e2guardian"
+      owner: nobody
+    - path: /var/log/e2guardian
       owner: nobody
 
 - name: INSTALL | E2Guardian built
