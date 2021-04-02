@@ -1,6 +1,6 @@
 ---
 
-exceptionphraselist:
+e2g_exceptionphraselist:
   - <anatom><-30>
   - <apple><-20>
   - <behav><-20>

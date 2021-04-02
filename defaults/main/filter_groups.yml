@@ -1,6 +1,6 @@
 ---
 
-e2guardian_filter_groups:
+e2g_filter_groups:
   - groupname: test_group
     lists:
       banned_sitelist:
