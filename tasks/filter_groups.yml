@@ -10,407 +10,356 @@
 - name: FILTER_GROUPS | banned_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_sitelist.path }}"
-    content: "{{ item.lists.banned_sitelist.content }}"
+    content: "{{ item.lists.banned_sitelist.content | default('') }}"
   when:
     - item.lists.banned_sitelist.path is defined
-    - item.lists.banned_sitelist.content is defined
 
 - name: FILTER_GROUPS | banned_phraselist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_phraselist.path }}"
-    content: "{{ item.lists.banned_phraselist.content }}"
+    content: "{{ item.lists.banned_phraselist.content | default('') }}"
   when:
     - item.lists.banned_phraselist.path is defined
-    - item.lists.banned_phraselist.content is defined
 
 - name: FILTER_GROUPS | weighted_phraselist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.weighted_phraselist.path }}"
-    content: "{{ item.lists.weighted_phraselist.content }}"
+    content: "{{ item.lists.weighted_phraselist.content | default('') }}"
   when:
     - item.lists.weighted_phraselist.path is defined
-    - item.lists.weighted_phraselist.content is defined
 
 - name: FILTER_GROUPS | exception_phraselist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_phraselist.path }}"
-    content: "{{ item.lists.exception_phraselist.content }}"
+    content: "{{ item.lists.exception_phraselist.content | default('') }}"
   when:
     - item.lists.exception_phraselist.path is defined
-    - item.lists.exception_phraselist.content is defined
 
 - name: FILTER_GROUPS | banned_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_sitelist.path }}"
-    content: "{{ item.lists.banned_sitelist.content }}"
+    content: "{{ item.lists.banned_sitelist.content | default('') }}"
   when:
     - item.lists.banned_sitelist.path is defined
-    - item.lists.banned_sitelist.content is defined
 
 - name: FILTER_GROUPS | banned_ipsitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_ipsitelist.path }}"
-    content: "{{ item.lists.banned_ipsitelist.content }}"
+    content: "{{ item.lists.banned_ipsitelist.content | default('') }}"
   when:
     - item.lists.banned_ipsitelist.path is defined
-    - item.lists.banned_ipsitelist.content is defined
 
 - name: FILTER_GROUPS | banned_urllist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_urllist.path }}"
-    content: "{{ item.lists.banned_urllist.content }}"
+    content: "{{ item.lists.banned_urllist.content | default('') }}"
   when:
     - item.lists.banned_urllist.path is defined
-    - item.lists.banned_urllist.content is defined
 
 - name: FILTER_GROUPS | banned_regexpboollist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_regexpboollist.path }}"
-    content: "{{ item.lists.banned_regexpboollist.content }}"
+    content: "{{ item.lists.banned_regexpboollist.content | default('') }}"
   when:
     - item.lists.banned_regexpboollist.path is defined
-    - item.lists.banned_regexpboollist.content is defined
 
 - name: FILTER_GROUPS | banned_useragent_regexpboollist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_useragent_regexpboollist.path }}"
-    content: "{{ item.lists.banned_useragent_regexpboollist.content }}"
+    content: "{{ item.lists.banned_useragent_regexpboollist.content | default('') }}"
   when:
     - item.lists.banned_useragent_regexpboollist.path is defined
-    - item.lists.banned_useragent_regexpboollist.content is defined
 
 - name: FILTER_GROUPS | banned_ssl_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_ssl_sitelist.path }}"
-    content: "{{ item.lists.banned_ssl_sitelist.content }}"
+    content: "{{ item.lists.banned_ssl_sitelist.content | default('') }}"
   when:
     - item.lists.banned_ssl_sitelist.path is defined
-    - item.lists.banned_ssl_sitelist.content is defined
 
 - name: FILTER_GROUPS | banned_ssl_ipsitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_ssl_ipsitelist.path }}"
-    content: "{{ item.lists.banned_ssl_ipsitelist.content }}"
+    content: "{{ item.lists.banned_ssl_ipsitelist.content | default('') }}"
   when:
     - item.lists.banned_ssl_ipsitelist.path is defined
-    - item.lists.banned_ssl_ipsitelist.content is defined
 
 - name: FILTER_GROUPS | grey_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.grey_sitelist.path }}"
-    content: "{{ item.lists.grey_sitelist.content }}"
+    content: "{{ item.lists.grey_sitelist.content | default('') }}"
   when:
     - item.lists.grey_sitelist.path is defined
-    - item.lists.grey_sitelist.content is defined
 
 - name: FILTER_GROUPS | grey_ipsitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.grey_ipsitelist.path }}"
-    content: "{{ item.lists.grey_ipsitelist.content }}"
+    content: "{{ item.lists.grey_ipsitelist.content | default('') }}"
   when:
     - item.lists.grey_ipsitelist.path is defined
-    - item.lists.grey_ipsitelist.content is defined
 
 - name: FILTER_GROUPS | grey_urllist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.grey_urllist.path }}"
-    content: "{{ item.lists.grey_urllist.content }}"
+    content: "{{ item.lists.grey_urllist.content | default('') }}"
   when:
     - item.lists.grey_urllist.path is defined
-    - item.lists.grey_urllist.content is defined
 
 - name: FILTER_GROUPS | grey_ssl_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.grey_ssl_sitelist.path }}"
-    content: "{{ item.lists.grey_ssl_sitelist.content }}"
+    content: "{{ item.lists.grey_ssl_sitelist.content | default('') }}"
   when:
     - item.lists.grey_ssl_sitelist.path is defined
-    - item.lists.grey_ssl_sitelist.content is defined
 
 - name: FILTER_GROUPS | grey_ssl_ipsitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.grey_ssl_ipsitelist.path }}"
-    content: "{{ item.lists.grey_ssl_ipsitelist.content }}"
+    content: "{{ item.lists.grey_ssl_ipsitelist.content | default('') }}"
   when:
     - item.lists.grey_ssl_ipsitelist.path is defined
-    - item.lists.grey_ssl_ipsitelist.content is defined
 
 - name: FILTER_GROUPS | exception_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_sitelist.path }}"
-    content: "{{ item.lists.exception_sitelist.content }}"
+    content: "{{ item.lists.exception_sitelist.content | default('') }}"
   when:
     - item.lists.exception_sitelist.path is defined
-    - item.lists.exception_sitelist.content is defined
 
 - name: FILTER_GROUPS | exception_ipsitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_ipsitelist.path }}"
-    content: "{{ item.lists.exception_ipsitelist.content }}"
+    content: "{{ item.lists.exception_ipsitelist.content | default('') }}"
   when:
     - item.lists.exception_ipsitelist.path is defined
-    - item.lists.exception_ipsitelist.content is defined
 
 - name: FILTER_GROUPS | exception_urllist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_urllist.path }}"
-    content: "{{ item.lists.exception_urllist.content }}"
+    content: "{{ item.lists.exception_urllist.content | default('') }}"
   when:
     - item.lists.exception_urllist.path is defined
-    - item.lists.exception_urllist.content is defined
 
 - name: FILTER_GROUPS | exception_regexpboollist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_regexpboollist.path }}"
-    content: "{{ item.lists.exception_regexpboollist.content }}"
+    content: "{{ item.lists.exception_regexpboollist.content | default('') }}"
   when:
     - item.lists.exception_regexpboollist.path is defined
-    - item.lists.exception_regexpboollist.content is defined
 
 - name: FILTER_GROUPS | exception_useragent_regexpboollist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_useragent_regexpboollist.path }}"
-    content: "{{ item.lists.exception_useragent_regexpboollist.content }}"
+    content: "{{ item.lists.exception_useragent_regexpboollist.content | default('') }}"
   when:
     - item.lists.exception_useragent_regexpboollist.path is defined
-    - item.lists.exception_useragent_regexpboollist.content is defined
 
 - name: FILTER_GROUPS | reference_exception_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.reference_exception_sitelist.path }}"
-    content: "{{ item.lists.reference_exception_sitelist.content }}"
+    content: "{{ item.lists.reference_exception_sitelist.content | default('') }}"
   when:
     - item.lists.reference_exception_sitelist.path is defined
-    - item.lists.reference_exception_sitelist.content is defined
 
 - name: FILTER_GROUPS | reference_exception_ipsitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.reference_exception_ipsitelist.path }}"
-    content: "{{ item.lists.reference_exception_ipsitelist.content }}"
+    content: "{{ item.lists.reference_exception_ipsitelist.content | default('') }}"
   when:
     - item.lists.reference_exception_ipsitelist.path is defined
-    - item.lists.reference_exception_ipsitelist.content is defined
 
 - name: FILTER_GROUPS | reference_exception_urllist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.reference_exception_urllist.path }}"
-    content: "{{ item.lists.reference_exception_urllist.content }}"
+    content: "{{ item.lists.reference_exception_urllist.content | default('') }}"
   when:
     - item.lists.reference_exception_urllist.path is defined
-    - item.lists.reference_exception_urllist.content is defined
 
 - name: FILTER_GROUPS | embeded_reference_exception_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.embeded_reference_exception_sitelist.path }}"
-    content: "{{ item.lists.embeded_reference_exception_sitelist.content }}"
+    content: "{{ item.lists.embeded_reference_exception_sitelist.content | default('') }}"
   when:
     - item.lists.embeded_reference_exception_sitelist.path is defined
-    - item.lists.embeded_reference_exception_sitelist.content is defined
 
 - name: FILTER_GROUPS | embeded_reference_exception_ipsitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.embeded_reference_exception_ipsitelist.path }}"
-    content: "{{ item.lists.embeded_reference_exception_ipsitelist.content }}"
+    content: "{{ item.lists.embeded_reference_exception_ipsitelist.content | default('') }}"
   when:
     - item.lists.embeded_reference_exception_ipsitelist.path is defined
-    - item.lists.embeded_reference_exception_ipsitelist.content is defined
 
 - name: FILTER_GROUPS | embeded_reference_exception_urllist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.embeded_reference_exception_urllist.path }}"
-    content: "{{ item.lists.embeded_reference_exception_urllist.content }}"
+    content: "{{ item.lists.embeded_reference_exception_urllist.content | default('') }}"
   when:
     - item.lists.embeded_reference_exception_urllist.path is defined
-    - item.lists.embeded_reference_exception_urllist.content is defined
 
 - name: FILTER_GROUPS | modification_regexpreplacelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.modification_regexpreplacelist.path }}"
-    content: "{{ item.lists.modification_regexpreplacelist.content }}"
+    content: "{{ item.lists.modification_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.modification_regexpreplacelist.path is defined
-    - item.lists.modification_regexpreplacelist.content is defined
 
 - name: FILTER_GROUPS | modification_ssl_regexpreplacelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.modification_ssl_regexpreplacelist.path }}"
-    content: "{{ item.lists.modification_ssl_regexpreplacelist.content }}"
+    content: "{{ item.lists.modification_ssl_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.modification_ssl_regexpreplacelist.path is defined
-    - item.lists.modification_ssl_regexpreplacelist.content is defined
 
 - name: FILTER_GROUPS | redirect_regexpreplacelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.redirect_regexpreplacelist.path }}"
-    content: "{{ item.lists.redirect_regexpreplacelist.content }}"
+    content: "{{ item.lists.redirect_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.redirect_regexpreplacelist.path is defined
-    - item.lists.redirect_regexpreplacelist.content is defined
 
 - name: FILTER_GROUPS | redirect_contentregexplist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.redirect_contentregexplist.path }}"
-    content: "{{ item.lists.redirect_contentregexplist.content }}"
+    content: "{{ item.lists.redirect_contentregexplist.content | default('') }}"
   when:
     - item.lists.redirect_contentregexplist.path is defined
-    - item.lists.redirect_contentregexplist.content is defined
 
 - name: FILTER_GROUPS | local_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.local_sitelist.path }}"
-    content: "{{ item.lists.local_sitelist.content }}"
+    content: "{{ item.lists.local_sitelist.content | default('') }}"
   when:
     - item.lists.local_sitelist.path is defined
-    - item.lists.local_sitelist.content is defined
 
 - name: FILTER_GROUPS | local_searchlist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.local_searchlist.path }}"
-    content: "{{ item.lists.local_searchlist.content }}"
+    content: "{{ item.lists.local_searchlist.content | default('') }}"
   when:
     - item.lists.local_searchlist.path is defined
-    - item.lists.local_searchlist.content is defined
 
 - name: FILTER_GROUPS | local_grey_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.local_grey_sitelist.path }}"
-    content: "{{ item.lists.local_grey_sitelist.content }}"
+    content: "{{ item.lists.local_grey_sitelist.content | default('') }}"
   when:
     - item.lists.local_grey_sitelist.path is defined
-    - item.lists.local_grey_sitelist.content is defined
 
 - name: FILTER_GROUPS | local_grey_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.local_grey_sitelist.path }}"
-    content: "{{ item.lists.local_grey_sitelist.content }}"
+    content: "{{ item.lists.local_grey_sitelist.content | default('') }}"
   when:
     - item.lists.local_grey_sitelist.path is defined
-    - item.lists.local_grey_sitelist.content is defined
 
 - name: FILTER_GROUPS | local_exception_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.local_exception_sitelist.path }}"
-    content: "{{ item.lists.local_exception_sitelist.content }}"
+    content: "{{ item.lists.local_exception_sitelist.content | default('') }}"
   when:
     - item.lists.local_exception_sitelist.path is defined
-    - item.lists.local_exception_sitelist.content is defined
 
 - name: FILTER_GROUPS | fileextlist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.fileextlist.path }}"
-    content: "{{ item.lists.fileextlist.content }}"
+    content: "{{ item.lists.fileextlist.content | default('') }}"
   when:
     - item.lists.fileextlist.path is defined
-    - item.lists.fileextlist.content is defined
 
 - name: FILTER_GROUPS | mimelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.mimelist.path }}"
-    content: "{{ item.lists.mimelist.content }}"
+    content: "{{ item.lists.mimelist.content | default('') }}"
   when:
     - item.lists.mimelist.path is defined
-    - item.lists.mimelist.content is defined
 
 - name: FILTER_GROUPS | exception_file_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_file_sitelist.path }}"
-    content: "{{ item.lists.exception_file_sitelist.content }}"
+    content: "{{ item.lists.exception_file_sitelist.content | default('') }}"
   when:
     - item.lists.exception_file_sitelist.path is defined
-    - item.lists.exception_file_sitelist.content is defined
 
 - name: FILTER_GROUPS | exception_file_ipsitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_file_ipsitelist.path }}"
-    content: "{{ item.lists.exception_file_ipsitelist.content }}"
+    content: "{{ item.lists.exception_file_ipsitelist.content | default('') }}"
   when:
     - item.lists.exception_file_ipsitelist.path is defined
-    - item.lists.exception_file_ipsitelist.content is defined
 
 - name: FILTER_GROUPS | exception_file_urllist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_file_urllist.path }}"
-    content: "{{ item.lists.exception_file_urllist.content }}"
+    content: "{{ item.lists.exception_file_urllist.content | default('') }}"
   when:
     - item.lists.exception_file_urllist.path is defined
-    - item.lists.exception_file_urllist.content is defined
 
 - name: FILTER_GROUPS | header_regexpreplacelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.header_regexpreplacelist.path }}"
-    content: "{{ item.lists.header_regexpreplacelist.content }}"
+    content: "{{ item.lists.header_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.header_regexpreplacelist.path is defined
-    - item.lists.header_regexpreplacelist.content is defined
 
 - name: FILTER_GROUPS | banned_header_regexpboollist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_header_regexpboollist.path }}"
-    content: "{{ item.lists.banned_header_regexpboollist.content }}"
+    content: "{{ item.lists.banned_header_regexpboollist.content | default('') }}"
   when:
     - item.lists.banned_header_regexpboollist.path is defined
-    - item.lists.banned_header_regexpboollist.content is defined
 
 - name: FILTER_GROUPS | exception_header_regexpboollist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.exception_header_regexpboollist.path }}"
-    content: "{{ item.lists.exception_header_regexpboollist.content }}"
+    content: "{{ item.lists.exception_header_regexpboollist.content | default('') }}"
   when:
     - item.lists.exception_header_regexpboollist.path is defined
-    - item.lists.exception_header_regexpboollist.content is defined
 
 - name: FILTER_GROUPS | add_header_regexpreplacelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.add_header_regexpreplacelist.path }}"
-    content: "{{ item.lists.add_header_regexpreplacelist.content }}"
+    content: "{{ item.lists.add_header_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.add_header_regexpreplacelist.path is defined
-    - item.lists.add_header_regexpreplacelist.content is defined
 
 - name: FILTER_GROUPS | search_regexpreplacelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.search_regexpreplacelist.path }}"
-    content: "{{ item.lists.search_regexpreplacelist.content }}"
+    content: "{{ item.lists.search_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.search_regexpreplacelist.path is defined
-    - item.lists.search_regexpreplacelist.content is defined
 
 - name: FILTER_GROUPS | banned_searchlist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_searchlist.path }}"
-    content: "{{ item.lists.banned_searchlist.content }}"
+    content: "{{ item.lists.banned_searchlist.content | default('') }}"
   when:
     - item.lists.banned_searchlist.path is defined
-    - item.lists.banned_searchlist.content is defined
 
 - name: FILTER_GROUPS | override_searchlist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.override_searchlist.path }}"
-    content: "{{ item.lists.override_searchlist.content }}"
+    content: "{{ item.lists.override_searchlist.content | default('') }}"
   when:
     - item.lists.override_searchlist.path is defined
-    - item.lists.override_searchlist.content is defined
 
 - name: FILTER_GROUPS | banned_bypass_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.banned_bypass_sitelist.path }}"
-    content: "{{ item.lists.banned_bypass_sitelist.content }}"
+    content: "{{ item.lists.banned_bypass_sitelist.content | default('') }}"
   when:
     - item.lists.banned_bypass_sitelist.path is defined
-    - item.lists.banned_bypass_sitelist.content is defined
 
 - name: FILTER_GROUPS | nocheckcert_sitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.nocheckcert_sitelist.path }}"
-    content: "{{ item.lists.nocheckcert_sitelist.content }}"
+    content: "{{ item.lists.nocheckcert_sitelist.content | default('') }}"
   when:
     - item.lists.nocheckcert_sitelist.path is defined
-    - item.lists.nocheckcert_sitelist.content is defined
 
 - name: FILTER_GROUPS | nocheckcert_ipsitelist filter group file created
   ansible.builtin.copy:
     dest: "{{ item.lists.nocheckcert_ipsitelist.path }}"
-    content: "{{ item.lists.nocheckcert_ipsitelist.content }}"
+    content: "{{ item.lists.nocheckcert_ipsitelist.content | default('') }}"
   when:
     - item.lists.nocheckcert_ipsitelist.path is defined
-    - item.lists.nocheckcert_ipsitelist.content is defined
