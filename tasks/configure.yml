@@ -5,7 +5,7 @@
     src: opt/e2guardian/etc/e2guardian/{{ item }}.j2
     dest: "{{ e2g_install_dir }}/etc/e2guardian/{{ item }}"
     owner: root
-    group: root
+    group: "{{ root_group }}"
     mode: "0644"
     backup: true
   loop:
@@ -25,7 +25,7 @@
     src: opt/e2guardian/share/e2guardian/languages/ukenglish/{{ item }}.j2
     dest: "{{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/{{ item }}"
     owner: root
-    group: root
+    group: "{{ root_group }}"
     mode: "0644"
     backup: true
   loop:

@@ -26,7 +26,7 @@
     path: "{{ item.path }}"
     state: directory
     owner: "{{ item.owner }}"
-    group: "{{ item.owner }}"
+    group: "{{ root_group }}"
     mode: "0755"
   loop:
     - path: "{{ e2g_install_dir }}"
@@ -79,7 +79,7 @@
         dest: /etc/systemd/system/e2guardian.service
         remote_src: true
         owner: root
-        group: root
+        group: "{{ root_group }}"
         mode: "0644"
       when: ansible_system == "Linux"
   when: build_e2g
