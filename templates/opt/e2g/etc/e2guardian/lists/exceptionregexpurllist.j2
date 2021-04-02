@@ -1,6 +1,4 @@
 {{ ansible_managed | comment }}
-# vim: ft=conf
-
 #Exception URLs based on Regular Expressions
 #
 # E.g. 'news' would unblock news.bbc.com etc
@@ -15,6 +13,8 @@
 # Allow Facebook plugin applications like
 # http://apps.facebook.com/neighborhoods/Setup.aspx and others.
 
-{% for regex in exceptionregexpurllist %}
-{{ regex }}
-{% endfor %}
+{% if e2g_exceptionregexpurllist is defined %}
+  {% for item in e2g_exceptionregexpurllist %}
+    {{ item }}
+  {% endfor %}
+{% endif %}

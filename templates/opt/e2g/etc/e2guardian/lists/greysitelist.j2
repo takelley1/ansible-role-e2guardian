@@ -1,6 +1,4 @@
 {{ ansible_managed | comment }}
-# vim: ft=conf
-
 #domains in grey list
 #Don't bother with the www. or the http://
 #
@@ -59,6 +57,8 @@
 #List other sites to greylist:
 #
 
-{% for site in greysitelist %}
-{{ site }}
-{% endfor %}
+{% if e2g_greysitelist is defined %}
+  {% for item in e2g_greysitelist %}
+    {{ item }}
+  {% endfor %}
+{% endif %}

@@ -1,6 +1,4 @@
 {{ ansible_managed | comment }}
-# vim: ft=conf
-
 #Sites in exception list
 #Don't bother with the www. or
 #the http://
@@ -13,7 +11,6 @@
 #
 #.tld so for example you can match .gov for example
 #
-#
 # Time limiting syntax:
 # #time: <start hour> <start minute> <end hour> <end minute> <days>
 # Example:
@@ -24,6 +21,8 @@
 # NOTE: From v5 Blanket exceptions are now implimented using Storyboarding
 # WARNING: Old style Blanket blocks in this file will be silently ignored
 
-{% for site in exceptionsitelist %}
-{{ site }}
-{% endfor %}
+{% if e2g_exceptionsitelist is defined %}
+  {% for item in e2g_exceptionsitelist %}
+    {{ item }}
+  {% endfor %}
+{% endif %}

@@ -11,7 +11,8 @@
 #192.168.1.0/255.255.255.0 = filter1
 # Range matching:
 #192.168.1.0-192.168.1.255 = filter1
-
-{% for group in e2g_ipgroups %}
-{{ group }}
-{% endfor %}
+{% if e2g_ipgroups is defined %}
+  {% for group in e2g_ipgroups %}
+    {{ group }}
+  {% endfor %}
+{% endif %}

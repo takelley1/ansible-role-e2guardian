@@ -1,19 +1,17 @@
 {{ ansible_managed | comment }}
-# vim: ft=conf
-
 # IP sites in banned list
 #
 #The bannedsiteiplist is for blocking ALL of an IP site
 #
 # IP site addresses
-#
 # Single IPs, ranges and subnets can be used,
 # e.g.
 # 192.168.0.1
 # 10.0.0.1-10.0.0.3
 # 10.0.0.0/24
-#
 
-{% for ip in bannedsiteiplist %}
-{{ ip }}
-{% endfor %}
+{% if e2g_bannedsiteiplist is defined %}
+  {% for item in e2g_bannedsiteiplist %}
+    {{ item }}
+  {% endfor %}
+{% endif %}

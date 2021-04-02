@@ -1,6 +1,4 @@
 {{ ansible_managed | comment }}
-# vim: ft=conf
-
 #URLs in exception list
 #Don't bother with the www. or
 #the http://
@@ -17,6 +15,8 @@
 #Another example:
 #generallybadsite.tld/partthatsok/
 
-{% for url in exceptionurllist %}
-{{ url }}
-{% endfor %}
+{% if e2g_exceptionurllist is defined %}
+  {% for item in e2g_exceptionurllist %}
+    {{ item }}
+  {% endfor %}
+{% endif %}
