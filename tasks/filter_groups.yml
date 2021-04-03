@@ -4,6 +4,7 @@
   ansible.builtin.template:
     src: opt/e2g/etc/e2guardian/e2guardianfn.conf.j2
     dest: "{{ e2g_install_dir }}/etc/e2guardian/e2guardianf{{ item_index + 1}}.conf"
+  notify: restart-e2guardian
 
 # ------------------------------------------------------------------------------
 
@@ -13,6 +14,7 @@
     content: "{{ item.lists.banned_sitelist.content | default('') }}"
   when:
     - item.lists.banned_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_phraselist filter group file created
   ansible.builtin.copy:
@@ -20,6 +22,7 @@
     content: "{{ item.lists.banned_phraselist.content | default('') }}"
   when:
     - item.lists.banned_phraselist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | weighted_phraselist filter group file created
   ansible.builtin.copy:
@@ -27,6 +30,7 @@
     content: "{{ item.lists.weighted_phraselist.content | default('') }}"
   when:
     - item.lists.weighted_phraselist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_phraselist filter group file created
   ansible.builtin.copy:
@@ -34,6 +38,7 @@
     content: "{{ item.lists.exception_phraselist.content | default('') }}"
   when:
     - item.lists.exception_phraselist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_sitelist filter group file created
   ansible.builtin.copy:
@@ -41,6 +46,7 @@
     content: "{{ item.lists.banned_sitelist.content | default('') }}"
   when:
     - item.lists.banned_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_ipsitelist filter group file created
   ansible.builtin.copy:
@@ -48,6 +54,7 @@
     content: "{{ item.lists.banned_ipsitelist.content | default('') }}"
   when:
     - item.lists.banned_ipsitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_urllist filter group file created
   ansible.builtin.copy:
@@ -55,6 +62,7 @@
     content: "{{ item.lists.banned_urllist.content | default('') }}"
   when:
     - item.lists.banned_urllist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_regexpboollist filter group file created
   ansible.builtin.copy:
@@ -62,6 +70,7 @@
     content: "{{ item.lists.banned_regexpboollist.content | default('') }}"
   when:
     - item.lists.banned_regexpboollist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_useragent_regexpboollist filter group file created
   ansible.builtin.copy:
@@ -69,6 +78,7 @@
     content: "{{ item.lists.banned_useragent_regexpboollist.content | default('') }}"
   when:
     - item.lists.banned_useragent_regexpboollist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_ssl_sitelist filter group file created
   ansible.builtin.copy:
@@ -76,6 +86,7 @@
     content: "{{ item.lists.banned_ssl_sitelist.content | default('') }}"
   when:
     - item.lists.banned_ssl_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_ssl_ipsitelist filter group file created
   ansible.builtin.copy:
@@ -83,6 +94,7 @@
     content: "{{ item.lists.banned_ssl_ipsitelist.content | default('') }}"
   when:
     - item.lists.banned_ssl_ipsitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | grey_sitelist filter group file created
   ansible.builtin.copy:
@@ -90,6 +102,7 @@
     content: "{{ item.lists.grey_sitelist.content | default('') }}"
   when:
     - item.lists.grey_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | grey_ipsitelist filter group file created
   ansible.builtin.copy:
@@ -97,6 +110,7 @@
     content: "{{ item.lists.grey_ipsitelist.content | default('') }}"
   when:
     - item.lists.grey_ipsitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | grey_urllist filter group file created
   ansible.builtin.copy:
@@ -104,6 +118,7 @@
     content: "{{ item.lists.grey_urllist.content | default('') }}"
   when:
     - item.lists.grey_urllist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | grey_ssl_sitelist filter group file created
   ansible.builtin.copy:
@@ -111,6 +126,7 @@
     content: "{{ item.lists.grey_ssl_sitelist.content | default('') }}"
   when:
     - item.lists.grey_ssl_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | grey_ssl_ipsitelist filter group file created
   ansible.builtin.copy:
@@ -118,6 +134,7 @@
     content: "{{ item.lists.grey_ssl_ipsitelist.content | default('') }}"
   when:
     - item.lists.grey_ssl_ipsitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_sitelist filter group file created
   ansible.builtin.copy:
@@ -125,6 +142,7 @@
     content: "{{ item.lists.exception_sitelist.content | default('') }}"
   when:
     - item.lists.exception_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_ipsitelist filter group file created
   ansible.builtin.copy:
@@ -132,6 +150,7 @@
     content: "{{ item.lists.exception_ipsitelist.content | default('') }}"
   when:
     - item.lists.exception_ipsitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_urllist filter group file created
   ansible.builtin.copy:
@@ -139,6 +158,7 @@
     content: "{{ item.lists.exception_urllist.content | default('') }}"
   when:
     - item.lists.exception_urllist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_regexpboollist filter group file created
   ansible.builtin.copy:
@@ -146,6 +166,7 @@
     content: "{{ item.lists.exception_regexpboollist.content | default('') }}"
   when:
     - item.lists.exception_regexpboollist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_useragent_regexpboollist filter group file created
   ansible.builtin.copy:
@@ -153,6 +174,7 @@
     content: "{{ item.lists.exception_useragent_regexpboollist.content | default('') }}"
   when:
     - item.lists.exception_useragent_regexpboollist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | reference_exception_sitelist filter group file created
   ansible.builtin.copy:
@@ -160,6 +182,7 @@
     content: "{{ item.lists.reference_exception_sitelist.content | default('') }}"
   when:
     - item.lists.reference_exception_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | reference_exception_ipsitelist filter group file created
   ansible.builtin.copy:
@@ -167,6 +190,7 @@
     content: "{{ item.lists.reference_exception_ipsitelist.content | default('') }}"
   when:
     - item.lists.reference_exception_ipsitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | reference_exception_urllist filter group file created
   ansible.builtin.copy:
@@ -174,6 +198,7 @@
     content: "{{ item.lists.reference_exception_urllist.content | default('') }}"
   when:
     - item.lists.reference_exception_urllist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | embeded_reference_exception_sitelist filter group file created
   ansible.builtin.copy:
@@ -181,6 +206,7 @@
     content: "{{ item.lists.embeded_reference_exception_sitelist.content | default('') }}"
   when:
     - item.lists.embeded_reference_exception_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | embeded_reference_exception_ipsitelist filter group file created
   ansible.builtin.copy:
@@ -188,6 +214,7 @@
     content: "{{ item.lists.embeded_reference_exception_ipsitelist.content | default('') }}"
   when:
     - item.lists.embeded_reference_exception_ipsitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | embeded_reference_exception_urllist filter group file created
   ansible.builtin.copy:
@@ -195,6 +222,7 @@
     content: "{{ item.lists.embeded_reference_exception_urllist.content | default('') }}"
   when:
     - item.lists.embeded_reference_exception_urllist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | modification_regexpreplacelist filter group file created
   ansible.builtin.copy:
@@ -202,6 +230,7 @@
     content: "{{ item.lists.modification_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.modification_regexpreplacelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | modification_ssl_regexpreplacelist filter group file created
   ansible.builtin.copy:
@@ -209,6 +238,7 @@
     content: "{{ item.lists.modification_ssl_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.modification_ssl_regexpreplacelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | redirect_regexpreplacelist filter group file created
   ansible.builtin.copy:
@@ -216,6 +246,7 @@
     content: "{{ item.lists.redirect_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.redirect_regexpreplacelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | redirect_contentregexplist filter group file created
   ansible.builtin.copy:
@@ -223,6 +254,7 @@
     content: "{{ item.lists.redirect_contentregexplist.content | default('') }}"
   when:
     - item.lists.redirect_contentregexplist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | local_sitelist filter group file created
   ansible.builtin.copy:
@@ -230,6 +262,7 @@
     content: "{{ item.lists.local_sitelist.content | default('') }}"
   when:
     - item.lists.local_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | local_searchlist filter group file created
   ansible.builtin.copy:
@@ -237,6 +270,7 @@
     content: "{{ item.lists.local_searchlist.content | default('') }}"
   when:
     - item.lists.local_searchlist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | local_grey_sitelist filter group file created
   ansible.builtin.copy:
@@ -244,6 +278,7 @@
     content: "{{ item.lists.local_grey_sitelist.content | default('') }}"
   when:
     - item.lists.local_grey_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | local_grey_sitelist filter group file created
   ansible.builtin.copy:
@@ -251,6 +286,7 @@
     content: "{{ item.lists.local_grey_sitelist.content | default('') }}"
   when:
     - item.lists.local_grey_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | local_exception_sitelist filter group file created
   ansible.builtin.copy:
@@ -258,6 +294,7 @@
     content: "{{ item.lists.local_exception_sitelist.content | default('') }}"
   when:
     - item.lists.local_exception_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | fileextlist filter group file created
   ansible.builtin.copy:
@@ -265,6 +302,7 @@
     content: "{{ item.lists.fileextlist.content | default('') }}"
   when:
     - item.lists.fileextlist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | mimelist filter group file created
   ansible.builtin.copy:
@@ -272,6 +310,7 @@
     content: "{{ item.lists.mimelist.content | default('') }}"
   when:
     - item.lists.mimelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_file_sitelist filter group file created
   ansible.builtin.copy:
@@ -279,6 +318,7 @@
     content: "{{ item.lists.exception_file_sitelist.content | default('') }}"
   when:
     - item.lists.exception_file_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_file_ipsitelist filter group file created
   ansible.builtin.copy:
@@ -286,6 +326,7 @@
     content: "{{ item.lists.exception_file_ipsitelist.content | default('') }}"
   when:
     - item.lists.exception_file_ipsitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_file_urllist filter group file created
   ansible.builtin.copy:
@@ -293,6 +334,7 @@
     content: "{{ item.lists.exception_file_urllist.content | default('') }}"
   when:
     - item.lists.exception_file_urllist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | header_regexpreplacelist filter group file created
   ansible.builtin.copy:
@@ -300,6 +342,7 @@
     content: "{{ item.lists.header_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.header_regexpreplacelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_header_regexpboollist filter group file created
   ansible.builtin.copy:
@@ -307,6 +350,7 @@
     content: "{{ item.lists.banned_header_regexpboollist.content | default('') }}"
   when:
     - item.lists.banned_header_regexpboollist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_header_regexpboollist filter group file created
   ansible.builtin.copy:
@@ -314,6 +358,7 @@
     content: "{{ item.lists.exception_header_regexpboollist.content | default('') }}"
   when:
     - item.lists.exception_header_regexpboollist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | add_header_regexpreplacelist filter group file created
   ansible.builtin.copy:
@@ -321,6 +366,7 @@
     content: "{{ item.lists.add_header_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.add_header_regexpreplacelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | search_regexpreplacelist filter group file created
   ansible.builtin.copy:
@@ -328,6 +374,7 @@
     content: "{{ item.lists.search_regexpreplacelist.content | default('') }}"
   when:
     - item.lists.search_regexpreplacelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_searchlist filter group file created
   ansible.builtin.copy:
@@ -335,6 +382,7 @@
     content: "{{ item.lists.banned_searchlist.content | default('') }}"
   when:
     - item.lists.banned_searchlist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | override_searchlist filter group file created
   ansible.builtin.copy:
@@ -342,6 +390,7 @@
     content: "{{ item.lists.override_searchlist.content | default('') }}"
   when:
     - item.lists.override_searchlist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | banned_bypass_sitelist filter group file created
   ansible.builtin.copy:
@@ -349,6 +398,7 @@
     content: "{{ item.lists.banned_bypass_sitelist.content | default('') }}"
   when:
     - item.lists.banned_bypass_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | nocheckcert_sitelist filter group file created
   ansible.builtin.copy:
@@ -356,6 +406,7 @@
     content: "{{ item.lists.nocheckcert_sitelist.content | default('') }}"
   when:
     - item.lists.nocheckcert_sitelist.path is defined
+  notify: restart-e2guardian
 
 - name: FILTER_GROUPS | nocheckcert_ipsitelist filter group file created
   ansible.builtin.copy:
@@ -363,3 +414,4 @@
     content: "{{ item.lists.nocheckcert_ipsitelist.content | default('') }}"
   when:
     - item.lists.nocheckcert_ipsitelist.path is defined
+  notify: restart-e2guardian
