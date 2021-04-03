@@ -34,9 +34,7 @@
   loop:
     - path: "{{ e2g_install_dir }}"
       owner: root
-    - path: "{{ e2g_conf_loglocation }}"
-      owner: nobody
-    - path: "{{ e2g_install_dir }}/var/log/e2guardian"
+    - path: "{{ e2g_conf_loglocation | dirname }}"
       owner: nobody
     - path: /var/log/e2guardian
       owner: nobody
@@ -51,7 +49,6 @@
         version: HEAD
         depth: 1
         force: true
-      when: build_e2g
 
     - name: INSTALL | Build options configured
       shell:
@@ -59,20 +56,18 @@
         chdir: "{{ e2g_repo_dir }}"
       loop:
         - ./autogen.sh
-        - ./configure "{{ build_options }}"
-      when: build_e2g
+        - ./configure {{ build_options }}
 
     - name: INSTALL | Package built
       community.general.make:
         chdir: "{{ e2g_repo_dir }}"
-      when: build_e2g
 
     - name: INSTALL | Package installed
       shell:
         cmd: make install
         chdir: "{{ e2g_repo_dir }}"
-      when: build_e2g
       notify: restart-e2guardian
+  when: build_e2g
 
 - name: INSTALL | Service file deployed
   block:

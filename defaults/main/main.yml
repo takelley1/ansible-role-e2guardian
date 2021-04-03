@@ -7,7 +7,7 @@ e2g_install_dir: /opt/e2g
 # Whether to build E2Guardian.
 build_e2g: false
 
-build_options: --enable-sslmitm=yes --prefix={{ e2g_install_dir }}
+#                    logfilename         [owner:group]         mode count size when  flags [/pid_file] [sig_num]
+e2g_newsyslog_line: "{{ e2g_conf_loglocation }}                644  7     1000 *     C"
 
-#                   logfilename         [owner:group]  mode count size when  flags [/pid_file] [sig_num]
-e2g_newsyslog_line: /var/log/access.log                644  7     1000 *     C
+build_options: --enable-sslmitm=yes --prefix="{{ e2g_install_dir }}" --with-logdir="{{ e2g_conf_loglocation | dirname }}"
