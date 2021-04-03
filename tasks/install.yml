@@ -87,6 +87,10 @@
   ansible.builtin.copy:
     src: edit-e2g-lists.sh
     dests: /edit-e2g-lists.sh
+- name: INSTALL | {{ e2g_install_dir }} to added to $PATH
+  ansible.builtin.template:
+    src: etc/profile.d/e2g-path.sh.j2
+    dest: "{{ profiled_path }}/e2g-path.sh"
     owner: root
     group: "{{ root_group }}"
     mode: "0755"

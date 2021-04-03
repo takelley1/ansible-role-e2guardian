@@ -1,0 +1,5 @@
+{{ ansible_managed | comment }}
+
+if ! printf "%s\n" "${PATH}" | grep -q "{{ e2g_install_dir }}/sbin"; then
+  PATH="${PATH}:{{ e2g_install_dir }}/sbin"
+fi
