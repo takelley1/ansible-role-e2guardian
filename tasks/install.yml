@@ -29,7 +29,7 @@
     path: "{{ item.path }}"
     state: directory
     owner: "{{ item.owner }}"
-    group: "{{ root_group }}"
+    group: "{{ item.owner }}"
     mode: "0755"
   loop:
     - path: "{{ e2g_install_dir }}"
@@ -69,30 +69,28 @@
       notify: restart-e2guardian
   when: build_e2g
 
-- name: INSTALL | Service file deployed
-  block:
-    - name: INSTALL | Service file deployed (Linux)
-      ansible.builtin.copy:
-        src: "{{ e2g_repo_dir }}/data/scripts/e2guardian.service"
-        dest: /etc/systemd/system/e2guardian.service
-        remote_src: true
-        owner: root
-        group: "{{ root_group }}"
-        mode: "0644"
-      when: ansible_system == "Linux"
+- name: INSTALL | Service unit file deployed
+  ansible.builtin.copy:
+    src: "{{ e2g_repo_dir }}/data/scripts/e2guardian.service"
+    dest: /etc/systemd/system/e2guardian.service
+    remote_src: true
+    owner: root
+    group: root
+    mode: "0644"
   when: build_e2g
+
 - name: INSTALL | Helper script deployed
   ansible.builtin.copy:
     src: edit-e2g-lists.sh
     dest: /edit-e2g-lists.sh
     owner: root
-    group: "{{ root_group }}"
+    group: root
     mode: "0755"
 
 - name: INSTALL | {{ e2g_install_dir }} to added to $PATH
   ansible.builtin.template:
     src: etc/profile.d/e2g-path.sh.j2
-    dest: "{{ profiled_path }}/e2g-path.sh"
+    dest: /etc/profile.d/e2g-path.sh
     owner: root
-    group: "{{ root_group }}"
+    group: root
     mode: "0755"

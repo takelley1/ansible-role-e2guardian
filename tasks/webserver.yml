@@ -22,7 +22,7 @@
     src: "{{ item }}.j2"
     dest: /{{ item }}
     owner: root
-    group: "{{ root_group }}"
+    group: root
     mode: "0644"
   loop:
     - etc/nginx/nginx.conf

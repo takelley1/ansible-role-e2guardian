@@ -1,19 +1,5 @@
 ---
 
-- name: MAIN | Set facts
-  block:
-    - name: MAIN | Set FreeBSD facts
-      set_fact:
-        root_group: wheel  # FreeBSD hosts don't have a root group.
-        profiled_path: /usr/local/etc/profile.d
-      when: ansible_system == "FreeBSD"
-
-    - name: MAIN | Set Linux facts
-      set_fact:
-        root_group: root
-        profiled_path: /etc/profile.d
-      when: ansible_system == "Linux"
-
 - name: MAIN | Import install.yml
   import_tasks: install.yml
   when: e2g_include_install_tasks
