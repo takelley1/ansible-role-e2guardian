@@ -32,9 +32,3 @@
     - neterr_template.html
     - template.html
   notify: restart-e2guardian
-
-- name: CONFIGURE | E2Guardian service enabled and running
-  service:
-    name: e2guardian
-    enabled: true
-    state: started

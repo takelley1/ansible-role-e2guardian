@@ -32,3 +32,9 @@
 - name: MAIN | Import webserver.yml
   import_tasks: webserver.yml
   when: e2g_include_webserver_tasks
+
+- name: MAIN | E2Guardian service enabled and running
+  service:
+    name: e2guardian
+    enabled: true
+    state: started
