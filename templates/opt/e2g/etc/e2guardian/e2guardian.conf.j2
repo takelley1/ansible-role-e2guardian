@@ -270,7 +270,6 @@ connecttimeout = {{ e2g_conf_connecttimeout }}
 # Min 20 - Max 300
 # If this is higher than proxies timeout user will get proxy Gateway error page
 # If lower e2guardian Gateway error page
-proxyexchange = 61
 {% if e2g_conf_proxyexchange is defined %}
 proxyexchange = {{ e2g_conf_proxyexchange }}
 {% endif %}
@@ -280,7 +279,6 @@ proxyexchange = {{ e2g_conf_proxyexchange }}
 # squid apparently defaults to 1 minute (persistent_request_timeout),
 # so wait slightly less than this to avoid duff pconns.
 # Min 5 - Max 300
-pcontimeout = 55
 {% if e2g_conf_pcontimeout is defined %}
 pcontimeout = {{ e2g_conf_pcontimeout }}
 {% endif %}
@@ -464,7 +462,6 @@ preservecase = {{ e2g_conf_preservecase }}
 # then enable.  However this can break Big5 and other 16-bit texts.
 # off = disabled (default)
 # on = enabled
-hexdecodecontent = off
 {% if e2g_conf_hexdecodecontent is defined %}
 hexdecodecontent = {{ e2g_conf_hexdecodecontent }}
 {% endif %}
@@ -475,7 +472,6 @@ hexdecodecontent = {{ e2g_conf_hexdecodecontent }}
 # If you wish to use a large number of 16-bit character phrases then
 # enable this option.
 # off (default) | on (Big5 compatible)
-forcequicksearch = off
 {% if e2g_conf_forcequicksearch is defined %}
 forcequicksearch = {{ e2g_conf_forcequicksearch }}
 {% endif %}
@@ -487,7 +483,6 @@ forcequicksearch = {{ e2g_conf_forcequicksearch }}
 # It will reduce searching speed somewhat so unless you have a local caching
 # DNS server, leave it off and use the Blanket IP Block option in the
 # f1.story file instead.
-reverseaddresslookups = off
 {% if e2g_conf_reverseaddresslookups is defined %}
 reverseaddresslookups = {{ e2g_conf_reverseaddresslookups }}
 {% endif %}
@@ -500,7 +495,6 @@ reverseaddresslookups = {{ e2g_conf_reverseaddresslookups }}
 # match occurs against a hostname, the hostname will be logged instead.
 # It will reduce searching speed somewhat so unless you have a local DNS server,
 # leave it off.
-reverseclientiplookups = off
 {% if e2g_conf_reverseclientiplookups is defined %}
 reverseclientiplookups = {{ e2g_conf_reverseclientiplookups }}
 {% endif %}
@@ -511,7 +505,6 @@ reverseclientiplookups = {{ e2g_conf_reverseclientiplookups }}
 # IPs against requests.
 # This is not dependent on reverseclientiplookups being enabled; however, if it
 # is, enabling this option does not incur any additional forward DNS requests.
-logclienthostnames = off
 {% if e2g_conf_logclienthostnames is defined %}
 logclienthostnames = {{ e2g_conf_logclienthostnames }}
 {% endif %}
@@ -527,7 +520,6 @@ logclienthostnames = {{ e2g_conf_logclienthostnames }}
 #  long preamble not being content filtered
 # The size is in Kibibytes - eg 2048 = 2Mb
 # use 0 to set it to maxcontentramcachescansize
-maxcontentfiltersize = 1024
 {% if e2g_conf_maxcontentfiltersize is defined %}
 maxcontentfiltersize = {{ e2g_conf_maxcontentfiltersize }}
 {% endif %}
@@ -540,7 +532,6 @@ maxcontentfiltersize = {{ e2g_conf_maxcontentfiltersize }}
 # The size is in Kibibytes - eg 10240 = 10Mb
 # use 0 to set it to maxcontentfilecachescansize
 # This option may be ignored by the configured download manager.
-maxcontentramcachescansize = 2000
 {% if e2g_conf_maxcontentramcachescansize is defined %}
 maxcontentramcachescansize = {{ e2g_conf_maxcontentramcachescansize }}
 {% endif %}
@@ -551,7 +542,6 @@ maxcontentramcachescansize = {{ e2g_conf_maxcontentramcachescansize }}
 # so that it can be scanned or virus checked.
 # This value must be greater or equal to maxcontentramcachescansize.
 # The size is in Kibibytes - eg 10240 = 10Mb
-maxcontentfilecachescansize = 20000
 {% if e2g_conf_maxcontentfilecachescansize is defined %}
 maxcontentfilecachescansize = {{ e2g_conf_maxcontentfilecachescansize }}
 {% endif %}
@@ -559,7 +549,6 @@ maxcontentfilecachescansize = {{ e2g_conf_maxcontentfilecachescansize }}
 # File cache dir
 # Where DG will download files to be scanned if too large for the
 # RAM cache.
-filecachedir = '/tmp'
 {% if e2g_conf_filecachedir is defined %}
 filecachedir = {{ e2g_conf_filecachedir }}
 {% endif %}
@@ -571,7 +560,6 @@ filecachedir = {{ e2g_conf_filecachedir }}
 # the temp store a second time it will give a 404 error.
 # You should configure something to delete old files in temp to stop it filling up.
 # on|off (defaults to on)
-deletedownloadedtempfiles = on
 {% if e2g_conf_deletedownloadedtempfiles is defined %}
 deletedownloadedtempfiles = {{ e2g_conf_deletedownloadedtempfiles }}
 {% endif %}
@@ -583,7 +571,6 @@ deletedownloadedtempfiles = {{ e2g_conf_deletedownloadedtempfiles }}
 # Do not choose a value too low or normal web pages will be affected.
 # A value between 20 and 110 would be sensible
 # This may be ignored by the configured download manager.
-initialtrickledelay = 20
 {% if e2g_conf_initialtrickledelay is defined %}
 initialtrickledelay = {{ e2g_conf_initialtrickledelay }}
 {% endif %}
@@ -593,7 +580,6 @@ initialtrickledelay = {{ e2g_conf_initialtrickledelay }}
 # before being sent more *something* to keep it alive.  The
 # *something* depends on the download manager chosen.
 # This may be ignored by the configured download manager.
-trickledelay = 10
 {% if e2g_conf_trickledelay is defined %}
 trickledelay = {{ e2g_conf_trickledelay }}
 {% endif %}
@@ -626,7 +612,6 @@ trickledelay = {{ e2g_conf_trickledelay }}
 # and other matching mechanisms.
 #
 # NOTE - ONLY default downloadmanager is supported in v5
-downloadmanager = '{{ e2g_install_dir }}/etc/e2guardian/downloadmanagers/default.conf'
 {% if e2g_conf_downloadmanager is defined %}
 downloadmanager = {{ e2g_conf_downloadmanager }}
 {% endif %}
@@ -641,17 +626,12 @@ downloadmanager = {{ e2g_conf_downloadmanager }}
 # See the individual plugin conf file for more options (if any).
 #
 #contentscanner = '{{ e2g_install_dir }}/etc/e2guardian/contentscanners/clamdscan.conf'
-#!! Not compiled !! contentscanner = '{{ e2g_install_dir }}/etc/e2guardian/contentscanners/avastdscan.conf'
-#!! Not compiled !! contentscanner = '{{ e2g_install_dir }}/etc/e2guardian/contentscanners/kavdscan.conf'
-#!! Not compiled !! contentscanner = '{{ e2g_install_dir }}/etc/e2guardian/contentscanners/icapscan.conf'
-#!! Not compiled !! contentscanner = '{{ e2g_install_dir }}/etc/e2guardian/contentscanners/commandlinescan.conf'
 
 # Content scanner timeout
 # Some of the content scanners support using a timeout value to stop
 # processing (eg AV scanning) the file if it takes too long.
 # If supported this will be used.
 # The default of 60 seconds is probably reasonable.
-contentscannertimeout = 60
 {% if e2g_conf_contentscannertimeout is defined %}
 contentscannertimeout = {{ e2g_conf_contentscannertimeout }}
 {% endif %}
@@ -698,7 +678,6 @@ mapauthtoports = {{ e2g_conf_mapauthtoports }}
 # after replacement, making it possible for URL replacement to trigger exceptions based
 # on them.
 # Defaults to off.
-recheckreplacedurls = off
 {% if e2g_conf_recheckreplacedurls is defined %}
 recheckreplacedurls = {{ e2g_conf_recheckreplacedurls }}
 {% endif %}
@@ -708,7 +687,6 @@ recheckreplacedurls = {{ e2g_conf_recheckreplacedurls }}
 # if on it adds an X-Forwarded-For: <clientip> to the HTTP request
 # header.  This may help solve some problem sites that need to know the
 # source ip. on | off
-forwardedfor = off
 {% if e2g_conf_forwardedfor is defined %}
 forwardedfor = {{ e2g_conf_forwardedfor }}
 {% endif %}
@@ -716,7 +694,6 @@ forwardedfor = {{ e2g_conf_forwardedfor }}
 # if on it uses the X-Forwarded-For: <clientip> to determine the client
 # IP. This is for when you have squid between the clients and e2guardian.
 # Warning - headers are easily spoofed. on | off
-usexforwardedfor = off
 {% if e2g_conf_usexforwardedfor is defined %}
 usexforwardedfor = {{ e2g_conf_usexforwardedfor }}
 {% endif %}
@@ -733,7 +710,6 @@ usexforwardedfor = {{ e2g_conf_usexforwardedfor }}
 # which
 # can usually be ignored.  These are logged by syslog.  It is safe to leave
 # it on or off
-logconnectionhandlingerrors = on
 {% if e2g_conf_logconnectionhandlingerrors is defined %}
 logconnectionhandlingerrors = {{ e2g_conf_logconnectionhandlingerrors }}
 {% endif %}
@@ -765,21 +741,18 @@ pidfilename = {{ e2g_conf_pidfilename }}
 # If enabled the process will not fork into the background.
 # It is not usually advantageous to do this.
 # on|off (defaults to off)
-nodaemon = off
 {% if e2g_conf_nodaemon is defined %}
 nodaemon = {{ e2g_conf_nodaemon }}
 {% endif %}
 
 # Disable logging process
 # on|off (defaults to off)
-nologger = off
 {% if e2g_conf_nologger is defined %}
 nologger = {{ e2g_conf_nologger }}
 {% endif %}
 
 # Enable logging of "ADs" category blocks
 # on|off (defaults to off)
-logadblocks = off
 {% if e2g_conf_logadblocks is defined %}
 logadblocks = {{ e2g_conf_logadblocks }}
 {% endif %}
@@ -787,7 +760,6 @@ logadblocks = {{ e2g_conf_logadblocks }}
 # Enable logging of client User-Agent
 # Some browsers will cause a *lot* of extra information on each line!
 # on|off (defaults to off)
-loguseragent = off
 {% if e2g_conf_loguseragent is defined %}
 loguseragent = {{ e2g_conf_loguseragent }}
 {% endif %}
@@ -905,7 +877,6 @@ monitorflagprefix = {{ e2g_conf_monitorflagprefix }}
 {% endif %}
 
 # Much logic has moved to storyboard files
-preauthstoryboard = '{{ e2g_install_dir }}/etc/e2guardian/preauth.story'
 {% if e2g_conf_preauthstoryboard is defined %}
 preauthstoryboard = {{ e2g_conf_preauthstoryboard }}
 {% endif %}
