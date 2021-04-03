@@ -2,7 +2,7 @@
 
 - name: FILTER_GROUPS | Filter group configuration file created
   ansible.builtin.template:
-    src: opt/e2guardian/etc/e2guardian/e2guardianfn.conf.j2
+    src: opt/e2g/etc/e2guardian/e2guardianfn.conf.j2
     dest: "{{ e2g_install_dir }}/etc/e2guardian/e2guardianf{{ item_index + 1}}.conf"
 
 # ------------------------------------------------------------------------------

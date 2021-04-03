@@ -36,7 +36,7 @@ e2g_conf_pcontimeout: 55
 e2g_conf_usecustombannedimage: "on"
 e2g_conf_custombannedimagefile: "{{ e2g_install_dir }}/share/e2guardian/transparent1x1.gif"
 e2g_conf_usecustombannedflash: "on"
-custombannedflashfile: "{{ e2g_install_dir }}/share/e2guardian/blockedflash.swf"
+e2g_conf_custombannedflashfile: "{{ e2g_install_dir }}/share/e2guardian/blockedflash.swf"
 
 e2g_conf_filtergroups: "{{ e2g_filter_groups | length }}"
 e2g_conf_filtergroupslist: "{{ e2g_install_dir }}/etc/e2guardian/lists/filtergroupslist"

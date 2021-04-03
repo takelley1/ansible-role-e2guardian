@@ -2,7 +2,7 @@
 
 - name: CONFIGURE | Configuration templates deployed
   template:
-    src: opt/e2guardian/etc/e2guardian/{{ item }}.j2
+    src: opt/e2g/etc/e2guardian/{{ item }}.j2
     dest: "{{ e2g_install_dir }}/etc/e2guardian/{{ item }}"
     owner: root
     group: "{{ root_group }}"
@@ -11,18 +11,18 @@
   loop:
     - e2guardian.conf
     - lists/authplugins/ipgroups
-    - lists/bannedregexurllist
+    - lists/bannedregexpurllist
     - lists/bannedsiteiplist
     - lists/exceptionphraselist
     - lists/exceptionsitelist
     - lists/exceptionurllist
     - lists/greysitelist
-    - lists/weightedphraseslist
+    - lists/weightedphraselist
   notify: restart-e2guardian
 
 - name: CONFIGURE | Web templates deployed
   template:
-    src: opt/e2guardian/share/e2guardian/languages/ukenglish/{{ item }}.j2
+    src: opt/e2g/share/e2guardian/languages/ukenglish/{{ item }}.j2
     dest: "{{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/{{ item }}"
     owner: root
     group: "{{ root_group }}"
