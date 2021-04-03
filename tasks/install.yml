@@ -5,10 +5,13 @@
     - name: INSTALL | Necessary packages present (Ubuntu)
       ansible.builtin.apt:
         name: "{{ item }}"
+        update_cache: true
       loop:
         - "{{ e2g_build_dependencies_ubuntu }}"
         - "{{ e2g_runtime_dependencies_ubuntu }}"
-      when: ansible_distribution == "Ubuntu"
+        # Libpcre must be install after everything else on Ubuntu.
+        - "{{ e2g_additional_dependencies_ubuntu }}"
+  when: build_e2g
 
 - name: INSTALL | Group present
   ansible.builtin.group:

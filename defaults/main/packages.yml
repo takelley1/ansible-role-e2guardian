@@ -9,5 +9,6 @@ e2g_build_dependencies_ubuntu:
 e2g_runtime_dependencies_ubuntu:
   - curl
   - libssl-dev
-  - libpcre++-dev
   - zlib1g-dev
+e2g_additional_dependencies_ubuntu:
+  - libpcre++-dev
