@@ -84,7 +84,11 @@
 - name: INSTALL | Helper script deployed
   ansible.builtin.copy:
     src: edit-e2g-lists.sh
-    dests: /edit-e2g-lists.sh
+    dest: /edit-e2g-lists.sh
+    owner: root
+    group: "{{ root_group }}"
+    mode: "0755"
+
 - name: INSTALL | {{ e2g_install_dir }} to added to $PATH
   ansible.builtin.template:
     src: etc/profile.d/e2g-path.sh.j2
