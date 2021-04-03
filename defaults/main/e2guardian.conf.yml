@@ -7,13 +7,13 @@ e2g_conf_language: ukenglish
 # e2g_conf_debuglevelfile:
 e2g_conf_loglevel: 3
 e2g_conf_logexceptionhits: 2
-e2g_conf_logfileformat: 5
+e2g_conf_logfileformat: 2
 # e2g_conf_logheadervalue:
 # e2g_conf_maxlogitemlength:
 # e2g_conf_anonymizelogs:
-# e2g_conf_logsyslog:
+e2g_conf_logsyslog: "on"
 # e2g_conf_namesuffix:
-e2g_conf_loglocation: /var/log/access.log
+# e2g_conf_loglocation:
 
 # e2g_conf_dstatlocation:
 # e2g_conf_dstatinterval:
