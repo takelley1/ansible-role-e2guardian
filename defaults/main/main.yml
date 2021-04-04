@@ -13,5 +13,9 @@ e2g_cert_info:
   subject_alt_name: IP:{{ ansible_host }},DNS:{{ hostname }}
 e2g_ca_cert_info:
   common_name: E2Guardian CA
+# A small key size is used to speed up cert generation for sites during
+#   man-in-the-middle.
+e2g_cert_key_size: 1024
+e2g_cert_type: RSA
 
 build_options: --enable-sslmitm=yes --prefix="{{ e2g_install_dir }}"

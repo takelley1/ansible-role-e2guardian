@@ -53,8 +53,8 @@
 - name: CERTS | Proxy and CA private keys generated
   community.crypto.openssl_privatekey:
     path: "{{ item }}"
-    size: 2048
-    type: RSA
+    size: "{{ e2g_cert_key_size }}"
+    type: "{{ e2g_cert_type }}"
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0440"
