@@ -24,3 +24,9 @@
     name: e2guardian
     enabled: true
     state: started
+- name: MAIN | Import certs.yml
+  import_tasks: certs.yml
+  when:
+    - e2g_include_certs_tasks
+    - e2g_conf_enablessl is defined
+    - e2g_conf_enablessl

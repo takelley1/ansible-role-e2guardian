@@ -4,3 +4,4 @@ e2g_include_install_tasks: true
 e2g_include_configure_tasks: true
 e2g_include_filter_groups_tasks: true
 e2g_include_webserver_tasks: true
+e2g_include_certs_tasks: true
