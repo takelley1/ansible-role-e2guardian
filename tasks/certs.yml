@@ -1,5 +1,7 @@
 ---
 
+# Generate certificates for E2Guardian SSL man-in-the-middle usage.
+
 # Make sure certificate paths exist.
 - name: CERTS | e2g_conf_sslcertificatepath path exists
   ansible.builtin.file:
