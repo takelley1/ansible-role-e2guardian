@@ -1,7 +1,6 @@
 ---
 
 e2g_weightedphraselist:
-  - # Good Phrases (to allow medical, education, news and other good sites)
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/goodphrases/weighted_general>
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/goodphrases/weighted_news>
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/goodphrases/weighted_general_danish>
@@ -12,19 +11,19 @@ e2g_weightedphraselist:
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/goodphrases/weighted_general_swedish>
   - # Pornography
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted>
-  - # .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_chinese> #ALPHA#
-  - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_danish> #ALPHA#
-  - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_dutch> #BETA#
+  - "# .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_chinese> #ALPHA#"
+  - ".Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_danish> #ALPHA#"
+  - ".Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_dutch> #BETA#"
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_french>
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_german>
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_italian>
-  - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_japanese> #ALPHA# #Disabled due to overblocking#
-  - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_malay> #BETA#
-  - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_norwegian> #BETA#
+  - ".Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_japanese> #ALPHA# #Disabled due to overblocking#"
+  - ".Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_malay> #BETA#"
+  - ".Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_norwegian> #BETA#"
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_polish>
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_portuguese>
-  - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_russian> #BETA#
-  - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_russian_utf8> #BETA#
-  - # .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_spanish> #ALPHA#
+  - ".Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_russian> #BETA#"
+  - ".Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_russian_utf8> #BETA#"
+  - "# .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_spanish> #ALPHA#"
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/pornography/weighted_swedish>
   - .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/nudism/weighted>
