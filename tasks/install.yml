@@ -15,14 +15,14 @@
 
 - name: INSTALL | Group present
   ansible.builtin.group:
-    name: nobody
+    name: "{{ e2g_conf_daemongroup }}"
 
 - name: INSTALL | User present
   ansible.builtin.user:
-    name: nobody
+    name: "{{ e2g_conf_daemonuser }}"
     shell: /usr/sbin/nologin
     create_home: false
-    group: nobody
+    group: "{{ e2g_conf_daemongroup }}"
 
 - name: INSTALL | Paths configured
   file:
@@ -35,9 +35,9 @@
     - path: "{{ e2g_install_dir }}"
       owner: root
     - path: "{{ e2g_conf_loglocation | dirname }}"
-      owner: nobody
+      owner: "{{ e2g_conf_daemonuser }}"
     - path: /var/log/e2guardian
-      owner: nobody
+      owner: "{{ e2g_conf_daemonuser }}"
 
 - name: INSTALL | E2Guardian built
   block:
