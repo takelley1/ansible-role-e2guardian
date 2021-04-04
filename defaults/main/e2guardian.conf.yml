@@ -80,11 +80,8 @@ e2g_conf_initialtrickledelay: 20 # A value between 20 and 110 would be sensible
 e2g_conf_trickledelay: 10
 
 e2g_conf_downloadmanager: "{{ e2g_install_dir }}/etc/e2guardian/downloadmanagers/default.conf"
-
 e2g_conf_contentscannertimeout: 60
-
 e2g_conf_mapauthtoports: "off"
-
 e2g_conf_recheckreplacedurls: "off"
 
 e2g_conf_forwardedfor: "off"
@@ -92,14 +89,12 @@ e2g_conf_usexforwardedfor: "off"
 e2g_conf_logconnectionhandlingerrors: "on"
 
 e2g_conf_httpworkers: 500 # On large site you might want to try 5000 (max value 20000)
-
 # e2g_conf_pidfilename:
 
 e2g_conf_nodaemon: "off"
 e2g_conf_nologger: "off"
 
 e2g_conf_logadblocks: "off"
-
 e2g_conf_loguseragent: "off"
 
 e2g_conf_daemonuser: nobody
