@@ -11,7 +11,7 @@
 # 10.0.0.0/24
 
 {% if e2g_bannedsiteiplist is defined %}
-  {% for item in e2g_bannedsiteiplist %}
-    {{ item }}
-  {% endfor %}
+{% for item in e2g_bannedsiteiplist %}
+{{ item }}
+{% endfor %}
 {% endif %}

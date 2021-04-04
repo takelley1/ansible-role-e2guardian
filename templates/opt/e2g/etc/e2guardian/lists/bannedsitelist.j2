@@ -49,9 +49,9 @@
 # .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/blacklists/ads/domains>
 
 {% if e2g_bannedsitelist is defined %}
-  {% for item in e2g_bannedsitelist %}
-    {{ item }}
-  {% endfor %}
+{% for item in e2g_bannedsitelist %}
+{{ item }}
+{% endfor %}
 {% endif %}
 
 #Remove the # from the following and edit as needed to use a stock

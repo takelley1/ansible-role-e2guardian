@@ -14,7 +14,7 @@
 # http://apps.facebook.com/neighborhoods/Setup.aspx and others.
 
 {% if e2g_exceptionregexpurllist is defined %}
-  {% for item in e2g_exceptionregexpurllist %}
-    {{ item }}
-  {% endfor %}
+{% for item in e2g_exceptionregexpurllist %}
+{{ item }}
+{% endfor %}
 {% endif %}
