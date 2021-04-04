@@ -13,8 +13,10 @@
     - lists/authplugins/ipgroups
     - lists/bannedregexpurllist
     - lists/bannedsiteiplist
+    - lists/bannedsitelist
     - lists/bannedurllist
     - lists/exceptionphraselist
+    - lists/exceptionregexpurllist
     - lists/exceptionsitelist
     - lists/exceptionurllist
     - lists/greysitelist
