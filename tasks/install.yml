@@ -25,7 +25,7 @@
     group: "{{ e2g_conf_daemongroup }}"
 
 - name: INSTALL | Paths configured
-  file:
+  ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
     owner: "{{ item.owner }}"
@@ -38,6 +38,7 @@
       owner: "{{ e2g_conf_daemonuser }}"
     - path: /var/log/e2guardian
       owner: "{{ e2g_conf_daemonuser }}"
+  when: item.path is defined
 
 - name: INSTALL | E2Guardian built
   block:
