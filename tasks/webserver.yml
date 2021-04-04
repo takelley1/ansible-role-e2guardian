@@ -5,6 +5,7 @@
 - name: WEBSERVER | Nginx package installed
   ansible.builtin.package:
     name: nginx
+  notify: restart-webserver
 
 - name: WEBSERVER | Nginx paths configured
   ansible.builtin.file:
@@ -16,9 +17,10 @@
   loop:
     - path: /var/www/e2guardian
       owner: www-data
+  notify: restart-webserver
 
 - name: WEBSERVER | Nginx templates deployed
-  template:
+  ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: /{{ item }}
     owner: root
