@@ -7,8 +7,6 @@ e2g_install_dir: /opt/e2g
 # Whether to build E2Guardian.
 build_e2g: false
 
-#                    logfilename         [owner:group]         mode count size when  flags [/pid_file] [sig_num]
-e2g_newsyslog_line: "{{ e2g_conf_loglocation }}                644  7     1000 *     C"
 # Only used if SSL is enabled for E2Guardian.
 e2g_cert_info:
   common_name: E2Guardian
@@ -16,4 +14,4 @@ e2g_cert_info:
 e2g_ca_cert_info:
   common_name: E2Guardian CA
 
-build_options: --enable-sslmitm=yes --prefix="{{ e2g_install_dir }}" --with-logdir="{{ e2g_conf_loglocation | dirname }}"
+build_options: --enable-sslmitm=yes --prefix="{{ e2g_install_dir }}"
