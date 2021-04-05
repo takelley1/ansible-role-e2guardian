@@ -1,19 +1,17 @@
 ---
 
 e2g_filter_groups:
-  - groupname: group_1
+
+  - groupname: group1
     lists:
       banned_sitelist:
-        sslmitm: "on"
         path: "{{ e2g_install_dir }}/etc/e2guardian/lists/bannedsitelist_group1"
         content: |
           google.com
-          youtube.com
-  - groupname: group_2
+
+  - groupname: group2
     lists:
       banned_sitelist:
-        sslmitm: "on"
-        path: "{{ e2g_install_dir }}/etc/e2guardian/lists/bannedsitelist_group1"
+        path: "{{ e2g_install_dir }}/etc/e2guardian/lists/bannedsitelist_group2"
         content: |
-          google.com
           youtube.com
