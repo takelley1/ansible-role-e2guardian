@@ -19,13 +19,12 @@
       owner: www-data
   notify: restart-webserver
 
-- name: WEBSERVER | Nginx templates deployed
+- name: WEBSERVER | Nginx template deployed
   ansible.builtin.template:
-    src: "{{ item }}.j2"
-    dest: /{{ item }}
+    src: etc/nginx/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
     owner: root
     group: root
     mode: "0644"
-  loop:
-    - etc/nginx/nginx.conf
+    validate: nginx -t -c %s
   notify: restart-webserver
