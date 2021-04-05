@@ -7,16 +7,13 @@
     name: nginx
   notify: restart-webserver
 
-- name: WEBSERVER | Nginx paths configured
+- name: WEBSERVER | Nginx site configured
   ansible.builtin.file:
-    path: "{{ item.path }}"
+    path: /var/www/e2guardian
     state: directory
-    owner: "{{ item.owner }}"
-    group: "{{ item.owner }}"
+    owner: www-data
+    group: www-data
     mode: "0755"
-  loop:
-    - path: /var/www/e2guardian
-      owner: www-data
   notify: restart-webserver
 
 - name: WEBSERVER | Nginx template deployed
