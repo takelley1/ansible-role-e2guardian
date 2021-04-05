@@ -99,12 +99,12 @@ e2g_conf_loguseragent: "off"
 e2g_conf_daemonuser: nobody
 e2g_conf_daemongroup: nobody
 
-# e2g_conf_enablessl:
+e2g_conf_enablessl: "on"
 # e2g_conf_sslcertificatepath:
-# e2g_conf_cacertificatepath:
-# e2g_conf_caprivatekeypath:
-# e2g_conf_certprivatekeypath:
-# e2g_conf_generatedcertpath:
+e2g_conf_certprivatekeypath: "{{ e2g_install_dir }}/certs/generated-certs.key"
+e2g_conf_cacertificatepath: "{{ e2g_install_dir }}/certs/e2g-ca-cert.pem"
+e2g_conf_caprivatekeypath: "{{ e2g_install_dir }}/certs/e2g-ca-cert.key"
+e2g_conf_generatedcertpath: "{{ e2g_install_dir }}/certs/generated-certs"
 # e2g_conf_generatedcertstart:
 # e2g_conf_genratedcertend:
 

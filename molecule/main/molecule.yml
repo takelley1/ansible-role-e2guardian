@@ -23,12 +23,6 @@ provisioner:
         e2g_ipgroups:
           - 10.0.1.1 = filter1
           - 10.0.1.2 = filter2
-        e2g_conf_enablessl: true
-        e2g_conf_sslcertificatepath: /certs/cert.pem
-        e2g_conf_cacertificatepath: /certs/ca-cert.pem
-        e2g_conf_caprivatekeypath: /certs/ca-cert.key
-        e2g_conf_certprivatekeypath: /certs/cert.key
-        e2g_conf_generatedcertpath: /certs/generated-certs
     group_vars:
       all:
 verifier:
