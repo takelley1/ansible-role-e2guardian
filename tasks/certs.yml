@@ -3,74 +3,32 @@
 # Generate certificates for E2Guardian SSL man-in-the-middle usage.
 
 # Make sure certificate paths exist.
-- name: CERTS | e2g_conf_sslcertificatepath path exists
+- name: CERTS | Cert paths exist
   ansible.builtin.file:
-    path: "{{ e2g_conf_sslcertificatepath | dirname }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
-    mode: "0755"
-  when: e2g_conf_sslcertificatepath is defined
-
-- name: CERTS | e2g_conf_certprivatekeypath path exists
-  ansible.builtin.file:
-    path: "{{ e2g_conf_certprivatekeypath | dirname }}"
-    state: directory
-    owner: "{{ e2g_conf_daemonuser }}"
-    group: "{{ e2g_conf_daemongroup }}"
-    mode: "0755"
-  when: e2g_conf_certprivatekeypath is defined
-
-- name: CERTS | e2g_conf_cacertificatepath path exists
-  ansible.builtin.file:
-    path: "{{ e2g_conf_cacertificatepath | dirname }}"
-    state: directory
-    owner: "{{ e2g_conf_daemonuser }}"
-    group: "{{ e2g_conf_daemongroup }}"
-    mode: "0755"
-  when: e2g_conf_cacertificatepath is defined
-
-- name: CERTS | e2g_conf_caprivatekeypath path exists
-  ansible.builtin.file:
-    path: "{{ e2g_conf_caprivatekeypath | dirname }}"
-    state: directory
-    owner: "{{ e2g_conf_daemonuser }}"
-    group: "{{ e2g_conf_daemongroup }}"
-    mode: "0755"
-  when: e2g_conf_caprivatekeypath is defined
-
-- name: CERTS | e2g_conf_genratedcertpath path exists
-  ansible.builtin.file:
-    path: "{{ e2g_conf_generatedcertpath }}"
-    state: directory
-    recurse: true
-    owner: "{{ e2g_conf_daemonuser }}"
-    group: "{{ e2g_conf_daemongroup }}"
-    mode: "0755"
-  when: e2g_conf_generatedcertpath is defined
+    mode: "0750"
+  loop:
+    - "{{ e2g_conf_cacertificatepath | dirname }}"
+    - "{{ e2g_conf_caprivatekeypath | dirname }}"
+    - "{{ e2g_conf_generatedcertpath }}"
+  when: item is defined
 
 # Generate certificates.
-- name: CERTS | Proxy and CA private keys generated
+- name: CERTS | Private keys generated
   community.crypto.openssl_privatekey:
     path: "{{ item }}"
     size: "{{ e2g_cert_key_size }}"
     type: "{{ e2g_cert_type }}"
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
-    mode: "0440"
+    mode: "0400"
   loop:
-    - "{{ e2g_conf_certprivatekeypath }}"
     - "{{ e2g_conf_caprivatekeypath }}"
-  notify: restart-e2guardian
-
-- name: CERTS | Proxy cert generated
-  community.crypto.x509_certificate:
-    path: "{{ e2g_conf_sslcertificatepath }}"
-    privatekey_path: "{{ e2g_conf_certprivatekeypath }}"
-    provider: selfsigned
-    owner: "{{ e2g_conf_daemonuser }}"
-    group: "{{ e2g_conf_daemongroup }}"
-    mode: "0640"
+    - "{{ e2g_conf_certprivatekeypath }}"
+  when: item is defined
   notify: restart-e2guardian
 
 - name: CERTS | CA cert generated
@@ -80,35 +38,35 @@
     provider: selfsigned
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
-    mode: "0440"
+    mode: "0400"
   notify: restart-e2guardian
 
-- name: CERTS | CSR generated for proxy cert
+- name: CERTS | CSR created for CA cert
   community.crypto.openssl_csr:
-    path: "{{ e2g_conf_sslcertificatepath }}.csr"
-    privatekey_path: "{{ e2g_conf_certprivatekeypath }}"
-    common_name: "{{ e2g_cert_info.common_name }}"
-    subject_alt_name: "{{ e2g_cert_info.subject_alt_name }}"
+    path: "{{ e2g_conf_cacertificatepath }}.csr"
+    privatekey_path: "{{ e2g_conf_caprivatekeypath }}"
+    common_name: "{{ e2g_ca_name }}"
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
-    mode: "0440"
+    mode: "0400"
   notify: restart-e2guardian
 
-- name: CERTS | Proxy cert signed by CA
+- name: CERTS | CA cert signed using CSR
   community.crypto.x509_certificate:
-    path: "{{ e2g_conf_sslcertificatepath }}"
-    csr_path: "{{ e2g_conf_sslcertificatepath }}.csr"
-    ownca_path: "{{ e2g_conf_cacertificatepath }}"
-    ownca_privatekey_path: "{{ e2g_conf_caprivatekeypath }}"
-    provider: ownca
+    path: "{{ e2g_conf_cacertificatepath }}"
+    csr_path: "{{ e2g_conf_cacertificatepath }}.csr"
+    privatekey_path: "{{ e2g_conf_caprivatekeypath }}"
+    provider: selfsigned
+    owner: "{{ e2g_conf_daemonuser }}"
+    group: "{{ e2g_conf_daemongroup }}"
+    mode: "0400"
   notify: restart-e2guardian
 
-- name: CERTS | Proxy cert copied to webserver dir
+- name: CERTS | CA cert copied to webserver dir
   ansible.builtin.copy:
-    src: "{{ e2g_conf_sslcertificatepath }}"
-    dest: /var/www/e2guardian/cert.pem
+    src: "{{ e2g_conf_cacertificatepath }}"
+    dest: /var/www/e2guardian/e2g-ca-cert.pem
     remote_src: true
     owner: www-data
     group: www-data
     mode: "0440"
-  notify: restart-webserver
