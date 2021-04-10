@@ -64,6 +64,7 @@
     - name: INSTALL | Package built
       community.general.make:
         chdir: "{{ e2g_repo_dir }}"
+        jobs: "{{ ansible_processor_vcpus | int + 1 }}"
 
     - name: INSTALL | Package installed
       shell:
