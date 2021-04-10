@@ -34,8 +34,10 @@
   loop:
     - path: "{{ e2g_install_dir }}"
       owner: root
+
     - path: "{{ e2g_conf_loglocation | dirname }}"
       owner: "{{ e2g_conf_daemonuser }}"
+
     - path: /var/log/e2guardian
       owner: "{{ e2g_conf_daemonuser }}"
   when: item.path is defined
