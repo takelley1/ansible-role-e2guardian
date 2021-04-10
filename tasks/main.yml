@@ -30,7 +30,9 @@
     - e2g_conf_enablessl
 
 - name: MAIN | E2Guardian service enabled and running
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: e2guardian
     enabled: true
     state: started
+    daemon_reload: true
+    masked: false
