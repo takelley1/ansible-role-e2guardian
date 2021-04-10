@@ -3,6 +3,7 @@
 e2g_repo_url: https://github.com/e2guardian/e2guardian.git
 e2g_install_dir: /opt/e2g
 e2g_repo_dir: "{{ e2g_install_dir }}/git"
+e2g_filter_groups_dir: "{{ e2g_install_dir }}/etc/e2guardian/lists"
 
 # Whether to build E2Guardian.
 build_e2g: true
