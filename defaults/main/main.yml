@@ -12,4 +12,18 @@ e2g_ca_name: E2Guardian CA
 e2g_cert_key_size: 2048
 e2g_cert_type: RSA
 
-build_options: --enable-sslmitm=yes --prefix="{{ e2g_install_dir }}"
+# See https://wiki.gentoo.org/wiki/GCC_optimization for more info on CXXFLAGS.
+# Compiler options' affect on binary size (branch v5.3).
+  # No CXXFLAGS                        = 28748
+  # CXXFLAGS="-march=native"           = 2032
+  # CXXFLAGS=                  "-pipe" = 2020
+  # CXXFLAGS="-march=native -O2 -pipe" = 1468
+  # CXXFLAGS=              "-O2 -pipe" = 1460
+  # CXXFLAGS=              "-O2"       = 1460
+
+build_options: >
+  --enable-sslmitm=yes
+  --prefix="{{ e2g_install_dir }}"
+  --with-proxyuser="{{ e2g_conf_daemonuser }}"
+  --with-proxygroup="{{ e2g_conf_daemongroup }}"
+  CXXFLAGS="-march=native -O2 -pipe"
