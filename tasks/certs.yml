@@ -2,6 +2,8 @@
 
 # Generate certificates for E2Guardian SSL man-in-the-middle usage.
 
+# Certs are only generated if they don't already exist to maintain idempotence.
+
 # Make sure certificate paths exist.
 - name: CERTS | Cert paths exist
   ansible.builtin.file:
@@ -16,7 +18,6 @@
     - "{{ e2g_conf_generatedcertpath }}"
   when: item is defined
 
-# Generate certificates.
 - name: CERTS | Private keys generated
   community.crypto.openssl_privatekey:
     path: "{{ item }}"
@@ -31,7 +32,12 @@
   when: item is defined
   notify: restart-e2guardian
 
-- name: CERTS | CA cert generated
+- name: CERTS | Check for CA cert
+  ansible.builtin.stat:
+    path: "{{ e2g_conf_cacertificatepath }}"
+  register: ca_path
+
+- name: CERT | CA cert generated
   community.crypto.x509_certificate:
     path: "{{ e2g_conf_cacertificatepath }}"
     privatekey_path: "{{ e2g_conf_caprivatekeypath }}"
@@ -39,7 +45,13 @@
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
+  when: ca_path.stat.readable is not defined
   notify: restart-e2guardian
+
+- name: CERTS | Check for CSR
+  ansible.builtin.stat:
+    path: "{{ e2g_conf_cacertificatepath }}.csr"
+  register: ca_csr_path
 
 - name: CERTS | CSR created for CA cert
   community.crypto.openssl_csr:
@@ -49,6 +61,8 @@
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
+  register: csr_created
+  when: ca_csr_path.stat.readable is not defined
   notify: restart-e2guardian
 
 - name: CERTS | CA cert signed using CSR
@@ -60,6 +74,7 @@
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
+  when: csr_created.changed
   notify: restart-e2guardian
 
 - name: CERTS | CA cert copied to webserver dir
