@@ -9,7 +9,7 @@
       loop:
         - "{{ e2g_build_dependencies_ubuntu }}"
         - "{{ e2g_runtime_dependencies_ubuntu }}"
-        # Libpcre must be install after everything else on Ubuntu.
+        # Libpcre must be installed after everything else on Ubuntu.
         - "{{ e2g_additional_dependencies_ubuntu }}"
   when: build_e2g
 
