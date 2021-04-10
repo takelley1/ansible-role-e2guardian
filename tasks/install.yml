@@ -49,7 +49,7 @@
         repo: "{{ e2g_repo_url }}"
         dest: "{{ e2g_repo_dir }}"
         accept_hostkey: true
-        version: v5.3  # v5.4 has issues right now.
+        version: "{{ e2g_repo_branch }}"
         depth: 1
         force: true
 
