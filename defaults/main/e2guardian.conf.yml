@@ -96,8 +96,8 @@ e2g_conf_nologger: "off"
 e2g_conf_logadblocks: "off"
 e2g_conf_loguseragent: "off"
 
-e2g_conf_daemonuser: nobody
-e2g_conf_daemongroup: nobody
+e2g_conf_daemonuser: e2guardian
+e2g_conf_daemongroup: e2guardian
 
 e2g_conf_enablessl: "on"
 # e2g_conf_sslcertificatepath:
