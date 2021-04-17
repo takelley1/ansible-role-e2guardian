@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
 # vim: ft=conf
 
@@ -15,12 +16,12 @@
 # and easier to customise the access denied page.
 # The language file is used no matter what setting however.
 #
-{% if e2g_conf_languagedir is defined %}
+{% if e2g_conf_languagedir is defined -%}
 languagedir = '{{ e2g_conf_languagedir }}'
 {% endif %}
 
 # language to use from languagedir.
-{% if e2g_conf_language is defined %}
+{% if e2g_conf_language is defined -%}
 language = '{{ e2g_conf_language }}'
 {% endif %}
 
@@ -50,7 +51,7 @@ language = '{{ e2g_conf_language }}'
 #works also with e2guardian -N (-N Do not go into the background)
 #Possible value : ICAP CLAMAV ICAPC (icap client)
 #debuglevel = 'ALL'
-{% if e2g_conf_debuglevel is defined %}
+{% if e2g_conf_debuglevel is defined -%}
 debuglevel = '{{ e2g_conf_debuglevel }}'
 {% endif %}
 
@@ -58,7 +59,7 @@ debuglevel = '{{ e2g_conf_debuglevel }}'
 #Works only if debuglevel is enabled
 #
 #debuglevelfile = '/debug'
-{% if e2g_conf_debuglevelfile is defined %}
+{% if e2g_conf_debuglevelfile is defined -%}
 debuglevelfile = '{{ e2g_conf_debuglevelfile }}'
 {% endif %}
 
@@ -66,7 +67,7 @@ debuglevelfile = '{{ e2g_conf_debuglevelfile }}'
 #
 # 0 = none  1 = just denied  2 = all text based  3 = all requests
 # loglevel = 3
-{% if e2g_conf_loglevel is defined %}
+{% if e2g_conf_loglevel is defined -%}
 loglevel = {{ e2g_conf_loglevel }}
 {% endif %}
 
@@ -78,7 +79,7 @@ loglevel = {{ e2g_conf_loglevel }}
 # 1 = log exceptions, but do not explicitly mark them as such
 # 2 = always log & mark exceptions (default)
 # logexceptionhits = 2
-{% if e2g_conf_logexceptionhits is defined %}
+{% if e2g_conf_logexceptionhits is defined -%}
 logexceptionhits = {{ e2g_conf_logexceptionhits }}
 {% endif %}
 
@@ -95,7 +96,7 @@ logexceptionhits = {{ e2g_conf_logexceptionhits }}
 # used in stand-alone systems.
 # 6 = Protex format with server field blanked
 # logfileformat = 5
-{% if e2g_conf_logfileformat is defined %}
+{% if e2g_conf_logfileformat is defined -%}
 logfileformat = {{ e2g_conf_logfileformat }}
 {% endif %}
 
@@ -103,7 +104,7 @@ logfileformat = {{ e2g_conf_logfileformat }}
 # low case only
 # only used with logs: 1,5 and 6
 #logheadervalue = 'proxy-authorization:'
-{% if e2g_conf_logheadervalue is defined %}
+{% if e2g_conf_logheadervalue is defined -%}
 logheadervalue = '{{ e2g_conf_logheadervalue }}'
 {% endif %}
 
@@ -112,13 +113,13 @@ logheadervalue = '{{ e2g_conf_logheadervalue }}'
 # default 2000
 # unlimited not longer allowed - 0 will now set default of 2000
 #maxlogitemlength = 2000
-{% if e2g_conf_maxlogitemlength is defined %}
+{% if e2g_conf_maxlogitemlength is defined -%}
 maxlogitemlength = {{ e2g_conf_maxlogitemlength }}
 {% endif %}
 
 # anonymize logs (blank out usernames & IPs)
 #anonymizelogs = off
-{% if e2g_conf_anonymizelogs is defined %}
+{% if e2g_conf_anonymizelogs is defined -%}
 anonymizelogs = {{ e2g_conf_anonymizelogs }}
 {% endif %}
 
@@ -127,14 +128,14 @@ anonymizelogs = {{ e2g_conf_anonymizelogs }}
 # Use syslog for access logging instead of logging to the file
 # at the defined or built-in "loglocation"
 #logsyslog = off
-{% if e2g_conf_logsyslog is defined %}
+{% if e2g_conf_logsyslog is defined -%}
 logsyslog = {{ e2g_conf_logsyslog }}
 {% endif %}
 
 #Suffix to append to program name when logging through syslog
 # Default is the e2Guardian instance number
 #namesuffix = $z
-{% if e2g_conf_namesuffix is defined %}
+{% if e2g_conf_namesuffix is defined -%}
 namesuffix = {{ e2g_conf_namesuffix }}
 {% endif %}
 
@@ -142,7 +143,7 @@ namesuffix = {{ e2g_conf_namesuffix }}
 #
 # Defines the log directory and filename.
 # loglocation = /var/log/access.log
-{% if e2g_conf_loglocation is defined %}
+{% if e2g_conf_loglocation is defined -%}
 loglocation = {{ e2g_conf_loglocation }}
 {% endif %}
 
@@ -154,7 +155,7 @@ loglocation = {{ e2g_conf_loglocation }}
 # Format is similar to sar.  See notes/dstats_format for more details.
 # Default is not to write stats.
 #dstatlocation = '/var/log/dstats.log'
-{% if e2g_conf_dstatlocation is defined %}
+{% if e2g_conf_dstatlocation is defined -%}
 dstatlocation = {{ e2g_conf_dstatlocation }}
 {% endif %}
 
@@ -163,13 +164,13 @@ dstatlocation = {{ e2g_conf_dstatlocation }}
 # Minimum 10
 # Maximum 3600 (= 1 hour)
 #dstatinterval = 300
-{% if e2g_conf_dstatinterval is defined %}
+{% if e2g_conf_dstatinterval is defined -%}
 dstatinterval = {{ e2g_conf_dstatinterval }}
 {% endif %}
 
 # Time format is epoch GMT+0 by default | statshumanreadable change to local zone
 #statshumanreadable = off
-{% if e2g_conf_statshumanreadable is defined %}
+{% if e2g_conf_statshumanreadable is defined -%}
 statshumanreadable = {{ e2g_conf_statshumanreadable }}
 {% endif %}
 
@@ -178,7 +179,7 @@ statshumanreadable = {{ e2g_conf_statshumanreadable }}
 # In this mode systemd service is disabled !
 # Default:
 #dockermode = off
-{% if e2g_conf_dockermode is defined %}
+{% if e2g_conf_dockermode is defined -%}
 dockermode = {{ e2g_conf_dockermode }}
 {% endif %}
 
@@ -198,7 +199,7 @@ filterip =
 # you can specify different authentication mechanisms per port but
 # only if the mechanisms can co-exist (e.g. basic/proxy auth can't)
 # filterports = 8080
-{% if e2g_conf_filterports is defined %}
+{% if e2g_conf_filterports is defined -%}
 filterports = {{ e2g_conf_filterports }}
 {% endif %}
 
@@ -208,34 +209,34 @@ filterports = {{ e2g_conf_filterports }}
 # If disabled will listen on all filterports on all filterips.
 # on (default) | off
 #mapportstoips = off
-{% if e2g_conf_mapportstoips is defined %}
+{% if e2g_conf_mapportstoips is defined -%}
 mapportstoips = {{ e2g_conf_mapportstoips }}
 {% endif %}
 
 #port for transparent https
 #if defined enables tranparent https
 #transparenthttpsport = 8443
-{% if e2g_conf_transparenthttpsport is defined %}
+{% if e2g_conf_transparenthttpsport is defined -%}
 transparenthttpsport = {{ e2g_conf_transparenthttpsport }}
 {% endif %}
 
 #port for ICAP
 #if defined enables icap mode
 #icapport = 1344
-{% if e2g_conf_icapport is defined %}
+{% if e2g_conf_icapport is defined -%}
 icapport = {{ e2g_conf_icapport }}
 {% endif %}
 
 # the ip of upstream proxy - optional - if blank e2g will go direct to sites.
 # default is "" i.e. no proxy
 #proxyip = 127.0.0.1
-{% if e2g_conf_proxyip is defined %}
+{% if e2g_conf_proxyip is defined -%}
 proxyip = {{ e2g_conf_proxyip }}
 {% endif %}
 
 # the port e2guardian connects to proxy on
 #proxyport = 3128
-{% if e2g_conf_proxyport is defined %}
+{% if e2g_conf_proxyport is defined -%}
 proxyport = {{ e2g_conf_proxyport }}
 {% endif %}
 
@@ -245,7 +246,7 @@ proxyport = {{ e2g_conf_proxyport }}
  # If proxy is remote you may need to increase this to 10 or more.
 # Min 5 - Max 100
 # proxytimeout = 5
-{% if e2g_conf_proxytimeout is defined %}
+{% if e2g_conf_proxytimeout is defined -%}
 proxytimeout = {{ e2g_conf_proxytimeout }}
 {% endif %}
 
@@ -256,7 +257,7 @@ proxytimeout = {{ e2g_conf_proxytimeout }}
 # Min 1 - Max 100
 # default 3
 # connecttimeout = 5
-{% if e2g_conf_connecttimeout is defined %}
+{% if e2g_conf_connecttimeout is defined -%}
 connecttimeout = {{ e2g_conf_connecttimeout }}
 {% endif %}
 
@@ -270,7 +271,7 @@ connecttimeout = {{ e2g_conf_connecttimeout }}
 # Min 20 - Max 300
 # If this is higher than proxies timeout user will get proxy Gateway error page
 # If lower e2guardian Gateway error page
-{% if e2g_conf_proxyexchange is defined %}
+{% if e2g_conf_proxyexchange is defined -%}
 proxyexchange = {{ e2g_conf_proxyexchange }}
 {% endif %}
 
@@ -279,7 +280,7 @@ proxyexchange = {{ e2g_conf_proxyexchange }}
 # squid apparently defaults to 1 minute (persistent_request_timeout),
 # so wait slightly less than this to avoid duff pconns.
 # Min 5 - Max 300
-{% if e2g_conf_pcontimeout is defined %}
+{% if e2g_conf_pcontimeout is defined -%}
 pcontimeout = {{ e2g_conf_pcontimeout }}
 {% endif %}
 
@@ -304,21 +305,21 @@ pcontimeout = {{ e2g_conf_pcontimeout }}
 # icons from banned domains.
 # on (default) | off
 # usecustombannedimage = on
-{% if e2g_conf_usecustombannedimage is defined %}
+{% if e2g_conf_usecustombannedimage is defined -%}
 usecustombannedimage = {{ e2g_conf_usecustombannedimage }}
 {% endif %}
 
-{% if e2g_conf_custombannedimagefile is defined %}
+{% if e2g_conf_custombannedimagefile is defined -%}
 custombannedimagefile = '{{ e2g_conf_custombannedimagefile }}'
 {% endif %}
 
 #Banned flash replacement
 # usecustombannedflash = on
-{% if e2g_conf_usecustombannedflash is defined %}
+{% if e2g_conf_usecustombannedflash is defined -%}
 usecustombannedflash = {{ e2g_conf_usecustombannedflash }}
 {% endif %}
 
-{% if e2g_conf_custombannedflashfile is defined %}
+{% if e2g_conf_custombannedflashfile is defined -%}
 custombannedflashfile = '{{ e2g_conf_custombannedflashfile }}'
 {% endif %}
 
@@ -330,32 +331,32 @@ custombannedflashfile = '{{ e2g_conf_custombannedflashfile }}'
 # to filter group 1.  You must have some sort of authentication to be able to map users
 # to a group.
 # filtergroups = 1
-{% if e2g_conf_filtergroups is defined %}
+{% if e2g_conf_filtergroups is defined -%}
 filtergroups = {{ e2g_conf_filtergroups }}
 {% endif %}
 
-{% if e2g_conf_filtergroupslist is defined %}
+{% if e2g_conf_filtergroupslist is defined -%}
 filtergroupslist = '{{ e2g_conf_filtergroupslist }}'
 {% endif %}
 
 # default filtergroup for standard (explicit) mode
 # optional defaults to 1
 #defaultfiltergroup = 1;
-{% if e2g_conf_defaultfiltergroup is defined %}
+{% if e2g_conf_defaultfiltergroup is defined -%}
 defaultfiltergroup = {{ e2g_conf_defaultfiltergroup }}
 {% endif %}
 
 # default filtergroup for transparent proxy mode
 # optional defaults to 1
 #defaulttransparentfiltergroup = 1;
-{% if e2g_conf_defaulttransparentfiltergroup is defined %}
+{% if e2g_conf_defaulttransparentfiltergroup is defined -%}
 defaulttransparentfiltergroup = {{ e2g_conf_defaulttransparentfiltergroup }}
 {% endif %}
 
 # default filtergroup for ICAP mode
 # optional defaults to 1
 #defaulticapfiltergroup = 1;
-{% if e2g_conf_defaulticapfiltergroup is defined %}
+{% if e2g_conf_defaulticapfiltergroup is defined -%}
 defaulticapfiltergroup = {{ e2g_conf_defaulticapfiltergroup }}
 {% endif %}
 
@@ -365,7 +366,7 @@ defaulticapfiltergroup = {{ e2g_conf_defaulticapfiltergroup }}
 #
 # Defaults to off
 #authrequiresuserandgroup = off
-{% if e2g_conf_authrequiresuserandgroup is defined %}
+{% if e2g_conf_authrequiresuserandgroup is defined -%}
 authrequiresuserandgroup = {{ e2g_conf_authrequiresuserandgroup }}
 {% endif %}
 
@@ -393,7 +394,7 @@ urllist = 'name=authexception,messageno=603,path={{ e2g_install_dir }}/etc/e2gua
 # and optionaly site and url lists
 # Think of it as bannediplist and/or exceptions on crack
 #perroomdirectory = '{{ e2g_install_dir }}/etc/e2guardian/lists/rooms/'
-{% if e2g_conf_perroomdirectory is defined %}
+{% if e2g_conf_perroomdirectory is defined -%}
 perroomdirectory = {{ e2g_conf_perroomdirectory }}
 {% endif %}
 
@@ -402,7 +403,7 @@ perroomdirectory = {{ e2g_conf_perroomdirectory }}
 # the naughtyness limit will be logged and, if the reporting level is
 # high enough, reported. on | off
 # showweightedfound = on
-{% if e2g_conf_showweightedfound is defined %}
+{% if e2g_conf_showweightedfound is defined -%}
 showweightedfound = {{ e2g_conf_showweightedfound }}
 {% endif %}
 
@@ -418,7 +419,7 @@ showweightedfound = {{ e2g_conf_showweightedfound }}
 # links to banned URLs.
 #
 # weightedphrasemode = 2
-{% if e2g_conf_weightedphrasemode is defined %}
+{% if e2g_conf_weightedphrasemode is defined -%}
 weightedphrasemode = {{ e2g_conf_weightedphrasemode }}
 {% endif %}
 
@@ -432,7 +433,7 @@ weightedphrasemode = {{ e2g_conf_weightedphrasemode }}
 # 2 = both of the above (default)
 # 3 = meta/title
 # phrasefiltermode = 2
-{% if e2g_conf_phrasefiltermode is defined %}
+{% if e2g_conf_phrasefiltermode is defined -%}
 phrasefiltermode = {{ e2g_conf_phrasefiltermode }}
 {% endif %}
 
@@ -444,7 +445,7 @@ phrasefiltermode = {{ e2g_conf_phrasefiltermode }}
 # 0 = force lower case (default)
 # 1 = do not change case
 # 2 = scan first in lower case, then in original case
-{% if e2g_conf_preservecase is defined %}
+{% if e2g_conf_preservecase is defined -%}
 preservecase = {{ e2g_conf_preservecase }}
 {% endif %}
 
@@ -462,7 +463,7 @@ preservecase = {{ e2g_conf_preservecase }}
 # then enable.  However this can break Big5 and other 16-bit texts.
 # off = disabled (default)
 # on = enabled
-{% if e2g_conf_hexdecodecontent is defined %}
+{% if e2g_conf_hexdecodecontent is defined -%}
 hexdecodecontent = {{ e2g_conf_hexdecodecontent }}
 {% endif %}
 
@@ -472,7 +473,7 @@ hexdecodecontent = {{ e2g_conf_hexdecodecontent }}
 # If you wish to use a large number of 16-bit character phrases then
 # enable this option.
 # off (default) | on (Big5 compatible)
-{% if e2g_conf_forcequicksearch is defined %}
+{% if e2g_conf_forcequicksearch is defined -%}
 forcequicksearch = {{ e2g_conf_forcequicksearch }}
 {% endif %}
 
@@ -483,7 +484,7 @@ forcequicksearch = {{ e2g_conf_forcequicksearch }}
 # It will reduce searching speed somewhat so unless you have a local caching
 # DNS server, leave it off and use the Blanket IP Block option in the
 # f1.story file instead.
-{% if e2g_conf_reverseaddresslookups is defined %}
+{% if e2g_conf_reverseaddresslookups is defined -%}
 reverseaddresslookups = {{ e2g_conf_reverseaddresslookups }}
 {% endif %}
 
@@ -495,7 +496,7 @@ reverseaddresslookups = {{ e2g_conf_reverseaddresslookups }}
 # match occurs against a hostname, the hostname will be logged instead.
 # It will reduce searching speed somewhat so unless you have a local DNS server,
 # leave it off.
-{% if e2g_conf_reverseclientiplookups is defined %}
+{% if e2g_conf_reverseclientiplookups is defined -%}
 reverseclientiplookups = {{ e2g_conf_reverseclientiplookups }}
 {% endif %}
 
@@ -505,7 +506,7 @@ reverseclientiplookups = {{ e2g_conf_reverseclientiplookups }}
 # IPs against requests.
 # This is not dependent on reverseclientiplookups being enabled; however, if it
 # is, enabling this option does not incur any additional forward DNS requests.
-{% if e2g_conf_logclienthostnames is defined %}
+{% if e2g_conf_logclienthostnames is defined -%}
 logclienthostnames = {{ e2g_conf_logclienthostnames }}
 {% endif %}
 
@@ -520,7 +521,7 @@ logclienthostnames = {{ e2g_conf_logclienthostnames }}
 #  long preamble not being content filtered
 # The size is in Kibibytes - eg 2048 = 2Mb
 # use 0 to set it to maxcontentramcachescansize
-{% if e2g_conf_maxcontentfiltersize is defined %}
+{% if e2g_conf_maxcontentfiltersize is defined -%}
 maxcontentfiltersize = {{ e2g_conf_maxcontentfiltersize }}
 {% endif %}
 
@@ -532,7 +533,7 @@ maxcontentfiltersize = {{ e2g_conf_maxcontentfiltersize }}
 # The size is in Kibibytes - eg 10240 = 10Mb
 # use 0 to set it to maxcontentfilecachescansize
 # This option may be ignored by the configured download manager.
-{% if e2g_conf_maxcontentramcachescansize is defined %}
+{% if e2g_conf_maxcontentramcachescansize is defined -%}
 maxcontentramcachescansize = {{ e2g_conf_maxcontentramcachescansize }}
 {% endif %}
 
@@ -542,14 +543,14 @@ maxcontentramcachescansize = {{ e2g_conf_maxcontentramcachescansize }}
 # so that it can be scanned or virus checked.
 # This value must be greater or equal to maxcontentramcachescansize.
 # The size is in Kibibytes - eg 10240 = 10Mb
-{% if e2g_conf_maxcontentfilecachescansize is defined %}
+{% if e2g_conf_maxcontentfilecachescansize is defined -%}
 maxcontentfilecachescansize = {{ e2g_conf_maxcontentfilecachescansize }}
 {% endif %}
 
 # File cache dir
 # Where DG will download files to be scanned if too large for the
 # RAM cache.
-{% if e2g_conf_filecachedir is defined %}
+{% if e2g_conf_filecachedir is defined -%}
 filecachedir = {{ e2g_conf_filecachedir }}
 {% endif %}
 
@@ -560,7 +561,7 @@ filecachedir = {{ e2g_conf_filecachedir }}
 # the temp store a second time it will give a 404 error.
 # You should configure something to delete old files in temp to stop it filling up.
 # on|off (defaults to on)
-{% if e2g_conf_deletedownloadedtempfiles is defined %}
+{% if e2g_conf_deletedownloadedtempfiles is defined -%}
 deletedownloadedtempfiles = {{ e2g_conf_deletedownloadedtempfiles }}
 {% endif %}
 
@@ -571,7 +572,7 @@ deletedownloadedtempfiles = {{ e2g_conf_deletedownloadedtempfiles }}
 # Do not choose a value too low or normal web pages will be affected.
 # A value between 20 and 110 would be sensible
 # This may be ignored by the configured download manager.
-{% if e2g_conf_initialtrickledelay is defined %}
+{% if e2g_conf_initialtrickledelay is defined -%}
 initialtrickledelay = {{ e2g_conf_initialtrickledelay }}
 {% endif %}
 
@@ -580,7 +581,7 @@ initialtrickledelay = {{ e2g_conf_initialtrickledelay }}
 # before being sent more *something* to keep it alive.  The
 # *something* depends on the download manager chosen.
 # This may be ignored by the configured download manager.
-{% if e2g_conf_trickledelay is defined %}
+{% if e2g_conf_trickledelay is defined -%}
 trickledelay = {{ e2g_conf_trickledelay }}
 {% endif %}
 
@@ -612,7 +613,7 @@ trickledelay = {{ e2g_conf_trickledelay }}
 # and other matching mechanisms.
 #
 # NOTE - ONLY default downloadmanager is supported in v5
-{% if e2g_conf_downloadmanager is defined %}
+{% if e2g_conf_downloadmanager is defined -%}
 downloadmanager = {{ e2g_conf_downloadmanager }}
 {% endif %}
 
@@ -632,13 +633,13 @@ downloadmanager = {{ e2g_conf_downloadmanager }}
 # processing (eg AV scanning) the file if it takes too long.
 # If supported this will be used.
 # The default of 60 seconds is probably reasonable.
-{% if e2g_conf_contentscannertimeout is defined %}
+{% if e2g_conf_contentscannertimeout is defined -%}
 contentscannertimeout = {{ e2g_conf_contentscannertimeout }}
 {% endif %}
 
 # Content scan exceptions // THIS MOVED to e2guardianf1.conf
 #contentscanexceptions = off
-{% if e2g_conf_contentscanexceptions is defined %}
+{% if e2g_conf_contentscanexceptions is defined -%}
 contentscanexceptions = {{ e2g_conf_contentscanexceptions }}
 {% endif %}
 
@@ -665,7 +666,7 @@ authplugin = '{{ e2g_install_dir }}/etc/e2guardian/authplugins/ip.conf'
 #  to number of ports
 # on (default) | off
 #mapauthtoports = off
-{% if e2g_conf_mapauthtoports is defined %}
+{% if e2g_conf_mapauthtoports is defined -%}
 mapauthtoports = {{ e2g_conf_mapauthtoports }}
 {% endif %}
 
@@ -678,7 +679,7 @@ mapauthtoports = {{ e2g_conf_mapauthtoports }}
 # after replacement, making it possible for URL replacement to trigger exceptions based
 # on them.
 # Defaults to off.
-{% if e2g_conf_recheckreplacedurls is defined %}
+{% if e2g_conf_recheckreplacedurls is defined -%}
 recheckreplacedurls = {{ e2g_conf_recheckreplacedurls }}
 {% endif %}
 
@@ -687,14 +688,14 @@ recheckreplacedurls = {{ e2g_conf_recheckreplacedurls }}
 # if on it adds an X-Forwarded-For: <clientip> to the HTTP request
 # header.  This may help solve some problem sites that need to know the
 # source ip. on | off
-{% if e2g_conf_forwardedfor is defined %}
+{% if e2g_conf_forwardedfor is defined -%}
 forwardedfor = {{ e2g_conf_forwardedfor }}
 {% endif %}
 
 # if on it uses the X-Forwarded-For: <clientip> to determine the client
 # IP. This is for when you have squid between the clients and e2guardian.
 # Warning - headers are easily spoofed. on | off
-{% if e2g_conf_usexforwardedfor is defined %}
+{% if e2g_conf_usexforwardedfor is defined -%}
 usexforwardedfor = {{ e2g_conf_usexforwardedfor }}
 {% endif %}
 
@@ -710,7 +711,7 @@ usexforwardedfor = {{ e2g_conf_usexforwardedfor }}
 # which
 # can usually be ignored.  These are logged by syslog.  It is safe to leave
 # it on or off
-{% if e2g_conf_logconnectionhandlingerrors is defined %}
+{% if e2g_conf_logconnectionhandlingerrors is defined -%}
 logconnectionhandlingerrors = {{ e2g_conf_logconnectionhandlingerrors }}
 {% endif %}
 
@@ -720,7 +721,7 @@ logconnectionhandlingerrors = {{ e2g_conf_logconnectionhandlingerrors }}
 # If more connections are made, connections will queue until a worker thread is free.
 # On large site you might want to try 5000 (max value 20000)
 # httpworkers = 500
-{% if e2g_conf_httpworkers is defined %}
+{% if e2g_conf_httpworkers is defined -%}
 httpworkers = {{ e2g_conf_httpworkers }}
 {% endif %}
 
@@ -733,7 +734,7 @@ httpworkers = {{ e2g_conf_httpworkers }}
 #
 # Defines process id directory and filename.
 #pidfilename = '/var/run/e2guardian.pid'
-{% if e2g_conf_pidfilename is defined %}
+{% if e2g_conf_pidfilename is defined -%}
 pidfilename = {{ e2g_conf_pidfilename }}
 {% endif %}
 
@@ -741,26 +742,26 @@ pidfilename = {{ e2g_conf_pidfilename }}
 # If enabled the process will not fork into the background.
 # It is not usually advantageous to do this.
 # on|off (defaults to off)
-{% if e2g_conf_nodaemon is defined %}
+{% if e2g_conf_nodaemon is defined -%}
 nodaemon = {{ e2g_conf_nodaemon }}
 {% endif %}
 
 # Disable logging process
 # on|off (defaults to off)
-{% if e2g_conf_nologger is defined %}
+{% if e2g_conf_nologger is defined -%}
 nologger = {{ e2g_conf_nologger }}
 {% endif %}
 
 # Enable logging of "ADs" category blocks
 # on|off (defaults to off)
-{% if e2g_conf_logadblocks is defined %}
+{% if e2g_conf_logadblocks is defined -%}
 logadblocks = {{ e2g_conf_logadblocks }}
 {% endif %}
 
 # Enable logging of client User-Agent
 # Some browsers will cause a *lot* of extra information on each line!
 # on|off (defaults to off)
-{% if e2g_conf_loguseragent is defined %}
+{% if e2g_conf_loguseragent is defined -%}
 loguseragent = {{ e2g_conf_loguseragent }}
 {% endif %}
 
@@ -771,11 +772,11 @@ loguseragent = {{ e2g_conf_loguseragent }}
 
 # clamdscan, the two processes must run with either the same group or user ID.
 #daemonuser = 'nobody'
-{% if e2g_conf_daemonuser is defined %}
+{% if e2g_conf_daemonuser is defined -%}
 daemonuser = {{ e2g_conf_daemonuser }}
 {% endif %}
 #daemongroup = 'nobody'
-{% if e2g_conf_daemongroup is defined %}
+{% if e2g_conf_daemongroup is defined -%}
 daemongroup = {{ e2g_conf_daemongroup }}
 {% endif %}
 
@@ -789,7 +790,7 @@ daemongroup = {{ e2g_conf_daemongroup }}
 # This must be present to enable MITM and/or Cert checking
 # default is off
 # enablessl = off
-{% if e2g_conf_enablessl is defined %}
+{% if e2g_conf_enablessl is defined -%}
 enablessl = {{ e2g_conf_enablessl }}
 {% endif %}
 
@@ -798,7 +799,7 @@ enablessl = {{ e2g_conf_enablessl }}
 # if left blank openssl default ca certificate bundle will be used
 #Leave as default unless you want to load non-default cert bundle
 #sslcertificatepath = '/squid-certs/root-ca-cert.pem'
-{% if e2g_conf_sslcertificatepath is defined %}
+{% if e2g_conf_sslcertificatepath is defined -%}
 sslcertificatepath = {{ e2g_conf_sslcertificatepath }}
 {% endif %}
 
@@ -808,7 +809,7 @@ sslcertificatepath = {{ e2g_conf_sslcertificatepath }}
 #generated certificates.
 # default is blank - required if ssl_mitm is enabled.
 # cacertificatepath = '/home/e2/e2install/ca.pem'
-{% if e2g_conf_cacertificatepath is defined %}
+{% if e2g_conf_cacertificatepath is defined -%}
 cacertificatepath = {{ e2g_conf_cacertificatepath }}
 {% endif %}
 
@@ -816,7 +817,7 @@ cacertificatepath = {{ e2g_conf_cacertificatepath }}
 #path to the private key that matches the public key in the CA certificate.
 # default is blank - required if ssl_mitm is enabled.
 # caprivatekeypath = '/home/e2/e2install/ca.key'
-{% if e2g_conf_caprivatekeypath is defined %}
+{% if e2g_conf_caprivatekeypath is defined -%}
 caprivatekeypath = {{ e2g_conf_caprivatekeypath }}
 {% endif %}
 
@@ -824,7 +825,7 @@ caprivatekeypath = {{ e2g_conf_caprivatekeypath }}
 #The public / private key pair used by all generated certificates
 # default is blank - required if ssl_mitm is enabled.
 # certprivatekeypath = '/home/e2/e2install/cert.key'
-{% if e2g_conf_certprivatekeypath is defined %}
+{% if e2g_conf_certprivatekeypath is defined -%}
 certprivatekeypath = {{ e2g_conf_certprivatekeypath }}
 {% endif %}
 
@@ -833,7 +834,7 @@ certprivatekeypath = {{ e2g_conf_certprivatekeypath }}
 #(must be writable by the dg user)
 # default is blank - required if ssl_mitm is enabled.
 # generatedcertpath = '/home/e2/e2install/generatedcerts/'
-{% if e2g_conf_generatedcertpath is defined %}
+{% if e2g_conf_generatedcertpath is defined -%}
 generatedcertpath = {{ e2g_conf_generatedcertpath }}
 {% endif %}
 
@@ -844,7 +845,7 @@ generatedcertpath = {{ e2g_conf_generatedcertpath }}
 #Generated cert start time (in unix time) - optional
 # defaults to 1417872951 = 6th Dec 2014
 #generatedcertstart = 1417872951
-{% if e2g_conf_generatedcertstart is defined %}
+{% if e2g_conf_generatedcertstart is defined -%}
 generatedcertstart = {{ e2g_conf_generatedcertstart }}
 {% endif %}
 
@@ -860,7 +861,7 @@ generatedcertstart = {{ e2g_conf_generatedcertstart }}
 # ' start' appended
 # When e2guardian is stopping with ' stop' appended
 #monitorhelper = '{{ e2g_install_dir }}/bin/mymonitor'
-{% if e2g_conf_monitorhelper is defined %}
+{% if e2g_conf_monitorhelper is defined -%}
 monitorhelper = {{ e2g_conf_monitorhelper }}
 {% endif %}
 
@@ -872,12 +873,12 @@ monitorhelper = {{ e2g_conf_monitorhelper }}
 # When e2guardian is stopping with 'paused' appended
 # Note change in V4!!! - No longer detects cache failure
 #monitorflagprefix = '/home/e2g/run/e2g_flag_'
-{% if e2g_conf_monitorflagprefix is defined %}
+{% if e2g_conf_monitorflagprefix is defined -%}
 monitorflagprefix = {{ e2g_conf_monitorflagprefix }}
 {% endif %}
 
 # Much logic has moved to storyboard files
-{% if e2g_conf_preauthstoryboard is defined %}
+{% if e2g_conf_preauthstoryboard is defined -%}
 preauthstoryboard = {{ e2g_conf_preauthstoryboard }}
 {% endif %}
 
@@ -886,7 +887,7 @@ preauthstoryboard = {{ e2g_conf_preauthstoryboard }}
 # Output goes to syslog (or stderr in debug mode)
 # default off
 #storyboardtrace = off
-{% if e2g_conf_storyboardtrace is defined %}
+{% if e2g_conf_storyboardtrace is defined -%}
 storyboardtrace = {{ e2g_conf_storyboardtrace }}
 {% endif %}
 
@@ -902,7 +903,7 @@ storyboardtrace = {{ e2g_conf_storyboardtrace }}
 # 'on' - but note this incurs an overhead - putting IP in ipsitelists
 # and setting this to off gives the fastest implimentation.
 # default is 'on'
-{% if e2g_conf_searchsitelistforip is defined %}
+{% if e2g_conf_searchsitelistforip is defined -%}
 searchsitelistforip = {{ e2g_conf_searchsitelistforip }}
 {% endif %}
 
@@ -913,6 +914,6 @@ searchsitelistforip = {{ e2g_conf_searchsitelistforip }}
 # Minimum 10 max 250
 # default 50
 #maxheaderlines = 50
-{% if e2g_conf_maxheaderlines is defined %}
+{% if e2g_conf_maxheaderlines is defined -%}
 maxheaderlines = {{ e2g_conf_maxheaderlines }}
 {% endif %}

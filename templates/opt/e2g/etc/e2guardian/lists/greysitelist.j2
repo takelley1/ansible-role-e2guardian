@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
 #domains in grey list
 #Don't bother with the www. or the http://
@@ -58,7 +59,7 @@
 #
 
 {% if e2g_greysitelist is defined %}
-{% for item in e2g_greysitelist %}
-{{ item }}
-{% endfor %}
+  {% for item in e2g_greysitelist %}
+    {{ item }}
+  {% endfor %}
 {% endif %}

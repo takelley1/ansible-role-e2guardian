@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
 # EXCEPTIONPHRASELIST - INSTRUCTIONS FOR USE
 #
@@ -15,7 +16,7 @@
 # See the bannedphraselist for more examples.
 
 {% if e2g_exceptionphraselist is defined %}
-{% for item in e2g_exceptionphraselist %}
-{{ item }}
-{% endfor %}
+  {% for item in e2g_exceptionphraselist %}
+    {{ item }}
+  {% endfor %}
 {% endif %}

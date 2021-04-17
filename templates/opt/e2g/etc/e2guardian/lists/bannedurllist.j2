@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
 #URLs in banned list
 #Don't bother with the http:// or the www
@@ -27,7 +28,7 @@
 # members.home.net/uporn
 
 {% if e2g_bannedurllist is defined %}
-{% for item in e2g_bannedurllist %}
-{{ item }}
-{% endfor %}
+  {% for item in e2g_bannedurllist %}
+    {{ item }}
+  {% endfor %}
 {% endif %}

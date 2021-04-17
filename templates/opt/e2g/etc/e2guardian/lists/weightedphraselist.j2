@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
 # E2GUARDIAN weightedphraselist INSTRUCTIONS FOR USE
 # If weighting is a % then that % of the naughtynesslimit is used as the weight
@@ -45,9 +46,9 @@
 ##.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/safelabel/weighted>
 
 {% if e2g_weightedphraselist is defined %}
-{% for item in e2g_weightedphraselist %}
-{{ item }}
-{% endfor %}
+  {% for item in e2g_weightedphraselist %}
+    {{ item }}
+  {% endfor %}
 {% endif %}
 
 #Bad Words - swearing

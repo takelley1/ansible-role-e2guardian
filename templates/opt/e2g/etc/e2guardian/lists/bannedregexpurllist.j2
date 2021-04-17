@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
 #Banned URLs based on Regular Expressions
 # E.g. 'sex' would block sex.com and middlesex.com etc
@@ -5,9 +6,9 @@
 #Banned URLs based on Regular Expressions
 
 {% if e2g_bannedregexpurllist is defined %}
-{% for item in e2g_bannedregexpurllist %}
-{{ item }}
-{% endfor %}
+  {% for item in e2g_bannedregexpurllist %}
+    {{ item }}
+  {% endfor %}
 {% endif %}
 
 #Block Naturism and Nudist sites

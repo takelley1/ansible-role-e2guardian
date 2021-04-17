@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
 #URLs in exception list
 #Don't bother with the www. or
@@ -16,7 +17,7 @@
 #generallybadsite.tld/partthatsok/
 
 {% if e2g_exceptionurllist is defined %}
-{% for item in e2g_exceptionurllist %}
-{{ item }}
-{% endfor %}
+  {% for item in e2g_exceptionurllist %}
+    {{ item }}
+  {% endfor %}
 {% endif %}
