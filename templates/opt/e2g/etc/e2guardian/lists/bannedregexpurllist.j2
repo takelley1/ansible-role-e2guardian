@@ -5,11 +5,13 @@
 #listcategory: "Banned Regular Expression URLs"
 #Banned URLs based on Regular Expressions
 
-{% if e2g_bannedregexpurllist is defined %}
-  {% for item in e2g_bannedregexpurllist %}
-    {{ item }}
-  {% endfor %}
-{% endif %}
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_bannedregexpurllist is defined -%}
+{%- for item in e2g_bannedregexpurllist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------
 
 #Block Naturism and Nudist sites
 #(naturism|naturist|nude|nudist|nudism|nekkid|nakt|naakt)

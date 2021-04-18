@@ -40,16 +40,17 @@
 # BETA - Relatively new - tested in several locations
 #
 #listcategory: "Weighted Phrases"
-
 #To enable several non-PICS self-labelling and self-rating systems.
 #Enabled as a bannedsitelist by default.  Disable there before enabling as a phraselist.
 ##.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/safelabel/weighted>
 
-{% if e2g_weightedphraselist is defined %}
-  {% for item in e2g_weightedphraselist %}
-    {{ item }}
-  {% endfor %}
-{% endif %}
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_weightedphraselist is defined -%}
+{%- for item in e2g_weightedphraselist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------
 
 #Bad Words - swearing
 #.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/badwords/weighted_dutch>

@@ -27,8 +27,10 @@
 #List other URLs to block:
 # members.home.net/uporn
 
-{% if e2g_bannedurllist is defined %}
-  {% for item in e2g_bannedurllist %}
-    {{ item }}
-  {% endfor %}
-{% endif %}
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_bannedurllist is defined -%}
+{%- for item in e2g_bannedurllist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

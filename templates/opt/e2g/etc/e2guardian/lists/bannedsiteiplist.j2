@@ -11,8 +11,10 @@
 # 10.0.0.1-10.0.0.3
 # 10.0.0.0/24
 
-{% if e2g_bannedsiteiplist is defined %}
-  {% for item in e2g_bannedsiteiplist %}
-    {{ item }}
-  {% endfor %}
-{% endif %}
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_bannedsiteiplist is defined -%}
+{%- for item in e2g_bannedsiteiplist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

@@ -58,8 +58,10 @@
 #List other sites to greylist:
 #
 
-{% if e2g_greysitelist is defined %}
-  {% for item in e2g_greysitelist %}
-    {{ item }}
-  {% endfor %}
-{% endif %}
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_greysitelist is defined -%}
+{%- for item in e2g_greysitelist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

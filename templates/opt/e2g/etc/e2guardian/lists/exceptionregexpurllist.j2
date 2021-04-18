@@ -14,8 +14,10 @@
 # Allow Facebook plugin applications like
 # http://apps.facebook.com/neighborhoods/Setup.aspx and others.
 
-{% if e2g_exceptionregexpurllist is defined %}
-  {% for item in e2g_exceptionregexpurllist %}
-    {{ item }}
-  {% endfor %}
-{% endif %}
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_exceptionregexpurllist is defined -%}
+{%- for item in e2g_exceptionregexpurllist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

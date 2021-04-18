@@ -22,8 +22,10 @@
 # NOTE: From v5 Blanket exceptions are now implimented using Storyboarding
 # WARNING: Old style Blanket blocks in this file will be silently ignored
 
-{% if e2g_exceptionsitelist is defined %}
-  {% for item in e2g_exceptionsitelist %}
-    {{ item }}
-  {% endfor %}
-{% endif %}
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_exceptionsitelist is defined -%}
+{%- for item in e2g_exceptionsitelist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

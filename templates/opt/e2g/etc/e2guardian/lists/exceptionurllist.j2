@@ -16,8 +16,10 @@
 #Another example:
 #generallybadsite.tld/partthatsok/
 
-{% if e2g_exceptionurllist is defined %}
-  {% for item in e2g_exceptionurllist %}
-    {{ item }}
-  {% endfor %}
-{% endif %}
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_exceptionurllist is defined -%}
+{%- for item in e2g_exceptionurllist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------
