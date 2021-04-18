@@ -12,9 +12,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_sitelist.name }}"
     content: |
-      {% for site in item.lists.banned_sitelist.content %}
+      {%- for site in item.lists.banned_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -22,9 +22,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_phraselist.name }}"
     content: |
-      {% for site in item.lists.banned_phraselist.content %}
+      {%- for site in item.lists.banned_phraselist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_phraselist.name is defined
   notify: restart-e2guardian
 
@@ -32,9 +32,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.weighted_phraselist.name }}"
     content: |
-      {% for site in item.lists.weighted_phraselist.content %}
+      {%- for site in item.lists.weighted_phraselist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.weighted_phraselist.name is defined
   notify: restart-e2guardian
 
@@ -42,9 +42,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_phraselist.name }}"
     content: |
-      {% for site in item.lists.exception_phraselist.content %}
+      {%- for site in item.lists.exception_phraselist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_phraselist.name is defined
   notify: restart-e2guardian
 
@@ -52,9 +52,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_sitelist.name }}"
     content: |
-      {% for site in item.lists.banned_sitelist.content %}
+      {%- for site in item.lists.banned_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -62,9 +62,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_ipsitelist.name }}"
     content: |
-      {% for site in item.lists.banned_ipsitelist.content %}
+      {%- for site in item.lists.banned_ipsitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_ipsitelist.name is defined
   notify: restart-e2guardian
 
@@ -72,9 +72,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_urllist.name }}"
     content: |
-      {% for site in item.lists.banned_urllist.content %}
+      {%- for site in item.lists.banned_urllist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_urllist.name is defined
   notify: restart-e2guardian
 
@@ -82,9 +82,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_regexpboollist.name }}"
     content: |
-      {% for site in item.lists.banned_regexpboollist.content %}
+      {%- for site in item.lists.banned_regexpboollist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_regexpboollist.name is defined
   notify: restart-e2guardian
 
@@ -92,9 +92,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_useragent_regexpboollist.name }}"
     content: |
-      {% for site in item.lists.banned_useragent_regexpboollist.content %}
+      {%- for site in item.lists.banned_useragent_regexpboollist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_useragent_regexpboollist.name is defined
   notify: restart-e2guardian
 
@@ -102,9 +102,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_ssl_sitelist.name }}"
     content: |
-      {% for site in item.lists.banned_ssl_sitelist.content %}
+      {%- for site in item.lists.banned_ssl_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_ssl_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -112,9 +112,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_ssl_ipsitelist.name }}"
     content: |
-      {% for site in item.lists.banned_ssl_ipsitelist.content %}
+      {%- for site in item.lists.banned_ssl_ipsitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_ssl_ipsitelist.name is defined
   notify: restart-e2guardian
 
@@ -122,9 +122,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_sitelist.name }}"
     content: |
-      {% for site in item.lists.grey_sitelist.content %}
+      {%- for site in item.lists.grey_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.grey_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -132,9 +132,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_ipsitelist.name }}"
     content: |
-      {% for site in item.lists.grey_ipsitelist.content %}
+      {%- for site in item.lists.grey_ipsitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.grey_ipsitelist.name is defined
   notify: restart-e2guardian
 
@@ -142,9 +142,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_urllist.name }}"
     content: |
-      {% for site in item.lists.grey_urllist.content %}
+      {%- for site in item.lists.grey_urllist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.grey_urllist.name is defined
   notify: restart-e2guardian
 
@@ -152,9 +152,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_ssl_sitelist.name }}"
     content: |
-      {% for site in item.lists.grey_ssl_sitelist.content %}
+      {%- for site in item.lists.grey_ssl_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.grey_ssl_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -162,9 +162,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_ssl_ipsitelist.name }}"
     content: |
-      {% for site in item.lists.grey_ssl_ipsitelist.content %}
+      {%- for site in item.lists.grey_ssl_ipsitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.grey_ssl_ipsitelist.name is defined
   notify: restart-e2guardian
 
@@ -172,9 +172,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_sitelist.name }}"
     content: |
-      {% for site in item.lists.exception_sitelist.content %}
+      {%- for site in item.lists.exception_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -182,9 +182,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_ipsitelist.name }}"
     content: |
-      {% for site in item.lists.exception_ipsitelist.content %}
+      {%- for site in item.lists.exception_ipsitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_ipsitelist.name is defined
   notify: restart-e2guardian
 
@@ -192,9 +192,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_urllist.name }}"
     content: |
-      {% for site in item.lists.exception_urllist.content %}
+      {%- for site in item.lists.exception_urllist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_urllist.name is defined
   notify: restart-e2guardian
 
@@ -202,9 +202,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_regexpboollist.name }}"
     content: |
-      {% for site in item.lists.exception_regexpboollist.content %}
+      {%- for site in item.lists.exception_regexpboollist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_regexpboollist.name is defined
   notify: restart-e2guardian
 
@@ -212,9 +212,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_useragent_regexpboollist.name }}"
     content: |
-      {% for site in item.lists.exception_useragent_regexpboollist.content %}
+      {%- for site in item.lists.exception_useragent_regexpboollist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_useragent_regexpboollist.name is defined
   notify: restart-e2guardian
 
@@ -222,9 +222,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.reference_exception_sitelist.name }}"
     content: |
-      {% for site in item.lists.reference_exception_sitelist.content %}
+      {%- for site in item.lists.reference_exception_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.reference_exception_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -232,9 +232,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.reference_exception_ipsitelist.name }}"
     content: |
-      {% for site in item.lists.reference_exception_ipsitelist.content %}
+      {%- for site in item.lists.reference_exception_ipsitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.reference_exception_ipsitelist.name is defined
   notify: restart-e2guardian
 
@@ -242,9 +242,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.reference_exception_urllist.name }}"
     content: |
-      {% for site in item.lists.reference_exception_urllist.content %}
+      {%- for site in item.lists.reference_exception_urllist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.reference_exception_urllist.name is defined
   notify: restart-e2guardian
 
@@ -252,9 +252,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.embeded_reference_exception_sitelist.name }}"
     content: |
-      {% for site in item.lists.embeded_reference_exception_sitelist.content %}
+      {%- for site in item.lists.embeded_reference_exception_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.embeded_reference_exception_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -262,9 +262,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.embeded_reference_exception_ipsitelist.name }}"
     content: |
-      {% for site in item.lists.embeded_reference_exception_ipsitelist.content %}
+      {%- for site in item.lists.embeded_reference_exception_ipsitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.embeded_reference_exception_ipsitelist.name is defined
   notify: restart-e2guardian
 
@@ -272,9 +272,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.embeded_reference_exception_urllist.name }}"
     content: |
-      {% for site in item.lists.embeded_reference_exception_urllist.content %}
+      {%- for site in item.lists.embeded_reference_exception_urllist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.embeded_reference_exception_urllist.name is defined
   notify: restart-e2guardian
 
@@ -282,9 +282,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.modification_regexpreplacelist.name }}"
     content: |
-      {% for site in item.lists.modification_regexpreplacelist.content %}
+      {%- for site in item.lists.modification_regexpreplacelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.modification_regexpreplacelist.name is defined
   notify: restart-e2guardian
 
@@ -292,9 +292,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.modification_ssl_regexpreplacelist.name }}"
     content: |
-      {% for site in item.lists.modification_ssl_regexpreplacelist.content %}
+      {%- for site in item.lists.modification_ssl_regexpreplacelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.modification_ssl_regexpreplacelist.name is defined
   notify: restart-e2guardian
 
@@ -302,9 +302,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.redirect_regexpreplacelist.name }}"
     content: |
-      {% for site in item.lists.redirect_regexpreplacelist.content %}
+      {%- for site in item.lists.redirect_regexpreplacelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.redirect_regexpreplacelist.name is defined
   notify: restart-e2guardian
 
@@ -312,9 +312,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.redirect_contentregexplist.name }}"
     content: |
-      {% for site in item.lists.redirect_contentregexplist.content %}
+      {%- for site in item.lists.redirect_contentregexplist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.redirect_contentregexplist.name is defined
   notify: restart-e2guardian
 
@@ -322,9 +322,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_sitelist.name }}"
     content: |
-      {% for site in item.lists.local_sitelist.content %}
+      {%- for site in item.lists.local_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.local_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -332,9 +332,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_searchlist.name }}"
     content: |
-      {% for site in item.lists.local_searchlist.content %}
+      {%- for site in item.lists.local_searchlist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.local_searchlist.name is defined
   notify: restart-e2guardian
 
@@ -342,9 +342,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_grey_sitelist.name }}"
     content: |
-      {% for site in item.lists.local_grey_sitelist.content %}
+      {%- for site in item.lists.local_grey_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.local_grey_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -352,9 +352,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_grey_sitelist.name }}"
     content: |
-      {% for site in item.lists.local_grey_sitelist.content %}
+      {%- for site in item.lists.local_grey_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.local_grey_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -362,9 +362,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_exception_sitelist.name }}"
     content: |
-      {% for site in item.lists.local_exception_sitelist.content %}
+      {%- for site in item.lists.local_exception_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.local_exception_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -372,9 +372,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.fileextlist.name }}"
     content: |
-      {% for site in item.lists.fileextlist.content %}
+      {%- for site in item.lists.fileextlist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.fileextlist.name is defined
   notify: restart-e2guardian
 
@@ -382,9 +382,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.mimelist.name }}"
     content: |
-      {% for site in item.lists.mimelist.content %}
+      {%- for site in item.lists.mimelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.mimelist.name is defined
   notify: restart-e2guardian
 
@@ -392,9 +392,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_file_sitelist.name }}"
     content: |
-      {% for site in item.lists.exception_file_sitelist.content %}
+      {%- for site in item.lists.exception_file_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_file_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -402,9 +402,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_file_ipsitelist.name }}"
     content: |
-      {% for site in item.lists.exception_file_ipsitelist.content %}
+      {%- for site in item.lists.exception_file_ipsitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_file_ipsitelist.name is defined
   notify: restart-e2guardian
 
@@ -412,9 +412,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_file_urllist.name }}"
     content: |
-      {% for site in item.lists.exception_file_urllist.content %}
+      {%- for site in item.lists.exception_file_urllist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_file_urllist.name is defined
   notify: restart-e2guardian
 
@@ -422,9 +422,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.header_regexpreplacelist.name }}"
     content: |
-      {% for site in item.lists.header_regexpreplacelist.content %}
+      {%- for site in item.lists.header_regexpreplacelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.header_regexpreplacelist.name is defined
   notify: restart-e2guardian
 
@@ -432,9 +432,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_header_regexpboollist.name }}"
     content: |
-      {% for site in item.lists.banned_header_regexpboollist.content %}
+      {%- for site in item.lists.banned_header_regexpboollist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_header_regexpboollist.name is defined
   notify: restart-e2guardian
 
@@ -442,9 +442,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_header_regexpboollist.name }}"
     content: |
-      {% for site in item.lists.exception_header_regexpboollist.content %}
+      {%- for site in item.lists.exception_header_regexpboollist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.exception_header_regexpboollist.name is defined
   notify: restart-e2guardian
 
@@ -452,9 +452,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.add_header_regexpreplacelist.name }}"
     content: |
-      {% for site in item.lists.add_header_regexpreplacelist.content %}
+      {%- for site in item.lists.add_header_regexpreplacelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.add_header_regexpreplacelist.name is defined
   notify: restart-e2guardian
 
@@ -462,9 +462,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.search_regexpreplacelist.name }}"
     content: |
-      {% for site in item.lists.search_regexpreplacelist.content %}
+      {%- for site in item.lists.search_regexpreplacelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.search_regexpreplacelist.name is defined
   notify: restart-e2guardian
 
@@ -472,9 +472,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_searchlist.name }}"
     content: |
-      {% for site in item.lists.banned_searchlist.content %}
+      {%- for site in item.lists.banned_searchlist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_searchlist.name is defined
   notify: restart-e2guardian
 
@@ -482,9 +482,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.override_searchlist.name }}"
     content: |
-      {% for site in item.lists.override_searchlist.content %}
+      {%- for site in item.lists.override_searchlist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.override_searchlist.name is defined
   notify: restart-e2guardian
 
@@ -492,9 +492,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_bypass_sitelist.name }}"
     content: |
-      {% for site in item.lists.banned_bypass_sitelist.content %}
+      {%- for site in item.lists.banned_bypass_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.banned_bypass_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -502,9 +502,9 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.nocheckcert_sitelist.name }}"
     content: |
-      {% for site in item.lists.nocheckcert_sitelist.content %}
+      {%- for site in item.lists.nocheckcert_sitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.nocheckcert_sitelist.name is defined
   notify: restart-e2guardian
 
@@ -512,8 +512,8 @@
   ansible.builtin.copy:
     dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.nocheckcert_ipsitelist.name }}"
     content: |
-      {% for site in item.lists.nocheckcert_ipsitelist.content %}
+      {%- for site in item.lists.nocheckcert_ipsitelist.content %}
       {{ site }}
-      {% endfor %}
+      {% endfor -%}
   when: item.lists.nocheckcert_ipsitelist.name is defined
   notify: restart-e2guardian
