@@ -1,16 +1,14 @@
 ---
 
-- name: INSTALL | Packages present
-  block:
-    - name: INSTALL | Necessary packages present (Ubuntu)
-      ansible.builtin.apt:
-        name: "{{ item }}"
-        update_cache: true
-      loop:
-        - "{{ e2g_build_dependencies_ubuntu }}"
-        - "{{ e2g_runtime_dependencies_ubuntu }}"
-        # Libpcre must be installed after everything else on Ubuntu.
-        - "{{ e2g_additional_dependencies_ubuntu }}"
+- name: INSTALL | Necessary packages present
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    update_cache: true
+  loop:
+    - "{{ e2g_build_dependencies }}"
+    - "{{ e2g_runtime_dependencies }}"
+    # Libpcre must be installed after everything else on Ubuntu.
+    - "{{ e2g_additional_dependencies }}"
   when: build_e2g
 
 - name: INSTALL | Group present
@@ -75,6 +73,7 @@
 
 - name: INSTALL | Service unit file deployed
   block:
+
     - name: INSTALL | Deployed service unit
       ansible.builtin.copy:
         src: "{{ e2g_repo_dir }}/data/scripts/e2guardian.service"
@@ -84,6 +83,7 @@
         group: root
         mode: "0644"
       changed_when: false
+
     - name: INSTALL | Set niceness on service unit file
       ansible.builtin.lineinfile:
         path: /etc/systemd/system/e2guardian.service
@@ -97,9 +97,9 @@
           line: ExecReload=nice -n -19 {{ e2g_install_dir }}/sbin/e2guardian -r
   when: build_e2g
 
-- name: INSTALL | Build dependencies removed (Ubuntu)
+- name: INSTALL | Build dependencies removed
   ansible.builtin.apt:
-    name: "{{ e2g_build_dependencies_ubuntu }}"
+    name: "{{ e2g_build_dependencies }}"
     state: absent
     autoremove: true
     purge: true
