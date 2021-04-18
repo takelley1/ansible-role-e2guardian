@@ -30,9 +30,11 @@
   ansible.builtin.file:
     path: /etc/nginx/sites-enabled/default
     state: absent
+  notify: restart-webserver
 
 - name: WEBSERVER | Nginx E2Guardian site enabled
   ansible.builtin.file:
     src: /etc/nginx/sites-available/e2guardian
     dest: /etc/nginx/sites-enabled/e2guardian
     state: link
+  notify: restart-webserver
