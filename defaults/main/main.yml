@@ -7,17 +7,16 @@ e2g_install_dir: /opt/e2g
 e2g_repo_dir: "{{ e2g_install_dir }}/git"
 e2g_filter_groups_dir: "{{ e2g_install_dir }}/etc/e2guardian/lists"
 
-# Whether to build E2Guardian.
+# Whether to clone, configure, and build E2Guardian.
 build_e2g: true
 # Whether to remove the packages to required to build E2Guardian after installation.
 remove_build_dependencies: false
 
-# Only used if SSL is enabled for E2Guardian.
+# Only used if SSL man-in-the-middle is enabled for E2Guardian.
 e2g_ca_name: E2Guardian CA
 e2g_cert_key_size: 2048
 e2g_cert_type: RSA
 
-# See https://wiki.gentoo.org/wiki/GCC_optimization for more info on CXXFLAGS.
 # Compiler options' affect on binary size (branch v5.3).
   # No CXXFLAGS                        = 28748
   # CXXFLAGS="-march=native"           = 2032
@@ -25,6 +24,7 @@ e2g_cert_type: RSA
   # CXXFLAGS="-march=native -O2 -pipe" = 1468
   # CXXFLAGS=              "-O2 -pipe" = 1460
   # CXXFLAGS=              "-O2"       = 1460
+# See https://wiki.gentoo.org/wiki/GCC_optimization for more info on CXXFLAGS.
 
 build_options: >
   --enable-sslmitm=yes
