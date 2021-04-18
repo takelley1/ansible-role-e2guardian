@@ -84,4 +84,4 @@
     remote_src: true
     owner: www-data
     group: www-data
-    mode: "0440"
+    mode: "0400"
