@@ -337,7 +337,7 @@ neterrtemplate = '{{ item.neterrtemplate }}'
 #SSL man in the middle
 # Forge ssl certificates for all non-exception sites, decrypt the data then re encrypt it
 # using a different private key. Used to filter ssl sites
-sslmitm = {{ item.sslmitm | default('off') }}
+sslmitm = {{ item.sslmitm | default('on') }}
 
 # Enable MITM site certificate checking
 # ignored if  sslmitm is off
