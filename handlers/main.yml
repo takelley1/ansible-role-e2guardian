@@ -1,15 +1,19 @@
 ---
 
 - name: HANDLERS | E2Guardian restarted
-  service:
+  ansible.builtin.systemd:
     name: e2guardian
     state: restarted
     enabled: true
+    masked: false
+    daemon_reload: true
   listen: restart-e2guardian
 
 - name: HANDLERS | Webserver restarted
-  service:
+  ansible.builtin.systemd:
     name: nginx
     state: restarted
     enabled: true
+    masked: false
+    daemon_reload: true
   listen: restart-webserver
