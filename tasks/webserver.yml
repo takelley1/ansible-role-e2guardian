@@ -38,3 +38,9 @@
     dest: /etc/nginx/sites-enabled/e2guardian
     state: link
   notify: restart-webserver
+
+- name: WEBSERVER | Nginx allowed in ufw
+  community.general.ufw:
+    name: tcp
+    rule: allow
+    to_port: 80
