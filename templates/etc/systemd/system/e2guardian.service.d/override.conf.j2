@@ -1,0 +1,17 @@
+{{ ansible_managed | comment }}
+
+[Service]
+
+# Start with maximum process priority.
+ExecStart=
+ExecReload=
+ExecStart=nice -n {{ e2g_service_niceness }} {{ e2g_install_dir }}/sbin/e2guardian
+ExecReload=nice -n {{ e2g_service_niceness }} {{ e2g_install_dir }}/sbin/e2guardian -r
+
+# Enable CPU accounting and increase priority with cgroups attributes.
+CPUAccounting=yes
+CPUWeight={{ e2g_service_cpuweight }}
+StartupCPUWeight={{ e2g_service_startupcpuweight }}
+
+# Protect the service from getting killed due to low-memory.
+MemoryMin={{ e2g_service_memorymin }}

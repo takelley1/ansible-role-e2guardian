@@ -1,0 +1,16 @@
+---
+
+# These settings apply to E2Guardian's systemd unit file.
+
+# How nice the service should be, from -19 to 20.
+# See nice(1) for details.
+e2g_service_niceness: -19
+
+# CPU priority of service using cgroups.
+# See systemd.resource-control(5) for details.
+e2g_service_cpuweight: 10000
+e2g_service_startupcpuweight: "{{ e2g_service_cpuweight }}"
+
+# Protect the service from getting killed due to low-memory.
+# See systemd.resource-control(5) for details.
+e2g_service_memorymin: infinity
