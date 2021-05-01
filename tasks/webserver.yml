@@ -41,6 +41,6 @@
 
 - name: WEBSERVER | Nginx allowed in ufw
   community.general.ufw:
-    name: tcp
     rule: allow
+    proto: tcp
     to_port: 80
