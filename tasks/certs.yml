@@ -1,10 +1,8 @@
 ---
 
-# Generate certificates for E2Guardian SSL man-in-the-middle usage.
+# Generate certificates for E2Guardian SSL man-in-the-middle mode.
+# Certs are only generated if they don't already exist in order to maintain idempotence.
 
-# Certs are only generated if they don't already exist to maintain idempotence.
-
-# Make sure certificate paths exist.
 - name: CERTS | Cert paths exist
   ansible.builtin.file:
     path: "{{ item }}"
@@ -77,6 +75,11 @@
   when: csr_created.changed
   notify: restart-e2guardian
 
+- name: CERTS | Check for webserver dir
+  ansible.builtin.stat:
+    path: /var/www/e2guardian
+  register: dir
+
 - name: CERTS | CA cert copied to webserver dir
   ansible.builtin.copy:
     src: "{{ e2g_conf_cacertificatepath }}"
@@ -85,3 +88,6 @@
     owner: www-data
     group: www-data
     mode: "0400"
+  when:
+    - dir.stat.isdir is defined
+    - dir.stat.isdir
