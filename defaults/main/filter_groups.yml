@@ -5,6 +5,7 @@ e2g_filter_groups:
   - groupname: all_group
 
   - groupname: group1
+    naughtyness_limit: 50
     lists:
       banned_siteiplist:
         name: bannedsiteiplist_group1
@@ -19,6 +20,7 @@ e2g_filter_groups:
         content: "{{ e2g_bannedsitelist }}"
 
   - groupname: group3
+    naughtyness_limit: 150
     lists:
       banned_sitelist:
         name: bannedsitelist_users_group
