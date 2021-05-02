@@ -9,70 +9,70 @@ groupname = '{{ item.groupname }}'
 storyboard = '{{ item.storyboard | default(e2g_install_dir + '/etc/e2guardian/examplef1.story') }}'
 
 # Content filtering files location ----------------------------------------------------------------------------------
-bannedphraselist = '{{ item.lists.banned_phraselist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedphraselist') }}'
-weightedphraselist = '{{ item.lists.weighted_phraselist.path | default(e2g_install_dir + '/etc/e2guardian/lists/weightedphraselist') }}'
-exceptionphraselist = '{{ item.lists.exception_phraselist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionphraselist') }}'
+bannedphraselist = '{{ item.lists.banned_phraselist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedphraselist') }}'
+weightedphraselist = '{{ item.lists.weighted_phraselist.name | default(e2g_install_dir + '/etc/e2guardian/lists/weightedphraselist') }}'
+exceptionphraselist = '{{ item.lists.exception_phraselist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionphraselist') }}'
 
 #banned lists -------------------------------------------------------------------------------------------------------
-sitelist = 'name=banned,messageno=500,path={{ item.lists.banned_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsitelist') }}'
-ipsitelist = 'name=banned,messageno=510,path={{ item.lists.banned_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsiteiplist') }}'
-urllist = 'name=banned,messageno=501,path={{ item.lists.banned_urllist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedurllist') }}'
-regexpboollist = 'name=banned,messageno=503,path={{ item.lists.banned_regexpboollist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedregexpurllist') }}'
-regexpboollist = 'name=banneduseragent,messageno=522,path={{ item.lists.banned_useragent_regexpboollist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedregexpuseragentlist') }}'
+sitelist = 'name=banned,messageno=500,path={{ item.lists.banned_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsitelist') }}'
+ipsitelist = 'name=banned,messageno=510,path={{ item.lists.banned_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsiteiplist') }}'
+urllist = 'name=banned,messageno=501,path={{ item.lists.banned_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedurllist') }}'
+regexpboollist = 'name=banned,messageno=503,path={{ item.lists.banned_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedregexpurllist') }}'
+regexpboollist = 'name=banneduseragent,messageno=522,path={{ item.lists.banned_useragent_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedregexpuseragentlist') }}'
 
-sitelist = 'name=bannedssl,messageno=520,path={{ item.lists.banned_ssl_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsslsitelist') }}'
-ipsitelist = 'name=bannedssl,messageno=520,path={{ item.lists.banned_ssl_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsslsiteiplist') }}'
+sitelist = 'name=bannedssl,messageno=520,path={{ item.lists.banned_ssl_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsslsitelist') }}'
+ipsitelist = 'name=bannedssl,messageno=520,path={{ item.lists.banned_ssl_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsslsiteiplist') }}'
 
 #grey (i.e. content check) lists ------------------------------------------------------------------------------------
-sitelist = 'name=grey,path={{ item.lists.grey_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/greysitelist') }}'
-ipsitelist = 'name=grey,path={{ item.lists.grey_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/greysiteiplist') }}'
-urllist = 'name=grey,path={{ item.lists.grey_urllist.path | default(e2g_install_dir + '/etc/e2guardian/lists/greyurllist') }}'
+sitelist = 'name=grey,path={{ item.lists.grey_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greysitelist') }}'
+ipsitelist = 'name=grey,path={{ item.lists.grey_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greysiteiplist') }}'
+urllist = 'name=grey,path={{ item.lists.grey_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greyurllist') }}'
 
-sitelist = 'name=greyssl,path={{ item.lists.grey_ssl_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/greysslsitelist') }}'
-ipsitelist = 'name=greyssl,path={{ item.lists.grey_ssl_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/greysslsiteiplist') }}'
+sitelist = 'name=greyssl,path={{ item.lists.grey_ssl_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greysslsitelist') }}'
+ipsitelist = 'name=greyssl,path={{ item.lists.grey_ssl_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greysslsiteiplist') }}'
 
 #exception lists ----------------------------------------------------------------------------------------------------
-sitelist = 'name=exception,messageno=602,path={{ item.lists.exception_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionsitelist') }}'
-ipsitelist = 'name=exception,messageno=602,path={{ item.lists.exception_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionsiteiplist') }}'
-urllist = 'name=exception,messageno=603,path={{ item.lists.exception_urllist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionurllist') }}'
-regexpboollist = 'name=exception,messageno=609,path={{ item.lists.exception_regexpboollist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionregexpurllist') }}'
-regexpboollist = 'name=exceptionuseragent,messageno=610,path={{ item.lists.exception_useragent_regexpboollist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionregexpuseragentlist') }}'
+sitelist = 'name=exception,messageno=602,path={{ item.lists.exception_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionsitelist') }}'
+ipsitelist = 'name=exception,messageno=602,path={{ item.lists.exception_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionsiteiplist') }}'
+urllist = 'name=exception,messageno=603,path={{ item.lists.exception_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionurllist') }}'
+regexpboollist = 'name=exception,messageno=609,path={{ item.lists.exception_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionregexpurllist') }}'
+regexpboollist = 'name=exceptionuseragent,messageno=610,path={{ item.lists.exception_useragent_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionregexpuseragentlist') }}'
 
-sitelist = 'name=refererexception,messageno=620,path={{ item.lists.reference_exception_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/refererexceptionsitelist') }}'
-ipsitelist = 'name=refererexception,messageno=620,path={{ item.lists.reference_exception_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/refererexceptionsiteiplist') }}'
-urllist = 'name=refererexception,messageno=620,path={{ item.lists.reference_exception_urllist.path | default(e2g_install_dir + '/etc/e2guardian/lists/refererexceptionurllist') }}'
+sitelist = 'name=refererexception,messageno=620,path={{ item.lists.reference_exception_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/refererexceptionsitelist') }}'
+ipsitelist = 'name=refererexception,messageno=620,path={{ item.lists.reference_exception_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/refererexceptionsiteiplist') }}'
+urllist = 'name=refererexception,messageno=620,path={{ item.lists.reference_exception_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/refererexceptionurllist') }}'
 
-sitelist = 'name=embededreferer,path={{ item.lists.embeded_reference_exception_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/embededreferersitelist') }}'
-ipsitelist = 'name=embededreferer,path={{ item.lists.embeded_reference_exception_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/embededreferersiteiplist') }}'
-urllist = 'name=embededreferer,path={{ item.lists.embeded_reference_exception_urllist.path | default(e2g_install_dir + '/etc/e2guardian/lists/embededrefererurllist') }}'
+sitelist = 'name=embededreferer,path={{ item.lists.embeded_reference_exception_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/embededreferersitelist') }}'
+ipsitelist = 'name=embededreferer,path={{ item.lists.embeded_reference_exception_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/embededreferersiteiplist') }}'
+urllist = 'name=embededreferer,path={{ item.lists.embeded_reference_exception_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/embededrefererurllist') }}'
 
 #modification lists -------------------------------------------------------------------------------------------------
-regexpreplacelist = 'name=change,path={{ item.lists.modification_regexpreplacelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/urlregexplist') }}'
-regexpreplacelist = 'name=sslreplace,path={{ item.lists.modification_ssl_regexpreplacelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/sslsiteregexplist') }}'
+regexpreplacelist = 'name=change,path={{ item.lists.modification_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/urlregexplist') }}'
+regexpreplacelist = 'name=sslreplace,path={{ item.lists.modification_ssl_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/sslsiteregexplist') }}'
 
 #redirection lists --------------------------------------------------------------------------------------------------
-regexpreplacelist = 'name=redirect,path={{ item.lists.redirect_regexpreplacelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/urlredirectregexplist') }}'
-contentregexplist = '{{ item.lists.redirect_contentregexplist.path | default(e2g_install_dir + '/etc/e2guardian/lists/contentregexplist') }}'
+regexpreplacelist = 'name=redirect,path={{ item.lists.redirect_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/urlredirectregexplist') }}'
+contentregexplist = '{{ item.lists.redirect_contentregexplist.name | default(e2g_install_dir + '/etc/e2guardian/lists/contentregexplist') }}'
 
 #local banned -------------------------------------------------------------------------------------------------------
-sitelist = 'name=localbanned,messageno=560,path={{ item.lists.local_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsitelist') }}'
-# ipsitelist = 'name=localbanned,messageno=560,path={{ item.lists.local_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsiteiplist') }}'
-# urllist = 'name=localbanned,messageno=561,path={{ item.lists.local_urllist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedurllist') }}'
-# sitelist = 'name=localbannedssl,messageno=580,path={{ item.lists.local_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsslsitelist') }}'
-# ipsitelist = 'name=localbannedssl,messageno=580,path={{ item.lists.local_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsslsiteiplist') }}'
-searchlist = 'name=localbanned,messageno=581,path={{ item.lists.local_searchlist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsearchlist') }}'
+sitelist = 'name=localbanned,messageno=560,path={{ item.lists.local_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsitelist') }}'
+# ipsitelist = 'name=localbanned,messageno=560,path={{ item.lists.local_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsiteiplist') }}'
+# urllist = 'name=localbanned,messageno=561,path={{ item.lists.local_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedurllist') }}'
+# sitelist = 'name=localbannedssl,messageno=580,path={{ item.lists.local_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsslsitelist') }}'
+# ipsitelist = 'name=localbannedssl,messageno=580,path={{ item.lists.local_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsslsiteiplist') }}'
+searchlist = 'name=localbanned,messageno=581,path={{ item.lists.local_searchlist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsearchlist') }}'
 
 #local grey lists -------------------------------------------------------------------------------------------------
-sitelist = 'name=localgrey,path={{ item.lists.local_grey_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysitelist') }}'
-# ipsitelist = 'name=localgrey,path={{ item.lists.local_grey_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysiteiplist') }}'
-# urllist = 'name=localgrey,path={{ item.lists.local_grey_urllist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localgreyurllist') }}'
-sitelist = 'name=localgreyssl,path={{ item.lists.local_grey_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysslsitelist') }}'
-# ipsitelist = 'name=localgreyssl,path={{ item.lists.local_grey_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysslsiteiplist') }}'
+sitelist = 'name=localgrey,path={{ item.lists.local_grey_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysitelist') }}'
+# ipsitelist = 'name=localgrey,path={{ item.lists.local_grey_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysiteiplist') }}'
+# urllist = 'name=localgrey,path={{ item.lists.local_grey_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreyurllist') }}'
+sitelist = 'name=localgreyssl,path={{ item.lists.local_grey_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysslsitelist') }}'
+# ipsitelist = 'name=localgreyssl,path={{ item.lists.local_grey_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysslsiteiplist') }}'
 
 #local exception lists --------------------------------------------------------------------------------------------
-sitelist = 'name=localexception,messageno=662,path={{ item.lists.local_exception_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localexceptionsitelist') }}'
-# ipsitelist = 'name=localexception,messageno=662,path={{ item.lists.local_exception_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localexceptionsiteiplist') }}'
-# urllist = 'name=localexception,messageno=663,path={{ item.lists.local_exception_urllist.path | default(e2g_install_dir + '/etc/e2guardian/lists/localexceptionurllist') }}'
+sitelist = 'name=localexception,messageno=662,path={{ item.lists.local_exception_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localexceptionsitelist') }}'
+# ipsitelist = 'name=localexception,messageno=662,path={{ item.lists.local_exception_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localexceptionsiteiplist') }}'
+# urllist = 'name=localexception,messageno=663,path={{ item.lists.local_exception_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localexceptionurllist') }}'
 
 # Filetype filtering
 #
@@ -88,15 +88,15 @@ sitelist = 'name=localexception,messageno=662,path={{ item.lists.local_exception
 #
 # Use the following lists to block specific kinds of file downloads.
 #
-fileextlist = 'name=bannedextension,messageno=900,path={{ item.lists.fileextlist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedextensionlist') }}'
-mimelist = 'name=bannedmime,messageno=800,path={{ item.lists.mimelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedmimetypelist') }}'
+fileextlist = 'name=bannedextension,messageno=900,path={{ item.lists.bannedextension_fileextlist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedextensionlist') }}'
+mimelist = 'name=bannedmime,messageno=800,path={{ item.lists.bannedmime_mimelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedmimetypelist') }}'
 #
 # In either file filtering mode, the following list can be used to override
 # MIME type & extension blocks for particular domains & URLs (trusted download sites).
 #
-sitelist = 'name=exceptionfile,path={{ item.lists.exception_file_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionfilesitelist') }}'
-ipsitelist = 'name=exceptionfile,path={{ item.lists.exception_file_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionfilesiteiplist') }}'
-urllist = 'name=exceptionfile,path={{ item.lists.exception_file_urllist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionfileurllist') }}'
+sitelist = 'name=exceptionfile,path={{ item.lists.exception_file_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionfilesitelist') }}'
+ipsitelist = 'name=exceptionfile,path={{ item.lists.exception_file_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionfilesiteiplist') }}'
+urllist = 'name=exceptionfile,path={{ item.lists.exception_file_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionfileurllist') }}'
 
 # POST protection (web upload and forms)
 # does not block forms without any file upload, i.e. this is just for
@@ -128,11 +128,11 @@ maxuploadsize = {{ item.maxuploadsize | default('-1') }}
 # Headers are matched/replaced on a line-by-line basis, not as a contiguous
 # block.
 # Use for example, to remove cookies or prevent certain user-agents.
-regexpreplacelist = 'name=headermods,path={{ item.lists.header_regexpreplacelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/headerregexplist') }}'
-regexpboollist = 'name=bannedheader,path={{ item.lists.banned_header_regexpboollist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedregexpheaderlist') }}'
-regexpboollist = 'name=exceptionheader,path={{ item.lists.exception_header_regexpboollist.path | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionregexpheaderlist') }}'
+regexpreplacelist = 'name=headermods,path={{ item.lists.header_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/headerregexplist') }}'
+regexpboollist = 'name=bannedheader,path={{ item.lists.banned_header_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedregexpheaderlist') }}'
+regexpboollist = 'name=exceptionheader,path={{ item.lists.exception_header_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionregexpheaderlist') }}'
 # used for Youtube add cookies etc
-regexpreplacelist = 'name=addheader,path={{ item.lists.add_header_regexpreplacelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/addheaderregexplist') }}'
+regexpreplacelist = 'name=addheader,path={{ item.lists.add_header_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/addheaderregexplist') }}'
 
 # Weighted phrase mode
 # Optional; overrides the weightedphrasemode option in e2guardian.conf
@@ -177,11 +177,11 @@ naughtynesslimit = {{ item.naughtynesslimit | default('100') }}
 # List of regular expressions for matching search engine URLs.  It is assumed
 # that the search terms themselves will be contained in the
 # of output of each expression.
-regexpreplacelist = 'name=searchterms,path={{ item.lists.search_regexpreplacelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/searchregexplist') }}'
+regexpreplacelist = 'name=searchterms,path={{ item.lists.search_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/searchregexplist') }}'
 #
 # Banned Search Term list(s) for option 1
-searchlist = 'name=banned,path={{ item.lists.banned_searchlist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsearchlist') }}'
-searchlist = 'name=override,path={{ item.lists.override_searchlist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsearchoveridelist') }}'
+searchlist = 'name=banned,path={{ item.lists.banned_searchlist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsearchlist') }}'
+searchlist = 'name=override,path={{ item.lists.override_searchlist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsearchoveridelist') }}'
 
 # Category display threshold
 # This option only applies to pages blocked by weighted phrase filtering.
@@ -213,9 +213,9 @@ categorydisplaythreshold = {{ item.categorydisplaythreshold | default('0') }}
 embeddedurlweight = {{ item.embeddedurlweight | default('0') }}
 
 #  Users will not be able to bypass sites/urls in these lists
-#sitelist = 'name=bannedbypass,messageno=500,path={{ item.lists.banned_bypass_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsitelistwithbypass') }}'
-#ipsitelist = 'name=bannedbypass,messageno=500,path={{ e2g_install_dir }}/etc/e2guardian/lists/bannedsiteiplistwithbypass'
-#urllist = 'name=bannedbypass,messageno=501,path={{ e2g_install_dir }}/etc/e2guardian/lists/bannedurllistwithbypass'
+#sitelist = 'name=bannedbypass,messageno=500,path={{ item.lists.banned_bypass_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsitelistwithbypass') }}'
+#ipsitelist = 'name=bannedbypass,messageno=500,path={{ item.lists.banned_bypass_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsiteiplistwithbypass') }}'
+#urllist = 'name=bannedbypass,messageno=501,path={{ item.lists.banned_bypass_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedurllistwithbypass') }}'
 
 # Infection/Scan Error Bypass
 # Similar to the 'bypass' setting, but specifically for bypassing files scanned and found
@@ -350,5 +350,5 @@ mitmcheckcert = {{ item.mitmcheckcert | default('off') }}
 # Use with caution!
 # Ignored if mitmcheckcert is 'off'
 #nocheckcertsitelist = e2g_install_dir'/etc/e2guardian/lists/nocheckcertsitelist'
-sitelist = 'name=nocheckcert,path={{ item.lists.nocheckcert_sitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/nocheckcertsitelist') }}'
-ipsitelist = 'name=nocheckcert,path={{ item.lists.nocheckcert_ipsitelist.path | default(e2g_install_dir + '/etc/e2guardian/lists/nocheckcertsiteiplist') }}'
+sitelist = 'name=nocheckcert,path={{ item.lists.nocheckcert_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/nocheckcertsitelist') }}'
+ipsitelist = 'name=nocheckcert,path={{ item.lists.nocheckcert_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/nocheckcertsiteiplist') }}'
