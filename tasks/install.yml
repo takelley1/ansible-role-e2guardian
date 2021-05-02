@@ -44,7 +44,7 @@
 
 - name: INSTALL | E2Guardian built
   block:
-    - name: INSTALL | Repo cloned
+    - name: INSTALL | BUILD | E2Guardian Repo cloned
       ansible.builtin.git:
         repo: "{{ e2g_repo_url }}"
         dest: "{{ e2g_repo_dir }}"
@@ -53,7 +53,7 @@
         depth: 1
         force: true
 
-    - name: INSTALL | Build options configured
+    - name: INSTALL | BUILD | Build options configured
       shell:
         cmd: "{{ item }}"
         chdir: "{{ e2g_repo_dir }}"
@@ -61,12 +61,12 @@
         - ./autogen.sh
         - ./configure {{ build_options }}
 
-    - name: INSTALL | Package built
+    - name: INSTALL | BUILD | E2Guardian built
       community.general.make:
         chdir: "{{ e2g_repo_dir }}"
         jobs: "{{ ansible_processor_vcpus | int + 1 }}"
 
-    - name: INSTALL | Package installed
+    - name: INSTALL | BUILD | E2Guardian installed
       shell:
         cmd: make install
         chdir: "{{ e2g_repo_dir }}"
