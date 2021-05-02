@@ -1,5 +1,7 @@
 ---
 
+# Clone, build, and install E2Guardian.
+
 - name: INSTALL | Necessary packages present
   ansible.builtin.apt:
     name: "{{ item }}"
@@ -122,6 +124,7 @@
     group: root
     mode: "0644"
 
+# Only supports a single value for {{ e2g_conf_filterports }}
 - name: INSTALL | E2Guardian allowed in ufw
   community.general.ufw:
     rule: allow

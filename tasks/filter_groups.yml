@@ -1,5 +1,7 @@
 ---
 
+# Deploy customized filer lists based on the groups defined in the e2g_filter_groups variable.
+
 - name: FILTER_GROUPS | Filter group configuration file created
   ansible.builtin.template:
     src: opt/e2g/etc/e2guardian/e2guardianfn.conf.j2

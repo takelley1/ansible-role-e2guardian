@@ -1,5 +1,8 @@
 ---
 
+# Variables used in the main e2guardian.conf configuration file.
+# See `templates/opt/e2g/etc/e2guardian/e2guardian.conf.j2` for
+#   information on the purpose of each variable.
 e2g_conf_languagedir: "{{ e2g_install_dir }}/share/e2guardian/languages"
 e2g_conf_language: ukenglish
 
@@ -22,6 +25,8 @@ e2g_conf_logsyslog: "on"
 # e2g_conf_dockermode:
 
 e2g_conf_filterports: 8080
+  - 8080
+
 # e2g_conf_mapportstoips:
 # e2g_conf_transparenthttpsport:
 # e2g_conf_icapport:
@@ -50,9 +55,6 @@ e2g_conf_showweightedfound: "on"
 e2g_conf_weightedphrasemode: 2
 e2g_conf_phrasefiltermode: 2
 
-# 0 = force lower case (default)
-# 1 = do not change case
-# 2 = scan first in lower case, then in original case
 e2g_conf_preservecase: 0
 e2g_conf_hexdecodecontent: "off"
 
@@ -61,21 +63,14 @@ e2g_conf_reverseaddresslookups: "off"
 e2g_conf_reverseclientiplookups: "off"
 e2g_conf_logclienthostnames: "off"
 
-# The size is in Kibibytes - eg 2048 = 2Mb
-# use 0 to set it to maxcontentramcachescansize
 e2g_conf_maxcontentfiltersize: 1024
-
-# The size is in Kibibytes - eg 10240 = 10Mb
-# use 0 to set it to maxcontentfilecachescansize
 e2g_conf_maxcontentramcachescansize: 2000
-
-# This value must be greater or equal to maxcontentramcachescansize.
-# The size is in Kibibytes - eg 10240 = 10Mb
 e2g_conf_maxcontentfilecachescansize: 20000
+
 e2g_conf_filecachedir: /tmp
 e2g_conf_deletedownloadedtempfiles: "on"
 
-e2g_conf_initialtrickledelay: 20 # A value between 20 and 110 would be sensible
+e2g_conf_initialtrickledelay: 20
 e2g_conf_trickledelay: 10
 
 e2g_conf_downloadmanager: "{{ e2g_install_dir }}/etc/e2guardian/downloadmanagers/default.conf"
@@ -87,7 +82,7 @@ e2g_conf_forwardedfor: "off"
 e2g_conf_usexforwardedfor: "off"
 e2g_conf_logconnectionhandlingerrors: "on"
 
-e2g_conf_httpworkers: 500 # On large site you might want to try 5000 (max value 20000)
+e2g_conf_httpworkers: 500
 # e2g_conf_pidfilename:
 
 e2g_conf_nodaemon: "off"

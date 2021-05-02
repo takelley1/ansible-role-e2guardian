@@ -1,6 +1,7 @@
 ---
 
-# Static webserver for serving E2Guardian's public certificate.
+# Static Nginx webserver for serving E2Guardian's public certificate.
+# Only useful if SSL man-in-the-middle is used.
 
 - name: WEBSERVER | Nginx package installed
   ansible.builtin.package:

@@ -1,5 +1,7 @@
 ---
 
+# Deploy E2Guardian's main filter lists.
+
 - name: CONFIGURE | Configuration templates deployed
   ansible.builtin.template:
     src: opt/e2g/etc/e2guardian/{{ item }}.j2
