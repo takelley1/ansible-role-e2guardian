@@ -22,14 +22,14 @@
     - "{{ e2g_additional_dependencies }}"
     - e2guardian
 
-- name: UNINSTALL | Group absent
-  ansible.builtin.group:
-    name: "{{ e2g_conf_daemongroup }}"
-    state: absent
-
 - name: UNINSTALL | User absent
   ansible.builtin.user:
     name: "{{ e2g_conf_daemonuser }}"
+    state: absent
+
+- name: UNINSTALL | Group absent
+  ansible.builtin.group:
+    name: "{{ e2g_conf_daemongroup }}"
     state: absent
 
 - name: UNINSTALL | Paths removed
@@ -49,12 +49,17 @@
     - path: /etc/nginx/sites-enabled/e2guardian
   when: item.path is defined
 
-- name: UNINSTALL | ufw rules removed
+- name: UNINSTALL | E2Guardian ufw rules removed
   community.general.ufw:
     rule: allow
     proto: tcp
     to_port: "{{ item }}"
     delete: true
-  loop:
-    - "{{ e2g_conf_filterports }}"
-    - 80
+  loop: "{{ e2g_conf_filterports }}"
+
+- name: UNINSTALL | Webserver ufw rules removed
+  community.general.ufw:
+    rule: allow
+    proto: tcp
+    to_port: 80
+    delete: true
