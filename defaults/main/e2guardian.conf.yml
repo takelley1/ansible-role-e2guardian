@@ -3,6 +3,7 @@
 # Variables used in the main e2guardian.conf configuration file.
 # See `templates/opt/e2g/etc/e2guardian/e2guardian.conf.j2` for
 #   information on the purpose of each variable.
+
 e2g_conf_languagedir: "{{ e2g_install_dir }}/share/e2guardian/languages"
 e2g_conf_language: ukenglish
 
@@ -24,7 +25,11 @@ e2g_conf_logsyslog: "on"
 
 # e2g_conf_dockermode:
 
-e2g_conf_filterports: 8080
+# e2g_conf_filterip:
+#  - "{{ ansible_default_ipv4.address }}"
+
+# This must match the number of IPs in e2g_conf_filterip.
+e2g_conf_filterports:
   - 8080
 
 # e2g_conf_mapportstoips:
