@@ -34,20 +34,18 @@
 
 - name: UNINSTALL | Paths removed
   ansible.builtin.file:
-    path: "{{ item.path }}"
+    path: "{{ item }}"
     state: absent
   loop:
-    - path: "{{ e2g_install_dir }}"
-    - path: "{{ e2g_conf_loglocation | dirname }}"
-    - path: /var/log/e2guardian
-    - path: /etc/systemd/system/e2guardian.service
-    - path: /etc/systemd/system/e2guardian.service.d
-    - path: /edit-e2g-lists.sh
-    - path: /etc/profile.d/e2g-path.sh
-    - path: /var/www/e2guardian
-    - path: /etc/nginx/sites-available/e2guardian
-    - path: /etc/nginx/sites-enabled/e2guardian
-  when: item.path is defined
+    - "{{ e2g_install_dir }}"
+    - /var/log/e2guardian
+    - /etc/systemd/system/e2guardian.service
+    - /etc/systemd/system/e2guardian.service.d
+    - /edit-e2g-lists.sh
+    - /etc/profile.d/e2g-path.sh
+    - /var/www/e2guardian
+    - /etc/nginx/sites-available/e2guardian
+    - /etc/nginx/sites-enabled/e2guardian
 
 - name: UNINSTALL | E2Guardian ufw rules removed
   community.general.ufw:
