@@ -2,16 +2,29 @@
 
 e2g_filter_groups:
 
+  - groupname: all_group
+
   - groupname: group1
     lists:
-      banned_sitelist:
-        name: bannedsitelist_group1
-        content: |
-          google.com
+      banned_siteiplist:
+        name: bannedsiteiplist_group1
+        content:
+          - 1.2.3.4
+          - 5.6.7.8
 
-  - groupname: group2
+  - groupname: users_group
     lists:
       banned_sitelist:
-        name: bannedsitelist_group2
-        content: |
-          youtube.com
+        name: bannedsitelist_users_group
+        content: "{{ e2g_bannedsitelist }}"
+
+  - groupname: group3
+    lists:
+      banned_sitelist:
+        name: bannedsitelist_users_group
+        content: "{{ e2g_bannedsitelist }}"
+      banned_urllist:
+        name: bannedurllist_group3
+        content:
+          - site1.com/url
+          - site2.com/url
