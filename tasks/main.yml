@@ -2,23 +2,23 @@
 
 - name: MAIN | Import install.yml
   import_tasks: install.yml
-  when: e2g_include_install_tasks
+  tags: install
 
 - name: MAIN | Import configure.yml
   import_tasks: configure.yml
-  when: e2g_include_configure_tasks
+  tags: configure
 
 - name: MAIN | Import webserver.yml
   import_tasks: webserver.yml
+  tags: webserver
   when:
-    - e2g_include_webserver_tasks
     - e2g_conf_enablessl is defined
     - e2g_conf_enablessl
 
 - name: MAIN | Import certs.yml
   import_tasks: certs.yml
+  tags: certs
   when:
-    - e2g_include_certs_tasks
     - e2g_conf_enablessl is defined
     - e2g_conf_enablessl
 
@@ -29,7 +29,7 @@
   loop: "{{ e2g_filter_groups }}"
   loop_control:
     index_var: item_index
-  when: e2g_include_filter_groups_tasks
+  tags: filter
 
 - name: MAIN | E2Guardian service enabled and running
   ansible.builtin.systemd:
@@ -38,3 +38,4 @@
     state: started
     daemon_reload: true
     masked: false
+  tags: services
