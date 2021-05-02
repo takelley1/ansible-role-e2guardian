@@ -124,9 +124,9 @@
     group: root
     mode: "0644"
 
-# Only supports a single value for {{ e2g_conf_filterports }}
 - name: INSTALL | E2Guardian allowed in ufw
   community.general.ufw:
     rule: allow
     proto: tcp
-    to_port: "{{ e2g_conf_filterports }}"
+    to_port: "{{ item }}"
+  loop: "{{ e2g_conf_filterports }}"
