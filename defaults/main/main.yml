@@ -29,7 +29,10 @@ e2g_cert_type: RSA
 # See https://wiki.gentoo.org/wiki/GCC_optimization for more info on CXXFLAGS.
 
 build_options: >
+  --quiet
   --enable-sslmitm=yes
+  --enable-pcre=yes
+  --enable-lfs=yes
   --prefix="{{ e2g_install_dir }}"
   --with-proxyuser="{{ e2g_conf_daemonuser }}"
   --with-proxygroup="{{ e2g_conf_daemongroup }}"
