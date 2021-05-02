@@ -1,0 +1,60 @@
+---
+
+# Uninstall E2Guardian.
+
+- name: UNINSTALL | Service stopped
+  ansible.builtin.systemd:
+    name: e2guardian
+    enabled: false
+    state: stopped
+    daemon_reload: true
+    masked: false
+  tags: services
+
+- name: UNINSTALL | Packages absent
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: absent
+    autoremove: true
+  loop:
+    - "{{ e2g_build_dependencies }}"
+    - "{{ e2g_runtime_dependencies }}"
+    - "{{ e2g_additional_dependencies }}"
+    - e2guardian
+
+- name: UNINSTALL | Group absent
+  ansible.builtin.group:
+    name: "{{ e2g_conf_daemongroup }}"
+    state: absent
+
+- name: UNINSTALL | User absent
+  ansible.builtin.user:
+    name: "{{ e2g_conf_daemonuser }}"
+    state: absent
+
+- name: UNINSTALL | Paths removed
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop:
+    - path: "{{ e2g_install_dir }}"
+    - path: "{{ e2g_conf_loglocation | dirname }}"
+    - path: /var/log/e2guardian
+    - path: /etc/systemd/system/e2guardian.service
+    - path: /etc/systemd/system/e2guardian.service.d
+    - path: /edit-e2g-lists.sh
+    - path: /etc/profile.d/e2g-path.sh
+    - path: /var/www/e2guardian
+    - path: /etc/nginx/sites-available/e2guardian
+    - path: /etc/nginx/sites-enabled/e2guardian
+  when: item.path is defined
+
+- name: UNINSTALL | ufw rules removed
+  community.general.ufw:
+    rule: allow
+    proto: tcp
+    to_port: "{{ item }}"
+    delete: true
+  loop:
+    - "{{ e2g_conf_filterports }}"
+    - 80
