@@ -8,7 +8,7 @@
     dest: "{{ e2g_install_dir }}/etc/e2guardian/{{ item }}"
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   loop:
     - e2guardian.conf
     - lists/authplugins/ipgroups
@@ -31,7 +31,7 @@
     dest: "{{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/{{ item }}"
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
     backup: true
   loop:
     - neterr_template.html
