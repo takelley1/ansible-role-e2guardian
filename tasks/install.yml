@@ -75,7 +75,7 @@
 
 - name: INSTALL | Unit file deployed
   ansible.builtin.copy:
-    src: "{{ e2g_repo_dir }}/data/scripts/e2guardian.service"
+    src: "{{ (e2g_repo_dir, 'data', 'scripts', 'e2guardian.service') | path_join }}"
     dest: /etc/systemd/system/e2guardian.service
     remote_src: true
     owner: root
