@@ -1,0 +1,12 @@
+#jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# banned MIME types
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_bannedmimetypelist is defined -%}
+{%- for item in e2g_bannedmimetypelist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------
+
