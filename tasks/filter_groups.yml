@@ -2,17 +2,26 @@
 
 # Deploy customized filer lists based on the groups defined in the e2g_filter_groups variable.
 
+- name: FILTER_GROUPS | Set filter group file index.
+  set_fact:
+    index: "{{ (item_index + 1) | string }}"
+
+# Setting a fact that depends on another fact must be defined separately.
+- name: FILTER_GROUPS | Set filter group file name.
+  set_fact:
+    filter_group_file: "{{ 'e2guardianf' + index }}"
+
 - name: FILTER_GROUPS | Filter group configuration file created
   ansible.builtin.template:
     src: opt/e2g/etc/e2guardian/e2guardianfn.conf.j2
-    dest: "{{ e2g_install_dir }}/etc/e2guardian/e2guardianf{{ item_index + 1}}.conf"
+    dest: "{{ ((e2g_install_dir, 'etc', 'e2guardian', filter_group_file) | path_join) + '.conf' }}"
   notify: restart-e2guardian
 
 # ------------------------------------------------------------------------------
 
 - name: FILTER_GROUPS | banned_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_sitelist.content %}
       {{ site }}
@@ -22,7 +31,7 @@
 
 - name: FILTER_GROUPS | banned_phraselist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_phraselist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_phraselist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_phraselist.content %}
       {{ site }}
@@ -32,7 +41,7 @@
 
 - name: FILTER_GROUPS | weighted_phraselist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.weighted_phraselist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.weighted_phraselist.name) | path_join }}"
     content: |
       {%- for site in item.lists.weighted_phraselist.content %}
       {{ site }}
@@ -42,7 +51,7 @@
 
 - name: FILTER_GROUPS | exception_phraselist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_phraselist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_phraselist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_phraselist.content %}
       {{ site }}
@@ -52,7 +61,7 @@
 
 - name: FILTER_GROUPS | banned_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_sitelist.content %}
       {{ site }}
@@ -62,7 +71,7 @@
 
 - name: FILTER_GROUPS | banned_ipsitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_ipsitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_ipsitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_ipsitelist.content %}
       {{ site }}
@@ -72,7 +81,7 @@
 
 - name: FILTER_GROUPS | banned_urllist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_urllist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_urllist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_urllist.content %}
       {{ site }}
@@ -82,7 +91,7 @@
 
 - name: FILTER_GROUPS | banned_regexpboollist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_regexpboollist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_regexpboollist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_regexpboollist.content %}
       {{ site }}
@@ -92,7 +101,7 @@
 
 - name: FILTER_GROUPS | banned_useragent_regexpboollist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_useragent_regexpboollist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_useragent_regexpboollist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_useragent_regexpboollist.content %}
       {{ site }}
@@ -102,7 +111,7 @@
 
 - name: FILTER_GROUPS | banned_ssl_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_ssl_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_ssl_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_ssl_sitelist.content %}
       {{ site }}
@@ -112,7 +121,7 @@
 
 - name: FILTER_GROUPS | banned_ssl_ipsitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_ssl_ipsitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_ssl_ipsitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_ssl_ipsitelist.content %}
       {{ site }}
@@ -122,7 +131,7 @@
 
 - name: FILTER_GROUPS | grey_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.grey_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.grey_sitelist.content %}
       {{ site }}
@@ -132,7 +141,7 @@
 
 - name: FILTER_GROUPS | grey_ipsitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_ipsitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.grey_ipsitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.grey_ipsitelist.content %}
       {{ site }}
@@ -142,7 +151,7 @@
 
 - name: FILTER_GROUPS | grey_urllist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_urllist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.grey_urllist.name) | path_join }}"
     content: |
       {%- for site in item.lists.grey_urllist.content %}
       {{ site }}
@@ -152,7 +161,7 @@
 
 - name: FILTER_GROUPS | grey_ssl_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_ssl_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.grey_ssl_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.grey_ssl_sitelist.content %}
       {{ site }}
@@ -162,7 +171,7 @@
 
 - name: FILTER_GROUPS | grey_ssl_ipsitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.grey_ssl_ipsitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.grey_ssl_ipsitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.grey_ssl_ipsitelist.content %}
       {{ site }}
@@ -172,7 +181,7 @@
 
 - name: FILTER_GROUPS | exception_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_sitelist.content %}
       {{ site }}
@@ -182,7 +191,7 @@
 
 - name: FILTER_GROUPS | exception_ipsitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_ipsitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_ipsitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_ipsitelist.content %}
       {{ site }}
@@ -192,7 +201,7 @@
 
 - name: FILTER_GROUPS | exception_urllist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_urllist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_urllist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_urllist.content %}
       {{ site }}
@@ -202,7 +211,7 @@
 
 - name: FILTER_GROUPS | exception_regexpboollist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_regexpboollist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_regexpboollist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_regexpboollist.content %}
       {{ site }}
@@ -212,7 +221,7 @@
 
 - name: FILTER_GROUPS | exception_useragent_regexpboollist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_useragent_regexpboollist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_useragent_regexpboollist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_useragent_regexpboollist.content %}
       {{ site }}
@@ -222,7 +231,7 @@
 
 - name: FILTER_GROUPS | reference_exception_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.reference_exception_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.reference_exception_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.reference_exception_sitelist.content %}
       {{ site }}
@@ -232,7 +241,7 @@
 
 - name: FILTER_GROUPS | reference_exception_ipsitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.reference_exception_ipsitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.reference_exception_ipsitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.reference_exception_ipsitelist.content %}
       {{ site }}
@@ -242,7 +251,7 @@
 
 - name: FILTER_GROUPS | reference_exception_urllist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.reference_exception_urllist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.reference_exception_urllist.name) | path_join }}"
     content: |
       {%- for site in item.lists.reference_exception_urllist.content %}
       {{ site }}
@@ -252,7 +261,7 @@
 
 - name: FILTER_GROUPS | embeded_reference_exception_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.embeded_reference_exception_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.embeded_reference_exception_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.embeded_reference_exception_sitelist.content %}
       {{ site }}
@@ -262,7 +271,7 @@
 
 - name: FILTER_GROUPS | embeded_reference_exception_ipsitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.embeded_reference_exception_ipsitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.embeded_reference_exception_ipsitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.embeded_reference_exception_ipsitelist.content %}
       {{ site }}
@@ -272,7 +281,7 @@
 
 - name: FILTER_GROUPS | embeded_reference_exception_urllist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.embeded_reference_exception_urllist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.embeded_reference_exception_urllist.name) | path_join }}"
     content: |
       {%- for site in item.lists.embeded_reference_exception_urllist.content %}
       {{ site }}
@@ -282,7 +291,7 @@
 
 - name: FILTER_GROUPS | modification_regexpreplacelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.modification_regexpreplacelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.modification_regexpreplacelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.modification_regexpreplacelist.content %}
       {{ site }}
@@ -292,7 +301,7 @@
 
 - name: FILTER_GROUPS | modification_ssl_regexpreplacelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.modification_ssl_regexpreplacelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.modification_ssl_regexpreplacelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.modification_ssl_regexpreplacelist.content %}
       {{ site }}
@@ -302,7 +311,7 @@
 
 - name: FILTER_GROUPS | redirect_regexpreplacelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.redirect_regexpreplacelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.redirect_regexpreplacelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.redirect_regexpreplacelist.content %}
       {{ site }}
@@ -312,7 +321,7 @@
 
 - name: FILTER_GROUPS | redirect_contentregexplist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.redirect_contentregexplist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.redirect_contentregexplist.name) | path_join }}"
     content: |
       {%- for site in item.lists.redirect_contentregexplist.content %}
       {{ site }}
@@ -322,7 +331,7 @@
 
 - name: FILTER_GROUPS | local_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.local_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.local_sitelist.content %}
       {{ site }}
@@ -332,7 +341,7 @@
 
 - name: FILTER_GROUPS | local_searchlist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_searchlist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.local_searchlist.name) | path_join }}"
     content: |
       {%- for site in item.lists.local_searchlist.content %}
       {{ site }}
@@ -342,7 +351,7 @@
 
 - name: FILTER_GROUPS | local_grey_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_grey_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.local_grey_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.local_grey_sitelist.content %}
       {{ site }}
@@ -352,7 +361,7 @@
 
 - name: FILTER_GROUPS | local_grey_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_grey_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.local_grey_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.local_grey_sitelist.content %}
       {{ site }}
@@ -362,7 +371,7 @@
 
 - name: FILTER_GROUPS | local_exception_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.local_exception_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.local_exception_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.local_exception_sitelist.content %}
       {{ site }}
@@ -372,7 +381,7 @@
 
 - name: FILTER_GROUPS | fileextlist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.fileextlist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.fileextlist.name) | path_join }}"
     content: |
       {%- for site in item.lists.fileextlist.content %}
       {{ site }}
@@ -382,7 +391,7 @@
 
 - name: FILTER_GROUPS | mimelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.mimelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.mimelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.mimelist.content %}
       {{ site }}
@@ -392,7 +401,7 @@
 
 - name: FILTER_GROUPS | exception_file_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_file_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_file_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_file_sitelist.content %}
       {{ site }}
@@ -402,7 +411,7 @@
 
 - name: FILTER_GROUPS | exception_file_ipsitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_file_ipsitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_file_ipsitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_file_ipsitelist.content %}
       {{ site }}
@@ -412,7 +421,7 @@
 
 - name: FILTER_GROUPS | exception_file_urllist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_file_urllist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_file_urllist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_file_urllist.content %}
       {{ site }}
@@ -422,7 +431,7 @@
 
 - name: FILTER_GROUPS | header_regexpreplacelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.header_regexpreplacelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.header_regexpreplacelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.header_regexpreplacelist.content %}
       {{ site }}
@@ -432,7 +441,7 @@
 
 - name: FILTER_GROUPS | banned_header_regexpboollist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_header_regexpboollist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_header_regexpboollist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_header_regexpboollist.content %}
       {{ site }}
@@ -442,7 +451,7 @@
 
 - name: FILTER_GROUPS | exception_header_regexpboollist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.exception_header_regexpboollist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.exception_header_regexpboollist.name) | path_join }}"
     content: |
       {%- for site in item.lists.exception_header_regexpboollist.content %}
       {{ site }}
@@ -452,7 +461,7 @@
 
 - name: FILTER_GROUPS | add_header_regexpreplacelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.add_header_regexpreplacelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.add_header_regexpreplacelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.add_header_regexpreplacelist.content %}
       {{ site }}
@@ -462,7 +471,7 @@
 
 - name: FILTER_GROUPS | search_regexpreplacelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.search_regexpreplacelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.search_regexpreplacelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.search_regexpreplacelist.content %}
       {{ site }}
@@ -472,7 +481,7 @@
 
 - name: FILTER_GROUPS | banned_searchlist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_searchlist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_searchlist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_searchlist.content %}
       {{ site }}
@@ -482,7 +491,7 @@
 
 - name: FILTER_GROUPS | override_searchlist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.override_searchlist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.override_searchlist.name) | path_join }}"
     content: |
       {%- for site in item.lists.override_searchlist.content %}
       {{ site }}
@@ -492,7 +501,7 @@
 
 - name: FILTER_GROUPS | banned_bypass_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.banned_bypass_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_bypass_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.banned_bypass_sitelist.content %}
       {{ site }}
@@ -502,7 +511,7 @@
 
 - name: FILTER_GROUPS | nocheckcert_sitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.nocheckcert_sitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.nocheckcert_sitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.nocheckcert_sitelist.content %}
       {{ site }}
@@ -512,7 +521,7 @@
 
 - name: FILTER_GROUPS | nocheckcert_ipsitelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ e2g_filter_groups_dir }}/{{ item.lists.nocheckcert_ipsitelist.name }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.nocheckcert_ipsitelist.name) | path_join }}"
     content: |
       {%- for site in item.lists.nocheckcert_ipsitelist.content %}
       {{ site }}

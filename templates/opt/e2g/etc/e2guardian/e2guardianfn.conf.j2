@@ -1,81 +1,80 @@
 {{ ansible_managed | comment }}
 # Filter group name
 # Used to fill in the -FILTERGROUP- placeholder in the HTML template file, and to
-# name the group in the access logs
+#   name the group in the access logs
 # Defaults to empty string
 groupname = '{{ item.groupname }}'
 
 # Much logic has moved to storyboard files
-storyboard = '{{ item.storyboard | default(e2g_install_dir + '/etc/e2guardian/examplef1.story') }}'
+storyboard = '{{ item.storyboard | default((e2g_install_dir, 'etc/e2guardian/examplef1.story') | path_join) }}'
 
-# Content filtering files location ----------------------------------------------------------------------------------
-bannedphraselist = '{{ item.lists.banned_phraselist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedphraselist') }}'
-weightedphraselist = '{{ item.lists.weighted_phraselist.name | default(e2g_install_dir + '/etc/e2guardian/lists/weightedphraselist') }}'
-exceptionphraselist = '{{ item.lists.exception_phraselist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionphraselist') }}'
+# CONTENT FILTERING FILES LOCATION ----------------------------------------------------------------------------------
+bannedphraselist = '{{ (e2g_filter_groups_dir, (item.lists.banned_phraselist.name | default('bannedphraselist'))) | path_join }}'
+weightedphraselist = '{{ (e2g_filter_groups_dir, (item.lists.weighted_phraselist.name | default('weightedphraselist'))) | path_join }}'
+exceptionphraselist = '{{ (e2g_filter_groups_dir, (item.lists.exception_phraselist.name | default('exceptionphraselist'))) | path_join }}'
 
-#banned lists -------------------------------------------------------------------------------------------------------
-sitelist = 'name=banned,messageno=500,path={{ item.lists.banned_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsitelist') }}'
-ipsitelist = 'name=banned,messageno=510,path={{ item.lists.banned_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsiteiplist') }}'
-urllist = 'name=banned,messageno=501,path={{ item.lists.banned_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedurllist') }}'
-regexpboollist = 'name=banned,messageno=503,path={{ item.lists.banned_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedregexpurllist') }}'
-regexpboollist = 'name=banneduseragent,messageno=522,path={{ item.lists.banned_useragent_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedregexpuseragentlist') }}'
+# BANNED LISTS -------------------------------------------------------------------------------------------------------
+sitelist = 'name=banned,messageno=500,path={{ (e2g_filter_groups_dir, (item.lists.banned_sitelist.name | default('bannedsitelist'))) | path_join }}'
+ipsitelist = 'name=banned,messageno=510,path={{ (e2g_filter_groups_dir, (item.lists.banned_ipsitelist.name | default('bannedsiteiplist'))) | path_join }}'
+urllist = 'name=banned,messageno=501,path={{ (e2g_filter_groups_dir, (item.lists.banned_urllist.name | default('bannedurllist'))) | path_join }}'
+regexpboollist = 'name=banned,messageno=503,path={{ (e2g_filter_groups_dir, (item.lists.banned_regexpboollist.name | default('bannedregexpurllist'))) | path_join }}'
+regexpboollist = 'name=banneduseragent,messageno=522,path={{ (e2g_filter_groups_dir, (item.lists.banned_useragent_regexpboollist.name | default('bannedregexpuseragentlist'))) | path_join }}'
 
-sitelist = 'name=bannedssl,messageno=520,path={{ item.lists.banned_ssl_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsslsitelist') }}'
-ipsitelist = 'name=bannedssl,messageno=520,path={{ item.lists.banned_ssl_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsslsiteiplist') }}'
+sitelist = 'name=bannedssl,messageno=520,path={{ (e2g_filter_groups_dir, (item.lists.banned_ssl_sitelist.name | default('bannedsslsitelist'))) | path_join }}'
+ipsitelist = 'name=bannedssl,messageno=520,path={{ (e2g_filter_groups_dir, (item.lists.banned_ssl_ipsitelist.name | default('bannedsslsiteiplist'))) | path_join }}'
 
-#grey (i.e. content check) lists ------------------------------------------------------------------------------------
-sitelist = 'name=grey,path={{ item.lists.grey_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greysitelist') }}'
-ipsitelist = 'name=grey,path={{ item.lists.grey_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greysiteiplist') }}'
-urllist = 'name=grey,path={{ item.lists.grey_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greyurllist') }}'
+# GREY (I.E. CONTENT CHECK) LISTS ------------------------------------------------------------------------------------
+sitelist = 'name=grey,path={{ (e2g_filter_groups_dir, (item.lists.grey_sitelist.name | default('greysitelist'))) | path_join }}'
+ipsitelist = 'name=grey,path={{ (e2g_filter_groups_dir, (item.lists.grey_ipsitelist.name | default('greysiteiplist'))) | path_join }}'
+urllist = 'name=grey,path={{ (e2g_filter_groups_dir, (item.lists.grey_urllist.name | default('greyurllist'))) | path_join }}'
 
-sitelist = 'name=greyssl,path={{ item.lists.grey_ssl_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greysslsitelist') }}'
-ipsitelist = 'name=greyssl,path={{ item.lists.grey_ssl_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/greysslsiteiplist') }}'
+sitelist = 'name=greyssl,path={{ (e2g_filter_groups_dir, (item.lists.grey_ssl_sitelist.name | default('greysslsitelist'))) | path_join }}'
+ipsitelist = 'name=greyssl,path={{ (e2g_filter_groups_dir, (item.lists.grey_ssl_ipsitelist.name | default('greysslsiteiplist'))) | path_join }}'
 
-#exception lists ----------------------------------------------------------------------------------------------------
-sitelist = 'name=exception,messageno=602,path={{ item.lists.exception_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionsitelist') }}'
-ipsitelist = 'name=exception,messageno=602,path={{ item.lists.exception_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionsiteiplist') }}'
-urllist = 'name=exception,messageno=603,path={{ item.lists.exception_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionurllist') }}'
-regexpboollist = 'name=exception,messageno=609,path={{ item.lists.exception_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionregexpurllist') }}'
-regexpboollist = 'name=exceptionuseragent,messageno=610,path={{ item.lists.exception_useragent_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionregexpuseragentlist') }}'
+# EXCEPTION LISTS ----------------------------------------------------------------------------------------------------
+sitelist = 'name=exception,messageno=602,path={{ (e2g_filter_groups_dir, (item.lists.exception_sitelist.name | default('exceptionsitelist'))) | path_join }}'
+ipsitelist = 'name=exception,messageno=602,path={{ (e2g_filter_groups_dir, (item.lists.exception_ipsitelist.name | default('exceptionsiteiplist'))) | path_join }}'
+urllist = 'name=exception,messageno=603,path={{ (e2g_filter_groups_dir, (item.lists.exception_urllist.name | default('exceptionurllist'))) | path_join }}'
+regexpboollist = 'name=exception,messageno=609,path={{ (e2g_filter_groups_dir, (item.lists.exception_regexpboollist.name | default('exceptionregexpurllist'))) | path_join }}'
+regexpboollist = 'name=exceptionuseragent,messageno=610,path={{ (e2g_filter_groups_dir, (item.lists.exception_useragent_regexpboollist.name | default('exceptionregexpuseragentlist'))) | path_join }}'
 
-sitelist = 'name=refererexception,messageno=620,path={{ item.lists.reference_exception_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/refererexceptionsitelist') }}'
-ipsitelist = 'name=refererexception,messageno=620,path={{ item.lists.reference_exception_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/refererexceptionsiteiplist') }}'
-urllist = 'name=refererexception,messageno=620,path={{ item.lists.reference_exception_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/refererexceptionurllist') }}'
+sitelist = 'name=refererexception,messageno=620,path={{ (e2g_filter_groups_dir, (item.lists.reference_exception_sitelist.name | default('refererexceptionsitelist'))) | path_join }}'
+ipsitelist = 'name=refererexception,messageno=620,path={{ (e2g_filter_groups_dir, (item.lists.reference_exception_ipsitelist.name | default('refererexceptionsiteiplist'))) | path_join }}'
+urllist = 'name=refererexception,messageno=620,path={{ (e2g_filter_groups_dir, (item.lists.reference_exception_urllist.name | default('refererexceptionurllist'))) | path_join }}'
 
-sitelist = 'name=embededreferer,path={{ item.lists.embeded_reference_exception_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/embededreferersitelist') }}'
-ipsitelist = 'name=embededreferer,path={{ item.lists.embeded_reference_exception_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/embededreferersiteiplist') }}'
-urllist = 'name=embededreferer,path={{ item.lists.embeded_reference_exception_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/embededrefererurllist') }}'
+sitelist = 'name=embededreferer,path={{ (e2g_filter_groups_dir, (item.lists.embeded_reference_exception_sitelist.name | default('embededreferersitelist'))) | path_join }}'
+ipsitelist = 'name=embededreferer,path={{ (e2g_filter_groups_dir, (item.lists.embeded_reference_exception_ipsitelist.name | default('embededreferersiteiplist'))) | path_join }}'
+urllist = 'name=embededreferer,path={{ (e2g_filter_groups_dir, (item.lists.embeded_reference_exception_urllist.name | default('embededrefererurllist'))) | path_join }}'
 
-#modification lists -------------------------------------------------------------------------------------------------
-regexpreplacelist = 'name=change,path={{ item.lists.modification_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/urlregexplist') }}'
-regexpreplacelist = 'name=sslreplace,path={{ item.lists.modification_ssl_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/sslsiteregexplist') }}'
+# MODIFICATION LISTS -------------------------------------------------------------------------------------------------
+regexpreplacelist = 'name=change,path={{ (e2g_filter_groups_dir, (item.lists.modification_regexpreplacelist.name | default('urlregexplist'))) | path_join }}'
+regexpreplacelist = 'name=sslreplace,path={{ (e2g_filter_groups_dir, (item.lists.modification_ssl_regexpreplacelist.name | default('sslsiteregexplist'))) | path_join }}'
 
-#redirection lists --------------------------------------------------------------------------------------------------
-regexpreplacelist = 'name=redirect,path={{ item.lists.redirect_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/urlredirectregexplist') }}'
-contentregexplist = '{{ item.lists.redirect_contentregexplist.name | default(e2g_install_dir + '/etc/e2guardian/lists/contentregexplist') }}'
+# REDIRECTION LISTS --------------------------------------------------------------------------------------------------
+regexpreplacelist = 'name=redirect,path={{ (e2g_filter_groups_dir, (item.lists.redirect_regexpreplacelist.name | default('urlredirectregexplist'))) | path_join }}'
+contentregexplist = '{{ (e2g_filter_groups_dir, (item.lists.redirect_contentregexplist.name | default('contentregexplist'))) | path_join }}'
 
-#local banned -------------------------------------------------------------------------------------------------------
-sitelist = 'name=localbanned,messageno=560,path={{ item.lists.local_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsitelist') }}'
-# ipsitelist = 'name=localbanned,messageno=560,path={{ item.lists.local_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsiteiplist') }}'
-# urllist = 'name=localbanned,messageno=561,path={{ item.lists.local_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedurllist') }}'
-# sitelist = 'name=localbannedssl,messageno=580,path={{ item.lists.local_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsslsitelist') }}'
-# ipsitelist = 'name=localbannedssl,messageno=580,path={{ item.lists.local_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsslsiteiplist') }}'
-searchlist = 'name=localbanned,messageno=581,path={{ item.lists.local_searchlist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localbannedsearchlist') }}'
+# LOCAL BANNED -------------------------------------------------------------------------------------------------------
+sitelist = 'name=localbanned,messageno=560,path={{ (e2g_filter_groups_dir, (item.lists.local_sitelist.name | default('localbannedsitelist'))) | path_join }}'
+# ipsitelist = 'name=localbanned,messageno=560,path={{ (e2g_filter_groups_dir, (item.lists.local_ipsitelist.name | default('localbannedsiteiplist'))) | path_join }}'
+# urllist = 'name=localbanned,messageno=561,path={{ (e2g_filter_groups_dir, (item.lists.local_urllist.name | default('localbannedurllist'))) | path_join }}'
+# sitelist = 'name=localbannedssl,messageno=580,path={{ (e2g_filter_groups_dir, (item.lists.local_sitelist.name | default('localbannedsslsitelist'))) | path_join }}'
+# ipsitelist = 'name=localbannedssl,messageno=580,path={{ (e2g_filter_groups_dir, (item.lists.local_ipsitelist.name | default('localbannedsslsiteiplist'))) | path_join }}'
+searchlist = 'name=localbanned,messageno=581,path={{ (e2g_filter_groups_dir, (item.lists.local_searchlist.name | default('localbannedsearchlist'))) | path_join }}'
 
-#local grey lists -------------------------------------------------------------------------------------------------
-sitelist = 'name=localgrey,path={{ item.lists.local_grey_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysitelist') }}'
-# ipsitelist = 'name=localgrey,path={{ item.lists.local_grey_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysiteiplist') }}'
-# urllist = 'name=localgrey,path={{ item.lists.local_grey_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreyurllist') }}'
-sitelist = 'name=localgreyssl,path={{ item.lists.local_grey_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysslsitelist') }}'
-# ipsitelist = 'name=localgreyssl,path={{ item.lists.local_grey_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localgreysslsiteiplist') }}'
+# LOCAL GREY LISTS -------------------------------------------------------------------------------------------------
+sitelist = 'name=localgrey,path={{ (e2g_filter_groups_dir, (item.lists.local_grey_sitelist.name | default('localgreysitelist'))) | path_join }}'
+# ipsitelist = 'name=localgrey,path={{ (e2g_filter_groups_dir, (item.lists.local_grey_ipsitelist.name | default('localgreysiteiplist'))) | path_join }}'
+# urllist = 'name=localgrey,path={{ (e2g_filter_groups_dir, (item.lists.local_grey_urllist.name | default('localgreyurllist'))) | path_join }}'
+sitelist = 'name=localgreyssl,path={{ (e2g_filter_groups_dir, (item.lists.local_grey_sitelist.name | default('localgreysslsitelist'))) | path_join }}'
+# ipsitelist = 'name=localgreyssl,path={{ (e2g_filter_groups_dir, (item.lists.local_grey_ipsitelist.name | default('localgreysslsiteiplist'))) | path_join }}'
 
-#local exception lists --------------------------------------------------------------------------------------------
-sitelist = 'name=localexception,messageno=662,path={{ item.lists.local_exception_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localexceptionsitelist') }}'
-# ipsitelist = 'name=localexception,messageno=662,path={{ item.lists.local_exception_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localexceptionsiteiplist') }}'
-# urllist = 'name=localexception,messageno=663,path={{ item.lists.local_exception_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/localexceptionurllist') }}'
+# LOCAL EXCEPTION LISTS --------------------------------------------------------------------------------------------
+sitelist = 'name=localexception,messageno=662,path={{ (e2g_filter_groups_dir, (item.lists.local_exception_sitelist.name | default('localexceptionsitelist'))) | path_join }}'
+# ipsitelist = 'name=localexception,messageno=662,path={{ (e2g_filter_groups_dir, (item.lists.local_exception_ipsitelist.name | default('localexceptionsiteiplist'))) | path_join }}'
+# urllist = 'name=localexception,messageno=663,path={{ (e2g_filter_groups_dir, (item.lists.local_exception_urllist.name | default('localexceptionurllist'))) | path_join }}'
 
-# Filetype filtering
-#
+# FILETYPE FILTERING -------------------------------------------------------------------------------------------------
 # Allow bannedregexpurllist with grey list mode
 
 # Phrase filtering additional mime types (by default text/*)
@@ -83,83 +82,83 @@ sitelist = 'name=localexception,messageno=662,path={{ item.lists.local_exception
 
 # Uncomment the two lines below if want to only allow extentions/mime types in these lists
 # You will also need to uncomment the checkfiletype function in site.story to enable this
-#fileextlist = 'name=exceptionextension,path={{ e2g_install_dir }}/etc/e2guardian/lists/exceptionextensionlist'
-#mimelist = 'name=exceptionmime,path={{ e2g_install_dir }}/etc/e2guardian/lists/exceptionmimelist'
+# fileextlist = 'name=exceptionextension,path={{ e2g_install_dir }}/etc/e2guardian/lists/exceptionextensionlist'
+# mimelist = 'name=exceptionmime,path={{ e2g_install_dir }}/etc/e2guardian/lists/exceptionmimelist'
 #
 # Use the following lists to block specific kinds of file downloads.
 #
-fileextlist = 'name=bannedextension,messageno=900,path={{ item.lists.bannedextension_fileextlist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedextensionlist') }}'
-mimelist = 'name=bannedmime,messageno=800,path={{ item.lists.bannedmime_mimelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedmimetypelist') }}'
+fileextlist = 'name=bannedextension,messageno=900,path={{ (e2g_filter_groups_dir, (item.lists.bannedextension_fileextlist.name | default('bannedextensionlist'))) | path_join }}'
+mimelist = 'name=bannedmime,messageno=800,path={{ (e2g_filter_groups_dir, (item.lists.bannedmime_mimelist.name | default('bannedmimetypelist'))) | path_join }}'
 #
 # In either file filtering mode, the following list can be used to override
 # MIME type & extension blocks for particular domains & URLs (trusted download sites).
 #
-sitelist = 'name=exceptionfile,path={{ item.lists.exception_file_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionfilesitelist') }}'
-ipsitelist = 'name=exceptionfile,path={{ item.lists.exception_file_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionfilesiteiplist') }}'
-urllist = 'name=exceptionfile,path={{ item.lists.exception_file_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionfileurllist') }}'
+sitelist = 'name=exceptionfile,path={{ (e2g_filter_groups_dir, (item.lists.exception_file_sitelist.name | default('exceptionfilesitelist'))) | path_join }}'
+ipsitelist = 'name=exceptionfile,path={{ (e2g_filter_groups_dir, (item.lists.exception_file_ipsitelist.name | default('exceptionfilesiteiplist'))) | path_join }}'
+urllist = 'name=exceptionfile,path={{ (e2g_filter_groups_dir, (item.lists.exception_file_urllist.name | default('exceptionfileurllist'))) | path_join }}'
 
 # POST protection (web upload and forms)
-# does not block forms without any file upload, i.e. this is just for
-# blocking or limiting uploads
-# measured in kibibytes after MIME encoding and header bumph
-# use 0 for a complete block
-# use higher (e.g. 512 = 512Kbytes) for limiting
-# use -1 for no blocking
+#   does not block forms without any file upload, i.e. this is just for
+#   blocking or limiting uploads
+# Measured in kibibytes after MIME encoding and header bumph
+# Use 0 for a complete block
+# Use higher (e.g. 512 = 512Kbytes) for limiting
+# Use -1 for no blocking
 # POST PROTECTION IS NOT YET IMPLIMENTED IN V5
-#maxuploadsize = 512
-#maxuploadsize = 0
+# maxuploadsize = 512
+# maxuploadsize = 0
 maxuploadsize = {{ item.maxuploadsize | default('-1') }}
 
 # Categorise without blocking:
 # Supply categorised lists here and the category string shall be logged against
-# matching requests, but matching these lists does not perform any filtering
-# action.
-#sitelist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logsitelist'
-#ipsitelist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logsiteiplist'
-#urllist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logurllist'
-#regexpboollist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logregexpurllist'
+#   matching requests, but matching these lists does not perform any filtering
+#   action.
+# sitelist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logsitelist'
+# ipsitelist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logsiteiplist'
+# urllist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logurllist'
+# regexpboollist = 'name=log,path={{ e2g_install_dir }}/etc/e2guardian/lists/logregexpurllist'
 
 # Outgoing HTTP header rules:
 # Optional lists for blocking based on, and modification of, outgoing HTTP
-# request headers.  Format for headerregexplist is one modification rule per
-# line, similar to content/URL modifications.  Format for
+#   request headers. Format for headerregexplist is one modification rule per
+#   line, similar to content/URL modifications. Format for
 # bannedregexpheaderlist is one regular expression per line, with matching
-# headers causing a request to be blocked.
+#   headers causing a request to be blocked.
 # Headers are matched/replaced on a line-by-line basis, not as a contiguous
-# block.
+#   block.
 # Use for example, to remove cookies or prevent certain user-agents.
-regexpreplacelist = 'name=headermods,path={{ item.lists.header_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/headerregexplist') }}'
-regexpboollist = 'name=bannedheader,path={{ item.lists.banned_header_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedregexpheaderlist') }}'
-regexpboollist = 'name=exceptionheader,path={{ item.lists.exception_header_regexpboollist.name | default(e2g_install_dir + '/etc/e2guardian/lists/exceptionregexpheaderlist') }}'
+regexpreplacelist = 'name=headermods,path={{ (e2g_filter_groups_dir, (item.lists.header_regexpreplacelist.name | default('headerregexplist'))) | path_join }}'
+regexpboollist = 'name=bannedheader,path={{ (e2g_filter_groups_dir, (item.lists.banned_header_regexpboollist.name | default('bannedregexpheaderlist'))) | path_join }}'
+regexpboollist = 'name=exceptionheader,path={{ (e2g_filter_groups_dir, (item.lists.exception_header_regexpboollist.name | default('exceptionregexpheaderlist'))) | path_join }}'
 # used for Youtube add cookies etc
-regexpreplacelist = 'name=addheader,path={{ item.lists.add_header_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/addheaderregexplist') }}'
+regexpreplacelist = 'name=addheader,path={{ (e2g_filter_groups_dir, (item.lists.add_header_regexpreplacelist.name | default('addheaderregexplist'))) | path_join }}'
 
 # Weighted phrase mode
 # Optional; overrides the weightedphrasemode option in e2guardian.conf
-# for this particular group.  See documentation for supported values in
-# that file.
+#   for this particular group.  See documentation for supported values in
+#   that file.
 #weightedphrasemode = 0
 {% if item.weightedphrasemode is defined -%}
 weightedphrasemode = {{ item.weightedphrasemode }}
 {% endif %}
 
 # Naughtiness limit
-# This the limit over which the page will be blocked.  Each weighted phrase is given
-# a value either positive or negative and the values added up.  Phrases to do with
-# good subjects will have negative values, and bad subjects will have positive
-# values.  See the weightedphraselist file for examples.
+# This the limit over which the page will be blocked. Each weighted phrase is given
+#   a value either positive or negative and the values added up. Phrases to do with
+#   good subjects will have negative values, and bad subjects will have positive
+#   values. See the weightedphraselist file for examples.
 # As a guide:
 # 50 is for young children,  100 for old children,  160 for young adults.
 naughtynesslimit = {{ item.naughtynesslimit | default('100') }}
 
-# Search term blocking
+# SEARCH TERM BLOCKING -----------------------------------------------------------------------------------------------
 # Search terms can be extracted from search URLs and filtered using one or
-# both of two different methods.
+#   both of two different methods.
 
 # Method 1 is that developed by Protex where specific
 # search terms are contained in a bannedsearchlist.
 # (localbannedsearchlist and bannedsearchoveridelist can be used to suppliment
-# and overide this list as required.)
+#   and overide this list as required.)
 # These lists contain banned search words combinations on each line.
 # Words are separated by '+' and must be in sorted order within a line.
 #    so to block 'sexy girl' then the list must contain the line
@@ -169,26 +168,26 @@ naughtynesslimit = {{ item.naughtynesslimit | default('100') }}
 
 # Method 2 is uses the
 # bannedphraselist, weightedphraselist and exceptionphraselist, with a separate
-# threshold for blocking than that used for normal page content.
+#   threshold for blocking than that used for normal page content.
 # To do this, the searchregexplist must be enabled and searchtermlimit
-# must be greater than 0.
+#   must be greater than 0.
 #
 # Search engine regular expression list (need for both options)
-# List of regular expressions for matching search engine URLs.  It is assumed
-# that the search terms themselves will be contained in the
-# of output of each expression.
-regexpreplacelist = 'name=searchterms,path={{ item.lists.search_regexpreplacelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/searchregexplist') }}'
+# List of regular expressions for matching search engine URLs. It is assumed
+#   that the search terms themselves will be contained in the
+#   of output of each expression.
+regexpreplacelist = 'name=searchterms,path={{ (e2g_filter_groups_dir, (item.lists.search_regexpreplacelist.name | default('searchregexplist'))) | path_join }}'
 #
 # Banned Search Term list(s) for option 1
-searchlist = 'name=banned,path={{ item.lists.banned_searchlist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsearchlist') }}'
-searchlist = 'name=override,path={{ item.lists.override_searchlist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsearchoveridelist') }}'
+searchlist = 'name=banned,path={{ (e2g_filter_groups_dir, (item.lists.banned_searchlist.name | default('bannedsearchlist'))) | path_join }}'
+searchlist = 'name=override,path={{ (e2g_filter_groups_dir, (item.lists.override_searchlist.name | default('bannedsearchoveridelist'))) | path_join }}'
 
 # Category display threshold
 # This option only applies to pages blocked by weighted phrase filtering.
 # Defines the minimum score that must be accumulated within a particular
-# category in order for it to show up on the block pages' category list.
+#   category in order for it to show up on the block pages' category list.
 # All categories under which the page scores positively will be logged; those
-# that were not displayed to the user appear in brackets.
+#   that were not displayed to the user appear in brackets.
 #
 # -1 = display only the highest scoring category
 # 0 = display all categories (default)
@@ -197,11 +196,11 @@ categorydisplaythreshold = {{ item.categorydisplaythreshold | default('0') }}
 
 # Embedded URL weighting
 # When set to something greater than zero, this option causes URLs embedded within a
-# page's HTML (from links, image tags, etc.) to be extracted and checked against the
-# bannedsitelist and bannedurllist. Each link to a banned page causes the amount set
-# here to be added to the page's weighting.
+#   page's HTML (from links, image tags, etc.) to be extracted and checked against the
+#   bannedsitelist and bannedurllist. Each link to a banned page causes the amount set
+#   here to be added to the page's weighting.
 # The behaviour of this option with regards to multiple occurrences of a site/URL is
-# affected by the weightedphrasemode setting.
+#   affected by the weightedphrasemode setting.
 #
 # NB Currently, this feature uses regular expressions that require the PCRE library.
 # As such, it is only available if you compiled e2guardian with '--enable-pcre=yes'.
@@ -212,36 +211,36 @@ categorydisplaythreshold = {{ item.categorydisplaythreshold | default('0') }}
 # WARNING:This option is highly CPU intensive!
 embeddedurlweight = {{ item.embeddedurlweight | default('0') }}
 
-#  Users will not be able to bypass sites/urls in these lists
-#sitelist = 'name=bannedbypass,messageno=500,path={{ item.lists.banned_bypass_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsitelistwithbypass') }}'
-#ipsitelist = 'name=bannedbypass,messageno=500,path={{ item.lists.banned_bypass_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedsiteiplistwithbypass') }}'
-#urllist = 'name=bannedbypass,messageno=501,path={{ item.lists.banned_bypass_urllist.name | default(e2g_install_dir + '/etc/e2guardian/lists/bannedurllistwithbypass') }}'
+# Users will not be able to bypass sites/urls in these lists
+# sitelist = 'name=bannedbypass,messageno=500,path={{ (e2g_filter_groups_dir, (item.lists.banned_bypass_sitelist.name | default('bannedsitelistwithbypass'))) | path_join }}'
+# ipsitelist = 'name=bannedbypass,messageno=500,path={{ (e2g_filter_groups_dir, (item.lists.banned_bypass_ipsitelist.name | default('bannedsiteiplistwithbypass'))) | path_join }}'
+# urllist = 'name=bannedbypass,messageno=501,path={{ (e2g_filter_groups_dir, (item.lists.banned_bypass_urllist.name | default('bannedurllistwithbypass'))) | path_join }}'
 
-# Infection/Scan Error Bypass
+# INFECTION/SCAN ERROR BYPASS
 # Similar to the 'bypass' setting, but specifically for bypassing files scanned and found
-# to be infected, or files that trigger scanner errors - for example, archive types with
-# recognised but unsupported compression schemes, or corrupt archives.
+#   to be infected, or files that trigger scanner errors - for example, archive types with
+#   recognised but unsupported compression schemes, or corrupt archives.
 # The option specifies the number of seconds for which the bypass link will be valid.
 # 300 = enable for 5 minutes
 # 0 = disable (default)
 # -1 - depreciated - for backward compatability enables cgiinfectionbypass with bypassversion 1
 infectionbypass = {{ item.infectionbypass | default('0') }}
 
-# Infection/Scan Error Bypass on Scan Errors Only
+# INFECTION/SCAN ERROR BYPASS ON SCAN ERRORS ONLY
 # Enable this option to allow infectionbypass links only when virus scanning fails,
-# not when a file is found to contain a virus.
+#   not when a file is found to contain a virus.
 # on = enable (default and highly recommended)
 # off = disable
 infectionbypasserrorsonly = {{ item.infectionbypasserrorsonly | default('on') }}
 
-# Disable content scanning
+# DISABLE CONTENT SCANNING
 # If you enable this option you will disable content scanning for this group.
 # Content scanning primarily is AV scanning (if enabled) but could include
 # other types.
 # (on|off) default = off.
 disablecontentscan = {{ item.disablecontentscan | default('off') }}
 
-# Disable content scanning with error (timeout, AV crash, etc)
+# DISABLE CONTENT SCANNING WITH ERROR (TIMEOUT, AV CRASH, ETC)
 # If you enable this option you will allow object with an unexpected result
 # Content scanning primarily is AV scanning (if enabled) but could include
 # other types.
@@ -256,7 +255,7 @@ disablecontentscanerror = {{ item.disablecontentscanerror | default('off') }}
 # (on|off) default = off
 contentscanexceptions = {{ item.contentscanexceptions | default('off') }}
 
-# Auth plugins
+# AUTH PLUGINS
 # Enable Deep URL Analysis
 # When enabled, DG looks for URLs within URLs, checking against the bannedsitelist and
 # bannedurllist. This can be used, for example, to block images originating from banned
@@ -265,7 +264,7 @@ contentscanexceptions = {{ item.contentscanexceptions | default('off') }}
 # (on|off) default = off
 deepurlanalysis = {{ item.deepurlanalysis | default('off') }}
 
-# reportinglevel
+# REPORTINGLEVEL
 #
 # -1 = log, but do not block - Stealth mode
 #  0 = just say 'Access Denied'
@@ -289,12 +288,12 @@ reportinglevel = {{ item.reportinglevel | default('3') }}
 #     only for users using both transparent proxying and a non-local server
 #     to host this script.
 #
-#accessdeniedaddress = 'http://YOURSERVER.YOURDOMAIN/cgi-bin/e2guardian.pl'
+# accessdeniedaddress = 'http://YOURSERVER.YOURDOMAIN/cgi-bin/e2guardian.pl'
 {% if item.accessdeniedaddress is defined -%}
 accessdeniedaddress = '{{ item.accessdeniedaddress }}'
 {% endif %}
 
-# HTML Template override
+# HTML TEMPLATE OVERRIDE
 # If defined, this specifies a custom HTML template file for members of this
 # filter group, overriding the global setting in e2guardian.conf. This is
 # only used in reporting level 3.
@@ -307,15 +306,15 @@ accessdeniedaddress = '{{ item.accessdeniedaddress }}'
 # <languagedir>/<language>/<htmltemplate>
 # e.g. {{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/custom.html
 #
-#htmltemplate = 'custom.html'
+# htmltemplate = 'custom.html'
 {% if item.htmltemplate is defined -%}
 htmltemplate = '{{ item.htmltemplate }}'
 {% endif %}
 
-#Template for use to report network issues and sites which are not responding
+# Template for use to report network issues and sites which are not responding
 # The default template file path is <languagedir>/<language>/neterr_template.html
-# e.g. {{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/neterr_template.html when using 'ukenglish'
-# language.
+#   e.g. {{ e2g_install_dir }}/share/e2guardian/languages/ukenglish/neterr_template.html when using 'ukenglish'
+#   language.
 #neterrtemplate = 'custom_neterr_template.html'
 {% if item.neterrtemplate is defined -%}
 neterrtemplate = '{{ item.neterrtemplate }}'
@@ -323,32 +322,31 @@ neterrtemplate = '{{ item.neterrtemplate }}'
 
 # Non standard delimiter (only used with accessdeniedaddress)
 # To help preserve the full banned URL, including parameters, the variables
-# passed into the access denied CGI are separated using non-standard
-# delimiters. This can be useful to ensure correct operation of the filter
-# bypass modes. Parameters are split using "::" in place of "&", and "==" in
+#   passed into the access denied CGI are separated using non-standard
+#   delimiters. This can be useful to ensure correct operation of the filter
+#   bypass modes. Parameters are split using "::" in place of "&", and "==" in
 # place of "=".
 # Default is enabled, but to go back to the standard mode, disable it.
 
-#nonstandarddelimiter = off
+# nonstandarddelimiter = off
 
-#to enable SSL MITM or NON-MITM SSL CERT checking
-# enablessl must be defined as 'yes' in e2guardian.conf
+# To enable SSL MITM or NON-MITM SSL CERT checking enablessl must be defined as 'yes' in e2guardian.conf
 
-#SSL man in the middle
+# SSL MAN IN THE MIDDLE
 # Forge ssl certificates for all non-exception sites, decrypt the data then re encrypt it
-# using a different private key. Used to filter ssl sites
+#   using a different private key. Used to filter ssl sites
 sslmitm = {{ item.sslmitm | default('on') }}
 
 # Enable MITM site certificate checking
-# ignored if  sslmitm is off
-# default (recommended) is 'on'
+# Ignored if sslmitm is off
+# Default (recommended) is 'on'
 mitmcheckcert = {{ item.mitmcheckcert | default('off') }}
 
-#Do not check ssl certificates for sites listed
+# Do not check ssl certificates for sites listed
 # Can be used to allow sites with self-signed or invalid certificates
-# or to reduced CPU load by not checking certs on heavily used sites (e.g. Google, Bing)
+#   or to reduced CPU load by not checking certs on heavily used sites (e.g. Google, Bing)
 # Use with caution!
 # Ignored if mitmcheckcert is 'off'
-#nocheckcertsitelist = e2g_install_dir'/etc/e2guardian/lists/nocheckcertsitelist'
-sitelist = 'name=nocheckcert,path={{ item.lists.nocheckcert_sitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/nocheckcertsitelist') }}'
-ipsitelist = 'name=nocheckcert,path={{ item.lists.nocheckcert_ipsitelist.name | default(e2g_install_dir + '/etc/e2guardian/lists/nocheckcertsiteiplist') }}'
+# nocheckcertsitelist = {{ e2g_install_dir }}'/etc/e2guardian/lists/nocheckcertsitelist'
+sitelist = 'name=nocheckcert,path={{ (e2g_filter_groups_dir, (item.lists.nocheckcert_sitelist.name | default('nocheckcertsitelist'))) | path_join }}'
+ipsitelist = 'name=nocheckcert,path={{ (e2g_filter_groups_dir, (item.lists.nocheckcert_ipsitelist.name | default('nocheckcertsiteiplist'))) | path_join }}'
