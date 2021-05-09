@@ -30,7 +30,7 @@
     state: directory
     owner: "{{ item.owner }}"
     group: "{{ item.owner }}"
-    mode: "0755"
+    mode: "0750"
   loop:
     - path: "{{ e2g_install_dir }}"
       owner: root
@@ -80,7 +80,7 @@
     remote_src: true
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   notify: restart-e2guardian
 
 - name: INSTALL | Unit file override path exists.
@@ -89,7 +89,7 @@
     state: directory
     owner: root
     group: root
-    mode: "0755"
+    mode: "0750"
 
 - name: INSTALL | Unit file override deployed.
   ansible.builtin.template:
@@ -97,7 +97,7 @@
     dest: /etc/systemd/system/e2guardian.service.d/override.conf
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   notify: restart-e2guardian
 
 - name: INSTALL | Build dependencies removed
