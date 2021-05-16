@@ -128,5 +128,5 @@
   community.general.ufw:
     rule: allow
     proto: tcp
-    to_port: "{{ item }}"
+    to_port: "{{ item | string }}"
   loop: "{{ e2g_conf_filterports }}"
