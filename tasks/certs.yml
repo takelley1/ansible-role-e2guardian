@@ -83,7 +83,7 @@
 - name: CERTS | CA cert copied to webserver dir
   ansible.builtin.copy:
     src: "{{ e2g_conf_cacertificatepath }}"
-    dest: /var/www/e2guardian/e2g-ca-cert.pem
+    dest: /var/www/e2guardian/cert.pem
     remote_src: true
     owner: www-data
     group: www-data
