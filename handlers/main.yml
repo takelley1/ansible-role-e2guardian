@@ -23,3 +23,12 @@
     masked: false
     daemon_reload: true
   listen: restart-webserver
+
+- name: HANDLERS | Systemd-journald restarted
+  ansible.builtin.systemd:
+    name: systemd-journald
+    state: restarted
+    enabled: true
+    masked: false
+    daemon_reload: true
+  listen: restart-journald
