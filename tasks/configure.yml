@@ -2,6 +2,14 @@
 
 # Deploy E2Guardian's main filter lists.
 
+- name: CONFIGURE | Helper script deployed
+  ansible.builtin.copy:
+    src: edit-e2g-lists.sh
+    dest: /edit-e2g-lists.sh
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: CONFIGURE | Configuration templates deployed
   ansible.builtin.template:
     src: opt/e2g/etc/e2guardian/{{ item }}.j2
