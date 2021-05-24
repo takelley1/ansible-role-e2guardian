@@ -25,6 +25,7 @@
     - lists/bannedsiteiplist
     - lists/bannedsitelist
     - lists/bannedurllist
+    - lists/contentregexplist
     - lists/exceptionphraselist
     - lists/exceptionregexpurllist
     - lists/exceptionsitelist

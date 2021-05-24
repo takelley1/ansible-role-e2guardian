@@ -1,0 +1,5 @@
+---
+
+e2g_contentregexplist:
+  # Remove 1x1 GIFs used for user tracking.
+  - '"<img\s+[^>]*(?:(width)|(height))\s*=\s*[''"]?[01](?=\D)[^>]*(?:(width)|(height))\s*=\s*[''"]?[01](?=\D)[^>]*?>"->""'
