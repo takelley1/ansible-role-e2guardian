@@ -5,8 +5,8 @@
 # Set process priority using nice.
 ExecStart=
 ExecReload=
-ExecStart=nice -n {{ e2g_service_niceness }} {{ e2g_install_dir }}/sbin/e2guardian
-ExecReload=nice -n {{ e2g_service_niceness }} {{ e2g_install_dir }}/sbin/e2guardian -r
+ExecStart=nice -n {{ e2g_service_niceness }} {{ (e2g_install_dir, "sbin", "e2guardian") | path_join }}
+ExecReload=nice -n {{ e2g_service_niceness }} {{ (e2g_install_dir, "sbin", "e2guardian") | path_join }} -r
 
 # Enable CPU accounting and set priority with cgroups attributes.
 CPUAccounting=yes

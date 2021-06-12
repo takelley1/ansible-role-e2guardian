@@ -20,7 +20,7 @@
 #to allow part of it.
 #
 #To include additional files in this list use this example:
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/anotherbannedurllist>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "anotherbannedurllist") | path_join }}>
 #
 #You can have multiple .Includes.
 #listcategory: "Banned URLs"

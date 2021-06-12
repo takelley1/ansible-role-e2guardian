@@ -4,7 +4,7 @@
 # See `templates/opt/e2g/etc/e2guardian/e2guardian.conf.j2` for
 #   information on the purpose of each variable.
 
-e2g_conf_languagedir: "{{ e2g_install_dir }}/share/e2guardian/languages"
+e2g_conf_languagedir: "{{ (e2g_install_dir, 'share', 'e2guardian', 'languages') | path_join }}"
 e2g_conf_language: ukenglish
 
 # e2g_conf_debuglevel:
@@ -44,12 +44,12 @@ e2g_conf_proxyexchange: 61
 e2g_conf_pcontimeout: 55
 
 e2g_conf_usecustombannedimage: "on"
-e2g_conf_custombannedimagefile: "{{ e2g_install_dir }}/share/e2guardian/transparent1x1.gif"
+e2g_conf_custombannedimagefile: "{{ (e2g_install_dir, 'share', 'e2guardian', 'transparent1x1.gif') | path_join }}"
 e2g_conf_usecustombannedflash: "on"
-e2g_conf_custombannedflashfile: "{{ e2g_install_dir }}/share/e2guardian/blockedflash.swf"
+e2g_conf_custombannedflashfile: "{{ (e2g_install_dir, 'share', 'e2guardian', 'blockedflash.swf') | path_join }}"
 
 e2g_conf_filtergroups: "{{ e2g_filter_groups | length }}"
-e2g_conf_filtergroupslist: "{{ e2g_install_dir }}/etc/e2guardian/lists/filtergroupslist"
+e2g_conf_filtergroupslist: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'filtergroupslist') | path_join }}"
 # e2g_conf_defaultfiltergroup:
 # e2g_conf_defaulttransparentfiltergroup:
 # e2g_conf_defaulticapfiltergroup:
@@ -78,7 +78,7 @@ e2g_conf_deletedownloadedtempfiles: "on"
 e2g_conf_initialtrickledelay: 20
 e2g_conf_trickledelay: 10
 
-e2g_conf_downloadmanager: "{{ e2g_install_dir }}/etc/e2guardian/downloadmanagers/default.conf"
+e2g_conf_downloadmanager: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'downloadmanagers', 'default.conf') | path_join }}"
 e2g_conf_contentscannertimeout: 60
 e2g_conf_mapauthtoports: "off"
 e2g_conf_recheckreplacedurls: "off"
@@ -101,17 +101,17 @@ e2g_conf_daemongroup: e2guardian
 
 e2g_conf_enablessl: "on"
 # e2g_conf_sslcertificatepath:
-e2g_conf_certprivatekeypath: "{{ e2g_install_dir }}/certs/generated-certs.key"
-e2g_conf_cacertificatepath: "{{ e2g_install_dir }}/certs/e2g-ca-cert.pem"
-e2g_conf_caprivatekeypath: "{{ e2g_install_dir }}/certs/e2g-ca-cert.key"
-e2g_conf_generatedcertpath: "{{ e2g_install_dir }}/certs/generated-certs"
+e2g_conf_certprivatekeypath: "{{ (e2g_install_dir, 'certs', 'generated-certs.key') | path_join }}"
+e2g_conf_cacertificatepath: "{{ (e2g_install_dir, 'certs', 'e2g-ca-cert.pem') | path_join }}"
+e2g_conf_caprivatekeypath: "{{ (e2g_install_dir, 'certs', 'e2g-ca-cert.key') | path_join }}"
+e2g_conf_generatedcertpath: "{{ (e2g_install_dir, 'certs', 'generated-certs') | path_join }}"
 # e2g_conf_generatedcertstart:
 # e2g_conf_genratedcertend:
 
 # e2g_conf_monitorhelper:
 # e2g_conf_monitorflagprefix:
 
-e2g_conf_preauthstoryboard: "{{ e2g_install_dir }}/etc/e2guardian/preauth.story"
+e2g_conf_preauthstoryboard: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'preauth.story') | path_join }}"
 # e2g_conf_storyboardtrace:
 
 e2g_conf_searchsitelistforip: "off"

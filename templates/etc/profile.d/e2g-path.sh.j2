@@ -1,7 +1,7 @@
-{{ ansible_managed | comment }}
+# {{ ansible_managed | comment }}
 # vim: ft=sh
 
 # Don't use any bash-isms here to allow for better POSIX compatibility.
-if ! printf "%s\n" "${PATH}" | grep -q "{{ e2g_install_dir }}/sbin"; then
-  PATH="${PATH}:{{ e2g_install_dir }}/sbin"
+if ! printf "%s\n" "${PATH}" | grep -q "{{ (e2g_install_dir, 'sbin') | path_join }}"; then
+    PATH="${PATH}:{{ (e2g_install_dir, 'sbin') | path_join }}"
 fi

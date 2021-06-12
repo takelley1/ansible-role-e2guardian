@@ -29,7 +29,7 @@
 # See the bannedphraselist for more examples.
 #
 # Extra weighted-list files to include
-# .Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/weightedphraselist.topic>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "weightedphraselist.topic") | path_join }}>
 #
 # Help by contributing customised lists and/or new keyword lists.
 # Email: pornmastergeneral@e2guardian.org or phrasemaster@e2guardian.org
@@ -42,7 +42,7 @@
 #listcategory: "Weighted Phrases"
 #To enable several non-PICS self-labelling and self-rating systems.
 #Enabled as a bannedsitelist by default.  Disable there before enabling as a phraselist.
-##.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/safelabel/weighted>
+##.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "safelabel", "weighted") | path_join }}>
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
 {% if e2g_weightedphraselist is defined -%}
@@ -53,63 +53,63 @@
 # ---- END ANSIBLE BLOCK ------------------------------------------------------
 
 #Bad Words - swearing
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/badwords/weighted_dutch>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/badwords/weighted_french>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/badwords/weighted_german> #ALPHA#
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/badwords/weighted_portuguese> #ALPHA#
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/badwords/weighted_spanish> #ALPHA#
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "badwords", "weighted_dutch") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "badwords", "weighted_french") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "badwords", "weighted_german") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "badwords", "weighted_portuguese") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "badwords", "weighted_spanish") | path_join }}>
 
 #Drugs
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/drugadvocacy/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/illegaldrugs/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/illegaldrugs/weighted_portuguese>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/legaldrugs/weighted>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "drugadvocacy", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "illegaldrugs", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "illegaldrugs", "weighted_portuguese") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "legaldrugs", "weighted") | path_join }}>
 
 #Violence and intolerance
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/intolerance/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/intolerance/weighted_portuguese>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/gore/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/gore/weighted_portuguese>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/violence/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/violence/weighted_portuguese>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/weapons/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/weapons/weighted_portuguese>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "intolerance", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "intolerance", "weighted_portuguese") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "gore", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "gore", "weighted_portuguese") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "violence", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "violence", "weighted_portuguese") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "weapons", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "weapons", "weighted_portuguese") | path_join }}>
 
 #Chat
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/chat/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/chat/weighted_italian>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "chat", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "chat", "weighted_italian") | path_join }}>
 
 #Webmail
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/webmail/weighted>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "webmail", "weighted") | path_join }}>
 #Note that if you enable the webmail weighted list you should also disable
 #the "exception_email" list in the exceptionphraselist file.
 
 #Forums
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/forums/weighted> #BETA#
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "forums", "weighted") | path_join }}>
 
 #Gambling
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/gambling/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/gambling/weighted_portuguese>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "gambling", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "gambling", "weighted_portuguese") | path_join }}>
 
 #Productivity
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/games/weighted> #ALPHA#
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/news/weighted> #ALPHA#
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/personals/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/personals/weighted_portuguese>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/sport/weighted> #ALPHA#
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/travel/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/music/weighted>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "games", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "news", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "personals", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "personals", "weighted_portuguese") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "sport", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "travel", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "music", "weighted") | path_join }}>
 
 #System Management and Security
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/domainsforsale/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/idtheft/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/malware/weighted> #BETA#
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/proxies/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/translation/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/upstreamfilter/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/warezhacking/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/peer2peer/weighted>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "domainsforsale", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "idtheft", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "malware", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "proxies", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "translation", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "upstreamfilter", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "warezhacking", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "peer2peer", "weighted") | path_join }}>
 
 #Miscellaneous
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/conspiracy/weighted>
-#.Include<{{ e2g_install_dir }}/etc/e2guardian/lists/phraselists/secretsocieties/weighted>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "conspiracy", "weighted") | path_join }}>
+#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "secretsocieties", "weighted") | path_join }}>

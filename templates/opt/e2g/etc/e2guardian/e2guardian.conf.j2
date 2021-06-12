@@ -382,18 +382,18 @@ authrequiresuserandgroup = {{ e2g_conf_authrequiresuserandgroup }}
 # These are now replaced with pre-authstoryboard logic but lists defined here
 #
 # bannediplist is ONLY for banned client IP
-iplist = 'name=bannedclient,messageno=100,logmessageno=103,path={{ e2g_install_dir }}/etc/e2guardian/lists/bannediplist'
+iplist = 'name=bannedclient,messageno=100,logmessageno=103,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "bannediplist") | path_join }}'
 # Put client dns names in bannedclientlist if required
-#sitelist = 'name=bannedclient,messageno=100,logmessageno=104,path={{ e2g_install_dir }}/etc/e2guardian/lists/bannedclientlist'
+#sitelist = 'name=bannedclient,messageno=100,logmessageno=104,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "bannedclientlist") | path_join }}'
 # exceptioniplist is ONLY for exception client IP
-iplist = 'name=exceptionclient,messageno=600,path={{ e2g_install_dir }}/etc/e2guardian/lists/exceptioniplist'
+iplist = 'name=exceptionclient,messageno=600,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "exceptioniplist") | path_join }}'
 # Put client dns names in exceptionclientlist if required
-#sitelist = 'name=exceptionclient,messageno=631,path={{ e2g_install_dir }}/etc/e2guardian/lists/exceptionclientlist'
+#sitelist = 'name=exceptionclient,messageno=631,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "exceptionclientlist") | path_join }}'
 
 # authexception lists are for exception sites/urls allowed before authentication# to allow for machines to update without user authentication
-iplist = 'name=authexception,messageno=602,path={{ e2g_install_dir }}/etc/e2guardian/lists/authexceptioniplist'
-sitelist = 'name=authexception,messageno=602,path={{ e2g_install_dir }}/etc/e2guardian/lists/authexceptionsitelist'
-urllist = 'name=authexception,messageno=603,path={{ e2g_install_dir }}/etc/e2guardian/lists/authexceptionurllist'
+iplist = 'name=authexception,messageno=602,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "authexceptioniplist") | path_join }}'
+sitelist = 'name=authexception,messageno=602,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "authexceptionsitelist") | path_join }}'
+urllist = 'name=authexception,messageno=603,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "authexceptionurllist") | path_join }}'
 
 #Note: only iplist, sitelist, ipsitelist and urllist can currently be defined for use with pre-authstoryboard.
 
@@ -401,7 +401,7 @@ urllist = 'name=authexception,messageno=603,path={{ e2g_install_dir }}/etc/e2gua
 # A directory containing text files containing the room's name followed by IPs or ranges
 # and optionaly site and url lists
 # Think of it as bannediplist and/or exceptions on crack
-#perroomdirectory = '{{ e2g_install_dir }}/etc/e2guardian/lists/rooms/'
+#perroomdirectory = '{{ (e2g_install_dir, "etc", "e2guardian", "lists", "rooms") | path_join }}"'
 {% if e2g_conf_perroomdirectory is defined -%}
 perroomdirectory = {{ e2g_conf_perroomdirectory }}
 {% endif %}
@@ -634,7 +634,7 @@ downloadmanager = {{ e2g_conf_downloadmanager }}
 # Some of the scanner(s) require 3rd party software and libraries eg clamav.
 # See the individual plugin conf file for more options (if any).
 #
-#contentscanner = '{{ e2g_install_dir }}/etc/e2guardian/contentscanners/clamdscan.conf'
+#contentscanner = '{{ (e2g_install_dir, "etc", "e2guardian", "contentscanners", "clamdscan.conf") | path_join }}'
 
 # Content scanner timeout
 # Some of the content scanners support using a timeout value to stop
@@ -659,13 +659,13 @@ contentscanexceptions = {{ e2g_conf_contentscanexceptions }}
 #
 # If you do not use multiple filter groups, you need not specify this option.
 #
-#authplugin = '{{ e2g_install_dir }}/etc/e2guardian/authplugins/proxy-basic.conf'
-#authplugin = '{{ e2g_install_dir }}/etc/e2guardian/authplugins/proxy-digest.conf'
-#!! Not compiled !! authplugin = '{{ e2g_install_dir }}/etc/e2guardian/authplugins/proxy-ntlm.conf'
-#authplugin = '{{ e2g_install_dir }}/etc/e2guardian/authplugins/ident.conf'
-authplugin = '{{ e2g_install_dir }}/etc/e2guardian/authplugins/ip.conf'
-#authplugin = '{{ e2g_install_dir }}/etc/e2guardian/authplugins/proxy-header.conf'
-#authplugin = '{{ e2g_install_dir }}/etc/e2guardian/authplugins/port.conf'
+#authplugin = '{{ (e2g_install_dir, "etc", "e2guardian", "authplugins", "proxy-basic.conf") | path_join }}'
+#authplugin = '{{ (e2g_install_dir, "etc", "e2guardian", "authplugins", "proxy-digest.conf") | path_join }}'
+#!! Not compiled !! authplugin = '{{ (e2g_install_dir, "etc", "e2guardian", "authplugins", "proxy-ntlm.conf") | path_join }}'
+#authplugin = '{{ (e2g_install_dir, "etc", "e2guardian", "authplugins", "ident.conf") | path_join }}'
+authplugin = '{{ (e2g_install_dir, "etc", "e2guardian", "authplugins", "ip.conf") | path_join }}'
+#authplugin = '{{ (e2g_install_dir, "etc", "e2guardian", "authplugins", "proxy-header.conf") | path_join }}'
+#authplugin = '{{ (e2g_install_dir, "etc", "e2guardian", "authplugins", "port.conf") | path_join }}'
 
 # Map auth to ports
 # If enabled map auth plugins to ips/ports - number of authplugins must then be same as
@@ -868,7 +868,7 @@ generatedcertstart = {{ e2g_conf_generatedcertstart }}
 # At start after e2guardian has started listener and worker threads with
 # ' start' appended
 # When e2guardian is stopping with ' stop' appended
-#monitorhelper = '{{ e2g_install_dir }}/bin/mymonitor'
+#monitorhelper = '{{ (e2g_install_dir, "bin", "mymonitor") | path_join }}'
 {% if e2g_conf_monitorhelper is defined -%}
 monitorhelper = {{ e2g_conf_monitorhelper }}
 {% endif %}
