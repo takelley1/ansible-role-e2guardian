@@ -22,17 +22,6 @@
 
 # ------------------------------------------------------------------------------
 
-- name: FILTER_GROUPS | banned_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_filter_groups_dir, item.lists.banned_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_sitelist.name is defined
-  notify: restart-e2guardian
-
 - name: FILTER_GROUPS | banned_phraselist filter group file created
   ansible.builtin.copy:
     dest: "{{ (e2g_filter_groups_dir, item.lists.banned_phraselist.name) | path_join }}"
@@ -420,24 +409,24 @@
 
 - name: FILTER_GROUPS | fileextlist filter group file created
   ansible.builtin.copy:
-    dest: "{{ (e2g_filter_groups_dir, item.lists.fileextlist.name) | path_join }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.bannedextension_fileextlist.name) | path_join }}"
     content: |
-      {%- for site in item.lists.fileextlist.content %}
+      {%- for site in item.lists.bannedextension_fileextlist.content %}
       {{ site }}
       {% endfor -%}
   tags: e2g_filter
-  when: item.lists.fileextlist.name is defined
+  when: item.lists.bannedextension_fileextlist.name is defined
   notify: restart-e2guardian
 
 - name: FILTER_GROUPS | mimelist filter group file created
   ansible.builtin.copy:
-    dest: "{{ (e2g_filter_groups_dir, item.lists.mimelist.name) | path_join }}"
+    dest: "{{ (e2g_filter_groups_dir, item.lists.bannedmime_mimelist.name) | path_join }}"
     content: |
-      {%- for site in item.lists.mimelist.content %}
+      {%- for site in item.lists.bannedmime_mimelist.content %}
       {{ site }}
       {% endfor -%}
   tags: e2g_filter
-  when: item.lists.mimelist.name is defined
+  when: item.lists.bannedmime_mimelist.name is defined
   notify: restart-e2guardian
 
 - name: FILTER_GROUPS | exception_file_sitelist filter group file created
