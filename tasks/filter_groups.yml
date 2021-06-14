@@ -14,7 +14,7 @@
 - name: FILTER_GROUPS | Filter group configuration file created
   ansible.builtin.template:
     src: opt/e2g/etc/e2guardian/e2guardianfn.conf.j2
-    dest: "{{ (e2g_install_dir, 'etc', 'e2guardian', filter_group_file) | path_join) + '.conf' }}"
+    dest: "{{ ((e2g_install_dir, 'etc', 'e2guardian', filter_group_file) | path_join) + '.conf' }}"
   notify: restart-e2guardian
 
 # ------------------------------------------------------------------------------
