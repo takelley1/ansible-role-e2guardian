@@ -3,13 +3,13 @@
 # Deploy customized filer lists based on the groups defined in the e2g_filter_groups variable.
 
 - name: FILTER_GROUPS | Set filter group file index.
-  set_fact:
+  ansible.builtin.set_fact:
     index: "{{ (item_index + 1) | string }}"
   tags: e2g_filter
 
 # Setting a fact that depends on another fact must be defined separately.
 - name: FILTER_GROUPS | Set filter group file name.
-  set_fact:
+  ansible.builtin.set_fact:
     filter_group_file: "{{ 'e2guardianf' + index }}"
   tags: e2g_filter
 

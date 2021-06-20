@@ -7,5 +7,5 @@
     build_e2g: true
   tasks:
     - name: Include e2guardian
-      include_role:
+      ansible.builtin.include_role:
         name: ansible-role-e2guardian
