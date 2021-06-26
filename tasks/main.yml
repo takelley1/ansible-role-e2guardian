@@ -46,5 +46,5 @@
 
 - name: MAIN | Import uninstall.yml
   ansible.builtin.import_tasks: uninstall.yml
-  when: uninstall_e2g
   tags: never
+  when: uninstall_e2g
