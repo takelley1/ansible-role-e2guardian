@@ -6,7 +6,7 @@
 #Banned URLs based on Regular Expressions
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_bannedregexpurllist is defined -%}
+{% if e2g_bannedregexpurllist is defined and e2g_bannedregexpurllist !="" -%}
 {%- for item in e2g_bannedregexpurllist %}
 {{ item }}
 {% endfor -%}

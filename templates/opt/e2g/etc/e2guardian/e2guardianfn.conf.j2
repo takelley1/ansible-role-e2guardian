@@ -138,7 +138,7 @@ regexpreplacelist = 'name=addheader,path={{ (e2g_filter_groups_dir, (item.lists.
 #   for this particular group.  See documentation for supported values in
 #   that file.
 #weightedphrasemode = 0
-{% if item.weightedphrasemode is defined -%}
+{% if item.weightedphrasemode is defined and item.weightedphrasemode !="" -%}
 weightedphrasemode = {{ item.weightedphrasemode }}
 {% endif %}
 
@@ -289,7 +289,7 @@ reportinglevel = {{ item.reportinglevel | default('3') }}
 #     to host this script.
 #
 # accessdeniedaddress = 'http://YOURSERVER.YOURDOMAIN/cgi-bin/e2guardian.pl'
-{% if item.accessdeniedaddress is defined -%}
+{% if item.accessdeniedaddress is defined and item.accessdeniedaddress !="" -%}
 accessdeniedaddress = '{{ item.accessdeniedaddress }}'
 {% endif %}
 
@@ -307,7 +307,7 @@ accessdeniedaddress = '{{ item.accessdeniedaddress }}'
 # e.g. {{ (e2g_install_dir, "share", "e2guardian", "languages", "ukenglish", "custom.html") | path_join }}'
 #
 # htmltemplate = 'custom.html'
-{% if item.htmltemplate is defined -%}
+{% if item.htmltemplate is defined and item.htmltemplate !="" -%}
 htmltemplate = '{{ item.htmltemplate }}'
 {% endif %}
 
@@ -316,7 +316,7 @@ htmltemplate = '{{ item.htmltemplate }}'
 #   e.g. {{ (e2g_install_dir, "share", "e2guardian", "languages", "ukenglish", "neterr_template.html") | path_join }} when using 'ukenglish'
 #   language.
 #neterrtemplate = 'custom_neterr_template.html'
-{% if item.neterrtemplate is defined -%}
+{% if item.neterrtemplate is defined and item.neterrtemplate !="" -%}
 neterrtemplate = '{{ item.neterrtemplate }}'
 {% endif %}
 

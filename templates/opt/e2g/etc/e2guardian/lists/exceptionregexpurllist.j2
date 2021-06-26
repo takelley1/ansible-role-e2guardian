@@ -15,7 +15,7 @@
 # http://apps.facebook.com/neighborhoods/Setup.aspx and others.
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_exceptionregexpurllist is defined -%}
+{% if e2g_exceptionregexpurllist is defined and e2g_exceptionregexpurllist !="" -%}
 {%- for item in e2g_exceptionregexpurllist %}
 {{ item }}
 {% endfor -%}

@@ -3,7 +3,7 @@
 # banned MIME types
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_bannedmimetypelist is defined -%}
+{% if e2g_bannedmimetypelist is defined and e2g_bannedmimetypelist !="" -%}
 {%- for item in e2g_bannedmimetypelist %}
 {{ item }}
 {% endfor -%}

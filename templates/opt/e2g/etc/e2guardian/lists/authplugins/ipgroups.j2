@@ -10,7 +10,7 @@
 # Range matching:
 #192.168.1.0-192.168.1.255 = filter1
 
-{% if e2g_ipgroups is defined %}
+{% if e2g_ipgroups is defined and e2g_ipgroups !="" %}
 {% for item in e2g_ipgroups %}
 {{ item }}
 {% endfor %}

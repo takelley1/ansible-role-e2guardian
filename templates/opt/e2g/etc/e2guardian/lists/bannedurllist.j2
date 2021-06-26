@@ -28,7 +28,7 @@
 # members.home.net/uporn
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_bannedurllist is defined -%}
+{% if e2g_bannedurllist is defined and e2g_bannedurllist !="" -%}
 {%- for item in e2g_bannedurllist %}
 {{ item }}
 {% endfor -%}

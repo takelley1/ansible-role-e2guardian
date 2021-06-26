@@ -45,7 +45,7 @@
 ##.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "safelabel", "weighted") | path_join }}>
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_weightedphraselist is defined -%}
+{% if e2g_weightedphraselist is defined and e2g_weightedphraselist !="" -%}
 {%- for item in e2g_weightedphraselist %}
 {{ item }}
 {% endfor -%}
