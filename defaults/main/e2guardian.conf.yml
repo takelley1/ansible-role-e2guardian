@@ -116,4 +116,4 @@ e2g_conf_preauthstoryboard: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'preauth.
 
 e2g_conf_searchsitelistforip: "off"
 
-e2g_conf_maxheaderlines: 200
+e2g_conf_maxheaderlines: 250
