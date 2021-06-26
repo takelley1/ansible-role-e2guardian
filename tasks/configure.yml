@@ -32,6 +32,7 @@
     - lists/exceptionurllist
     - lists/greysitelist
     - lists/weightedphraselist
+  tags: e2g_config_templates
   notify: restart-e2guardian
 
 - name: CONFIGURE | Web templates deployed
