@@ -1,6 +1,6 @@
 ---
 
-# Deploy customized filer lists based on the groups defined in the e2g_filter_groups variable.
+# Deploy customized filter lists based on the groups defined in the e2g_filter_groups variable.
 
 - name: FILTER_GROUPS | Set filter group file index.
   ansible.builtin.set_fact:
@@ -20,7 +20,7 @@
   tags: e2g_filter
   notify: restart-e2guardian
 
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 - name: FILTER_GROUPS | {{ item.groupname }} | banned_phraselist filter group file created
   ansible.builtin.copy:

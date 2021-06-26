@@ -6,7 +6,7 @@
     cmd: ./e2guardian -q
   listen: restart-e2guardian
 
-- name: HANDLERS | E2Guardian restarted
+- name: HANDLERS | E2Guardian started
   ansible.builtin.systemd:
     name: e2guardian
     state: restarted

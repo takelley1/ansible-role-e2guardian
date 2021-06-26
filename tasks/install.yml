@@ -1,6 +1,6 @@
 ---
 
-# Clone, build, and install E2Guardian.
+# Clone repository, then build and install E2Guardian.
 
 - name: INSTALL | Necessary packages present
   ansible.builtin.apt:

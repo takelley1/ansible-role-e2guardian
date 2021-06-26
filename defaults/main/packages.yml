@@ -7,10 +7,12 @@ e2g_build_dependencies:
   - make
   - pkg-config
 
+# These packages are installed after e2g_build_dependencies.
 e2g_runtime_dependencies:
   - curl
   - libssl-dev
   - zlib1g-dev
 
+# These packages are installed after e2g_runtime_dependencies.
 e2g_additional_dependencies:
   - libpcre++-dev
