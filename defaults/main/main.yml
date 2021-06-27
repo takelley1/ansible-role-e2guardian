@@ -13,8 +13,10 @@ build_e2g: true
 uninstall_e2g: false
 # Whether to remove the packages to required to build E2Guardian after installation.
 remove_build_dependencies: false
-# Whether to set `Storage=persistent` in /etc/systemd/journald.conf.
-enable_persistent_journal: true
+# The value to use for `Storage` in /etc/systemd/journald.conf.
+journald_conf_Storage: persistent
+# The value to use for `RuntimeMaxUse` in /etc/systemd/journald.conf.
+journald_conf_RuntimeMaxUse: 10M
 
 # Only used if SSL man-in-the-middle is enabled for E2Guardian.
 e2g_ca_name: E2Guardian CA
