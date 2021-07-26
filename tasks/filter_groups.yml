@@ -2,6 +2,8 @@
 
 # Deploy customized filter lists based on the groups defined in the e2g_filter_groups variable.
 
+# This is done because item_index starts at 0 and the filter_group_file index
+#   must begin at 1.
 - name: FILTER_GROUPS | Set filter group file index.
   ansible.builtin.set_fact:
     index: "{{ (item_index + 1) | string }}"

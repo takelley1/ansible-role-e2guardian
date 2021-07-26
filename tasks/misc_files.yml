@@ -1,0 +1,29 @@
+---
+
+# Example dictionary:
+# e2g_misc_files:
+#   - name: bannedregexpurllist_include_01
+#     content:
+#       - "#time: 15 00 23 59 0123456"
+#       - youtube\.com
+#       - youtu\.be
+#   - name: bannedregexpurllist_include_02
+#     content:
+#       - "#time: 00 00 11 00 0123456"
+#       - youtube\.com
+#       - youtu\.be
+
+- name: MISC_FILES | {{ item.name }} | Misc files created
+  ansible.builtin.copy:
+    dest: "{{ (e2g_filter_groups_dir, item.name) | path_join }}"
+    content: |
+      {%- for line in item.content %}
+      {{ line }}
+      {% endfor -%}
+  when:
+    - item.name is defined
+    - item.name != ""
+    - e2g_misc_files is defined
+    - e2g_misc_files != ""
+  loop: "{{ e2g_misc_files }}"
+  notify: restart-e2guardian

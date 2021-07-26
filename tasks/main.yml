@@ -18,6 +18,11 @@
   tags: e2g_filter
   when: not uninstall_e2g
 
+- name: MAIN | Import misc_files.yml
+  ansible.builtin.import_tasks: misc_files.yml
+  tags: e2g_misc_files
+  when: not uninstall_e2g
+
 - name: MAIN | Import webserver.yml
   ansible.builtin.import_tasks: webserver.yml
   tags: e2g_webserver
