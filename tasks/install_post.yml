@@ -1,0 +1,63 @@
+---
+
+# Post-install tasks.
+
+- name: INSTALL_POST | Unit file deployed
+  block:
+    - name: INSTALL_POST | UNIT FILE | File deployed
+      ansible.builtin.copy:
+        src: "{{ (e2g_repo_dir, 'data', 'scripts', 'e2guardian.service') | path_join }}"
+        dest: /etc/systemd/system/e2guardian.service
+        remote_src: true
+        owner: root
+        group: root
+        mode: "0640"
+      notify: restart-e2guardian
+
+    - name: INSTALL_POST | UNIT FILE | Override path exists.
+      ansible.builtin.file:
+        path: /etc/systemd/system/e2guardian.service.d
+        state: directory
+        owner: root
+        group: root
+        mode: "0750"
+
+    - name: INSTALL_POST | UNIT FILE | Override deployed.
+      ansible.builtin.template:
+        src: etc/systemd/system/e2guardian.service.d/override.conf.j2
+        dest: /etc/systemd/system/e2guardian.service.d/override.conf
+        owner: root
+        group: root
+        mode: "0640"
+      notify: restart-e2guardian
+
+# This is done to make it easier to view the E2Guardian logs remotely
+#   using `journalctl --directory=`.
+- name: INSTALL_POST | Systemd journal configured
+  community.general.ini_file:
+    path: /etc/systemd/journald.conf
+    section: Journal
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop:
+    - option: Storage
+      value: "{{ journald_conf_Storage }}"
+    - option: RuntimeMaxUse
+      value: "{{ journald_conf_RuntimeMaxUse }}"
+  when: item is defined and item != ""
+  notify: restart-journald
+
+- name: INSTALL_POST | {{ e2g_install_dir }} to added to $PATH
+  ansible.builtin.template:
+    src: etc/profile.d/e2g-path.sh.j2
+    dest: /etc/profile.d/e2g-path.sh
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: INSTALL_POST | E2Guardian allowed in ufw
+  community.general.ufw:
+    rule: allow
+    proto: tcp
+    to_port: "{{ item | string }}"
+  loop: "{{ e2g_conf_filterports }}"

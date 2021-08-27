@@ -5,6 +5,11 @@
   tags: e2g_install
   when: not uninstall_e2g
 
+- name: MAIN | Import install_post.yml
+  ansible.builtin.import_tasks: install_post.yml
+  tags: e2g_install_post
+  when: not uninstall_e2g
+
 - name: MAIN | Import configure.yml
   ansible.builtin.import_tasks: configure.yml
   tags: e2g_configure
