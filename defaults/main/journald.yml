@@ -1,0 +1,6 @@
+---
+
+# The value to use for `Storage` in /etc/systemd/journald.conf.
+journald_conf_Storage: persistent
+# The value to use for `RuntimeMaxUse` in /etc/systemd/journald.conf.
+journald_conf_RuntimeMaxUse: 10M
