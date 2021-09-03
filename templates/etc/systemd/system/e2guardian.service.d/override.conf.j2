@@ -10,6 +10,7 @@ ExecStart=nice -n {{ e2g_service_niceness }} {{ (e2g_install_dir, "sbin", "e2gua
 ExecReload=nice -n {{ e2g_service_niceness }} {{ (e2g_install_dir, "sbin", "e2guardian") | path_join }} -r
 
 # Enable CPU accounting and set priority with cgroups attributes.
+# See systemd.resource-control(5) for details.
 CPUAccounting=yes
 CPUWeight={{ e2g_service_cpuweight }}
 StartupCPUWeight={{ e2g_service_startupcpuweight }}
