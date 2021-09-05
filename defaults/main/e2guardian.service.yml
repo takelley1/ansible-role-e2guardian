@@ -1,16 +1,26 @@
 ---
 
 # These settings apply to E2Guardian's systemd unit file.
+# The defaults are tuned for maximum performance.
 
-# How nice the service should be, from -19 to 20.
-# See nice(1) for details.
-e2g_service_niceness: -19
+# IO
+# See systemd.exec(5) and ioprio_set(2) for details.
+e2g_service_IOWeight: 10000
+e2g_service_StartupIOWeight: "{{ e2g_service_IOWeight }}"
+e2g_service_IOSchedulingClass: realtime
+e2g_service_IOSchedulingPriority: 0
 
-# CPU priority of service using cgroups.
+# CPU
 # See systemd.resource-control(5) for details.
-e2g_service_cpuweight: 10000
-e2g_service_startupcpuweight: "{{ e2g_service_cpuweight }}"
+e2g_service_CPUWeight: 10000
+e2g_service_StartupCPUWeight: "{{ e2g_service_CPUWeight }}"
+# See systemd.exec(5) and sched_setscheduler(2) for details.
+e2g_service_CPUSchedulingPriority: 99
 
+# See nice(1) for details.
+e2g_service_Nice: -19
+
+# RAM
 # Protect the service from getting killed due to low-memory.
 # See systemd.resource-control(5) for details.
-e2g_service_memorymin: infinity
+e2g_service_MemoryMin: infinity

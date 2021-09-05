@@ -3,17 +3,27 @@
 
 [Service]
 
-# Set process priority using nice.
-ExecStart=
-ExecReload=
-ExecStart=nice -n {{ e2g_service_niceness }} {{ (e2g_install_dir, "sbin", "e2guardian") | path_join }}
-ExecReload=nice -n {{ e2g_service_niceness }} {{ (e2g_install_dir, "sbin", "e2guardian") | path_join }} -r
+# See systemd.exec(5) and systemd.resource-control(5) for details.
 
-# Enable CPU accounting and set priority with cgroups attributes.
-# See systemd.resource-control(5) for details.
+# IO
+IOWeight={{ e2g_service_IOWeight }}
+StartupIOWeight={{ e2g_service_StartupIOWeight }}
+# See ioprio_set(2) for details.
+IOSchedulingClass={{ e2g_service_IOSchedulingClass }}
+IOSchedulingPriority={{ e2g_service_IOSchedulingPriority }}
+
+# CPU
 CPUAccounting=yes
-CPUWeight={{ e2g_service_cpuweight }}
-StartupCPUWeight={{ e2g_service_startupcpuweight }}
+CPUWeight={{ e2g_service_CPUWeight }}
+StartupCPUWeight={{ e2g_service_StartupCPUWeight }}
+# See sched_setscheduler(2) for details.
+CPUSchedulingPriority={{ e2g_service_CPUSchedulingPriority }}
 
+Nice={{ e2g_service_Nice }}
+
+# RAM
 # Protect the service from getting killed from low-memory.
-MemoryMin={{ e2g_service_memorymin }}
+MemoryAccounting=yes
+MemoryMin={{ e2g_service_MemoryMin }}
+
+IPAccounting=yes
