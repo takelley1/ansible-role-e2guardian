@@ -14,8 +14,6 @@ e2g_service_IOSchedulingPriority: 0
 # See systemd.resource-control(5) for details.
 e2g_service_CPUWeight: 10000
 e2g_service_StartupCPUWeight: "{{ e2g_service_CPUWeight }}"
-# See systemd.exec(5) and sched_setscheduler(2) for details.
-e2g_service_CPUSchedulingPriority: 99
 
 # See nice(1) for details.
 e2g_service_Nice: -19
