@@ -1,6 +1,6 @@
 ---
 
-# Generate certificates for E2Guardian SSL man-in-the-middle mode.
+# Generate certificates for E2Guardian's SSL man-in-the-middle mode.
 # Certs are only generated if they don't already exist in order to maintain idempotence.
 
 - name: CERTS | Cert paths exist
@@ -10,11 +10,11 @@
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0750"
+  when: item is defined
   loop:
     - "{{ e2g_conf_cacertificatepath | dirname }}"
     - "{{ e2g_conf_caprivatekeypath | dirname }}"
     - "{{ e2g_conf_generatedcertpath }}"
-  when: item is defined
 
 - name: CERTS | Private keys generated
   community.crypto.openssl_privatekey:
@@ -24,11 +24,11 @@
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
+  when: item is defined
+  notify: restart-e2guardian
   loop:
     - "{{ e2g_conf_caprivatekeypath }}"
     - "{{ e2g_conf_certprivatekeypath }}"
-  when: item is defined
-  notify: restart-e2guardian
 
 - name: CERTS | Check for CA cert
   ansible.builtin.stat:
