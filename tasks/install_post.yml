@@ -44,6 +44,8 @@
       value: "{{ journald_conf_Storage }}"
     - option: RuntimeMaxUse
       value: "{{ journald_conf_RuntimeMaxUse }}"
+  loop_control:
+    label: "journald.conf -- {{ item.option }}: {{ item.value }}"
   when: item is defined and item != ""
   notify: restart-journald
 

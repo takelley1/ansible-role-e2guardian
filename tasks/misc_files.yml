@@ -25,5 +25,7 @@
     - item.name != ""
     - e2g_misc_files is defined
     - e2g_misc_files != ""
+  loop_control:
+    label: "{{ item.name }}"
   loop: "{{ e2g_misc_files }}"
   notify: restart-e2guardian
