@@ -9,25 +9,20 @@
     state: stopped
     daemon_reload: true
     masked: false
-  tags: services
+  ignore_errors: true  # Task will fail if service already doesn't exist.
 
-- name: UNINSTALL | Packages absent
+- name: UNINSTALL | Package absent
   ansible.builtin.apt:
-    name: "{{ item }}"
+    name: e2guardian
     state: absent
     autoremove: true
-  loop:
-    - "{{ e2g_build_dependencies }}"
-    - "{{ e2g_runtime_dependencies }}"
-    - "{{ e2g_additional_dependencies }}"
-    - e2guardian
 
-- name: UNINSTALL | User absent
+- name: UNINSTALL | E2Guardian user absent
   ansible.builtin.user:
     name: "{{ e2g_conf_daemonuser }}"
     state: absent
 
-- name: UNINSTALL | Group absent
+- name: UNINSTALL | E2Guardian group absent
   ansible.builtin.group:
     name: "{{ e2g_conf_daemongroup }}"
     state: absent
@@ -38,21 +33,21 @@
     state: absent
   loop:
     - "{{ e2g_install_dir }}"
-    - /var/log/e2guardian
-    - /etc/systemd/system/e2guardian.service
-    - /etc/systemd/system/e2guardian.service.d
-    - /edit-e2g-lists.sh
-    - /etc/profile.d/e2g-path.sh
-    - /var/www/e2guardian
     - /etc/nginx/sites-available/e2guardian
     - /etc/nginx/sites-enabled/e2guardian
+    - /etc/profile.d/e2g-path.sh
+    - /etc/systemd/system/e2guardian.service
+    - /etc/systemd/system/e2guardian.service.d
+    - /var/log/e2guardian
+    - /var/www/e2guardian
 
-- name: UNINSTALL | E2Guardian ufw rules removed
+- name: UNINSTALL | E2Guardian UFW rules removed
   community.general.ufw:
     rule: allow
     proto: tcp
     to_port: "{{ item }}"
     delete: true
+  when: ufw_check.rc == 0
   loop: "{{ e2g_conf_filterports }}"
 
 - name: UNINSTALL | Webserver ufw rules removed
@@ -61,3 +56,4 @@
     proto: tcp
     to_port: 80
     delete: true
+  when: ufw_check.rc == 0
