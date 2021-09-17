@@ -20,7 +20,7 @@
         state: directory
         owner: root
         group: root
-        mode: "0750"
+        mode: "0700"
 
     - name: INSTALL_POST | UNIT FILE | Override deployed.
       ansible.builtin.template:
@@ -28,7 +28,7 @@
         dest: /etc/systemd/system/e2guardian.service.d/override.conf
         owner: root
         group: root
-        mode: "0640"
+        mode: "0400"
       notify: restart-e2guardian
 
 # This is done to make it easier to view the E2Guardian logs remotely

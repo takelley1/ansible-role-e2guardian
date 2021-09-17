@@ -14,7 +14,7 @@
     state: directory
     owner: www-data
     group: www-data
-    mode: "0755"
+    mode: "0750"
   notify: restart-webserver
 
 - name: WEBSERVER | Nginx template deployed
@@ -23,7 +23,7 @@
     dest: /etc/nginx/sites-available/e2guardian
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   notify: restart-webserver
 
 - name: WEBSERVER | Nginx default site disabled
