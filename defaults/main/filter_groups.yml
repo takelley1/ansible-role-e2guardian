@@ -1,5 +1,6 @@
 ---
 
+# Example dictionary specifying filter groups and list overrides.
 e2g_filter_groups:
 
   - groupname: all_group

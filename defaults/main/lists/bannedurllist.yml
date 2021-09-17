@@ -1,4 +1,5 @@
 ---
 
 e2g_bannedurllist:
-  - pornhub.com
+  # PCRE regex syntax is used, so the `.` must be escaped.
+  - example\.com
