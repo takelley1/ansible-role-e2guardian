@@ -2,6 +2,7 @@
 
 - name: MAIN | Check for UFW
   ansible.builtin.shell: hash ufw
+  tags: always
   changed_when: false
   failed_when: false
   register: ufw_check
