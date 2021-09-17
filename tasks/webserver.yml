@@ -5,8 +5,8 @@
 # This is only useful if E2Guardian's SSL man-in-the-middle feature is being
 #   used.
 
-  ansible.builtin.package:
 - name: WEBSERVER | Nginx package present
+  ansible.builtin.apt:
     name: nginx
   notify: restart-webserver
 
