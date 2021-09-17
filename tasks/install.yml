@@ -91,3 +91,9 @@
         autoremove: true
         purge: true
       when: e2g_remove_build_dependencies
+
+- name: INSTALL | E2guardian binary symlinked to /usr/bin
+  ansible.builtin.file:
+    src: "{{ (e2g_install_dir, 'sbin', 'e2guardian') | path_join }}"
+    dest: /usr/bin/e2guardian
+    state: link

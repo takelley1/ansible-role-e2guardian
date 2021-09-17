@@ -50,14 +50,6 @@
   when: item is defined and item != ""
   notify: restart-journald
 
-- name: INSTALL_POST | {{ e2g_install_dir }} added to $PATH
-  ansible.builtin.template:
-    src: etc/profile.d/e2g-path.sh.j2
-    dest: /etc/profile.d/e2g-path.sh
-    owner: root
-    group: root
-    mode: "0644"
-
 - name: INSTALL_POST | E2Guardian allowed through UFW
   community.general.ufw:
     rule: allow
