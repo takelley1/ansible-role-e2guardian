@@ -63,5 +63,4 @@
 
 - name: MAIN | Import uninstall.yml
   ansible.builtin.import_tasks: uninstall.yml
-  tags: never
   when: e2g_uninstall_role
