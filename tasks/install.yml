@@ -55,9 +55,9 @@
       ansible.builtin.git:
         repo: "{{ e2g_repo_url }}"
         dest: "{{ e2g_repo_dir }}"
-        accept_hostkey: true
         version: "{{ e2g_repo_branch }}"
-        depth: 1
+        accept_hostkey: true
+        single_branch: true
         force: true
       register: e2g_repo
 
