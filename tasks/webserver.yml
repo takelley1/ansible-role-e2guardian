@@ -1,10 +1,12 @@
 ---
 
-# Static Nginx webserver for serving E2Guardian's public certificate.
-# Only useful if SSL man-in-the-middle is used.
+# Installs and configures Nginx for serving E2Guardian's public certificate.
+#
+# This is only useful if E2Guardian's SSL man-in-the-middle feature is being
+#   used.
 
-- name: WEBSERVER | Nginx package installed
   ansible.builtin.package:
+- name: WEBSERVER | Nginx package present
     name: nginx
   notify: restart-webserver
 
@@ -39,7 +41,7 @@
     state: link
   notify: restart-webserver
 
-- name: WEBSERVER | Nginx allowed in ufw
+- name: WEBSERVER | Nginx allowed through UFW
   community.general.ufw:
     rule: allow
     proto: tcp

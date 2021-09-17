@@ -13,7 +13,7 @@
 #       - youtube\.com
 #       - youtu\.be
 
-- name: MISC_FILES | {{ item.name }} | Misc files created
+- name: MISC_FILES | Misc files created for filter groups
   ansible.builtin.copy:
     dest: "{{ (e2g_filter_groups_dir, item.name) | path_join }}"
     content: |

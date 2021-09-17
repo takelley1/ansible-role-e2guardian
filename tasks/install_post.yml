@@ -14,7 +14,7 @@
         mode: "0640"
       notify: restart-e2guardian
 
-    - name: INSTALL_POST | UNIT FILE | Override path exists.
+    - name: INSTALL_POST | UNIT FILE | Unit file override path exists
       ansible.builtin.file:
         path: /etc/systemd/system/e2guardian.service.d
         state: directory
@@ -22,7 +22,7 @@
         group: root
         mode: "0700"
 
-    - name: INSTALL_POST | UNIT FILE | Override deployed.
+    - name: INSTALL_POST | UNIT FILE | Unit file override deployed
       ansible.builtin.template:
         src: etc/systemd/system/e2guardian.service.d/override.conf.j2
         dest: /etc/systemd/system/e2guardian.service.d/override.conf
@@ -47,7 +47,7 @@
   when: item is defined and item != ""
   notify: restart-journald
 
-- name: INSTALL_POST | {{ e2g_install_dir }} to added to $PATH
+- name: INSTALL_POST | {{ e2g_install_dir }} added to $PATH
   ansible.builtin.template:
     src: etc/profile.d/e2g-path.sh.j2
     dest: /etc/profile.d/e2g-path.sh
@@ -55,7 +55,7 @@
     group: root
     mode: "0644"
 
-- name: INSTALL_POST | E2Guardian allowed in ufw
+- name: INSTALL_POST | E2Guardian allowed through UFW
   community.general.ufw:
     rule: allow
     proto: tcp
