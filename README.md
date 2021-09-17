@@ -9,8 +9,8 @@ Example playbook:
   become: true
   gather_facts: true
   vars:
-    build_e2g: true
-    remove_build_dependencies: false
+    e2g_build_package: true
+    e2g_remove_build_dependencies: false
     e2g_filter_groups:
       - groupname: all_group
       - groupname: group1

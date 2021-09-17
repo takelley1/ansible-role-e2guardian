@@ -3,17 +3,17 @@
 - name: MAIN | Import install.yml
   ansible.builtin.import_tasks: install.yml
   tags: e2g_install
-  when: not uninstall_e2g
+  when: not e2g_uninstall_role
 
 - name: MAIN | Import install_post.yml
   ansible.builtin.import_tasks: install_post.yml
   tags: e2g_install_post
-  when: not uninstall_e2g
+  when: not e2g_uninstall_role
 
 - name: MAIN | Import configure.yml
   ansible.builtin.import_tasks: configure.yml
   tags: e2g_configure
-  when: not uninstall_e2g
+  when: not e2g_uninstall_role
 
 - name: MAIN | Import filter_groups.yml
   ansible.builtin.include_tasks: filter_groups.yml
@@ -21,12 +21,12 @@
   loop_control:
     index_var: item_index
   tags: e2g_filter
-  when: not uninstall_e2g
+  when: not e2g_uninstall_role
 
 - name: MAIN | Import misc_files.yml
   ansible.builtin.import_tasks: misc_files.yml
   tags: e2g_misc_files
-  when: not uninstall_e2g
+  when: not e2g_uninstall_role
 
 - name: MAIN | Import webserver.yml
   ansible.builtin.import_tasks: webserver.yml
@@ -34,7 +34,7 @@
   when:
     - e2g_conf_enablessl is defined
     - e2g_conf_enablessl
-    - not uninstall_e2g
+    - not e2g_uninstall_role
 
 - name: MAIN | Import certs.yml
   ansible.builtin.import_tasks: certs.yml
@@ -42,7 +42,7 @@
   when:
     - e2g_conf_enablessl is defined
     - e2g_conf_enablessl
-    - not uninstall_e2g
+    - not e2g_uninstall_role
 
 - name: MAIN | E2Guardian service enabled and running
   ansible.builtin.systemd:
@@ -52,9 +52,9 @@
     daemon_reload: true
     masked: false
   tags: e2g_services
-  when: not uninstall_e2g
+  when: not e2g_uninstall_role
 
 - name: MAIN | Import uninstall.yml
   ansible.builtin.import_tasks: uninstall.yml
   tags: never
-  when: uninstall_e2g
+  when: e2g_uninstall_role

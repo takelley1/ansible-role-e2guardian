@@ -4,7 +4,7 @@
   hosts: all
   become: true
   vars:
-    build_e2g: true
+    e2g_build_package: true
   tasks:
     - name: Include e2guardian
       ansible.builtin.include_role:

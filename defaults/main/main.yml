@@ -8,11 +8,11 @@ e2g_repo_dir: "{{ (e2g_install_dir, 'git') | path_join }}"
 e2g_filter_groups_dir: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists') | path_join }}"
 
 # Whether to clone, configure, and build E2Guardian.
-build_e2g: true
+e2g_build_package: true
 # Whether to remove E2Guardian.
-uninstall_e2g: false
+e2g_uninstall_role: false
 # Whether to remove the packages to required to build E2Guardian after installation.
-remove_build_dependencies: false
+e2g_remove_build_dependencies: false
 
 # Compiler options' affect on binary size (branch v5.3).
   # No CXXFLAGS                        = 28748

@@ -72,11 +72,4 @@
         state: absent
         autoremove: true
         purge: true
-      when: remove_build_dependencies
-
-    - name: INSTALL | BUILD | E2Guardian installed
-      shell:
-        cmd: make install
-        chdir: "{{ e2g_repo_dir }}"
-      notify: restart-e2guardian
-  when: build_e2g
+      when: e2g_remove_build_dependencies

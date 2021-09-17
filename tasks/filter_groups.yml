@@ -1,24 +1,25 @@
 ---
 
-# Deploy customized filter lists based on the groups defined in the e2g_filter_groups variable.
+# Deploy customized filter lists based on the groups defined in the
+#   e2g_filter_groups variable.
 
-# This is done because item_index starts at 0 and the filter_group_file index
-#   must begin at 1.
-- name: FILTER_GROUPS | Set filter group file index.
+# This is done because item_index starts at 0 and the e2g_filter_group_file_name index
+#   must start at 1.
+- name: FILTER_GROUPS | Set filter group file index
   ansible.builtin.set_fact:
     index: "{{ (item_index + 1) | string }}"
   tags: e2g_filter
 
 # Setting a fact that depends on another fact must be defined separately.
-- name: FILTER_GROUPS | Set filter group file name.
+- name: FILTER_GROUPS | Set filter group file name
   ansible.builtin.set_fact:
-    filter_group_file: "{{ 'e2guardianf' + index }}"
+    e2g_filter_group_file_name: "{{ 'e2guardianf' + index }}"
   tags: e2g_filter
 
 - name: FILTER_GROUPS | Filter group configuration file created
   ansible.builtin.template:
     src: opt/e2g/etc/e2guardian/e2guardianfn.conf.j2
-    dest: "{{ ((e2g_install_dir, 'etc', 'e2guardian', filter_group_file) | path_join) + '.conf' }}"
+    dest: "{{ ((e2g_install_dir, 'etc', 'e2guardian', e2g_filter_group_file_name) | path_join) + '.conf' }}"
   tags: e2g_filter
   notify: restart-e2guardian
 
