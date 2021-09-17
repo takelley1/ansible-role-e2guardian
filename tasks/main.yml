@@ -40,7 +40,7 @@
   tags: e2g_webserver
   when:
     - e2g_conf_enablessl is defined
-    - e2g_conf_enablessl
+    - e2g_conf_enablessl | bool
     - not e2g_uninstall_role
 
 - name: MAIN | Import certs.yml
@@ -48,7 +48,7 @@
   tags: e2g_certs
   when:
     - e2g_conf_enablessl is defined
-    - e2g_conf_enablessl
+    - e2g_conf_enablessl | bool
     - not e2g_uninstall_role
 
 - name: MAIN | E2Guardian service enabled and running
