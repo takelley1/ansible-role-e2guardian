@@ -2,35 +2,42 @@
 
 # Clone repository, then build and install E2Guardian.
 
-- name: INSTALL | Necessary packages present
+- name: INSTALL | Build dependencies present
+  ansible.builtin.apt:
+    name: "{{ e2g_build_dependencies }}"
+    update_cache: true
+  when: e2g_build_package
+
+- name: INSTALL | Runtime dependencies present
   ansible.builtin.apt:
     name: "{{ item }}"
     update_cache: true
   loop:
-    - "{{ e2g_build_dependencies }}"
     - "{{ e2g_runtime_dependencies }}"
     # Libpcre must be installed after everything else on Ubuntu.
     - "{{ e2g_additional_dependencies }}"
-  when: build_e2g
 
-- name: INSTALL | Group present
+- name: INSTALL | E2Guardian group present
   ansible.builtin.group:
     name: "{{ e2g_conf_daemongroup }}"
 
-- name: INSTALL | User present
+- name: INSTALL | E2Guardian user present
   ansible.builtin.user:
     name: "{{ e2g_conf_daemonuser }}"
     shell: /usr/sbin/nologin
     create_home: false
     group: "{{ e2g_conf_daemongroup }}"
 
-- name: INSTALL | Paths configured
+- name: INSTALL | Necessary paths present
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
     owner: "{{ item.owner }}"
     group: "{{ item.owner }}"
     mode: "0750"
+  when: item.path is defined
+  loop_control:
+    label: "{{ item.path }}"
   loop:
     - path: "{{ e2g_install_dir }}"
       owner: root
@@ -40,11 +47,11 @@
 
     - path: /var/log/e2guardian
       owner: "{{ e2g_conf_daemonuser }}"
-  when: item.path is defined
 
-- name: INSTALL | E2Guardian built
+- name: INSTALL | E2Guardian binary built
+  when: e2g_build_package
   block:
-    - name: INSTALL | BUILD | E2Guardian Repo cloned
+    - name: INSTALL | BUILD | E2Guardian repo cloned/updated
       ansible.builtin.git:
         repo: "{{ e2g_repo_url }}"
         dest: "{{ e2g_repo_dir }}"
@@ -52,19 +59,30 @@
         version: "{{ e2g_repo_branch }}"
         depth: 1
         force: true
+      register: e2g_repo
 
+    # Only attempt to compile E2Guardian if the repo pulled new commits.
     - name: INSTALL | BUILD | Build options configured
       shell:
         cmd: "{{ item }}"
         chdir: "{{ e2g_repo_dir }}"
+      when: e2g_repo.changed
       loop:
         - ./autogen.sh
         - ./configure {{ build_options }}
 
-    - name: INSTALL | BUILD | E2Guardian built
+    - name: INSTALL | BUILD | E2Guardian binary built
       community.general.make:
         chdir: "{{ e2g_repo_dir }}"
         jobs: "{{ ansible_processor_vcpus | int + 1 }}"
+      when: e2g_repo.changed
+
+    - name: INSTALL | BUILD | E2Guardian binary installed
+      shell:
+        cmd: make install
+        chdir: "{{ e2g_repo_dir }}"
+      when: e2g_repo.changed
+      notify: restart-e2guardian
 
     - name: INSTALL | BUILD | Build dependencies removed
       ansible.builtin.apt:
