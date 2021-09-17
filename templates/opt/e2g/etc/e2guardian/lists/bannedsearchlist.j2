@@ -1,0 +1,17 @@
+#jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+#Banned Search Words
+#
+#Words must be in alphabetic order within a single line
+# and separated by a '+' sign.
+#All combinations of the words will be blocked
+# e.g.   girl+naughty
+#     will block  naughty+girl as well as girl+naughty
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_bannedsearchlist is defined and e2g_bannedsearchlist !="" -%}
+{%- for item in e2g_bannedsearchlist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------
