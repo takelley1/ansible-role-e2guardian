@@ -60,4 +60,5 @@
     rule: allow
     proto: tcp
     to_port: "{{ item | string }}"
+  when: ufw_check.rc == 0
   loop: "{{ e2g_conf_filterports }}"

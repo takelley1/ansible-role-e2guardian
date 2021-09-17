@@ -1,5 +1,10 @@
 ---
 
+- name: MAIN | Check for UFW
+  ansible.builtin.shell: hash ufw
+  changed_when: false
+  failed_when: false
+  register: ufw_check
 - name: MAIN | Import install.yml
   ansible.builtin.import_tasks: install.yml
   tags: e2g_install

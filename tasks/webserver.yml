@@ -44,3 +44,4 @@
     rule: allow
     proto: tcp
     to_port: 80
+  when: ufw_check.rc == 0
