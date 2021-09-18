@@ -1,119 +1,157 @@
 ---
 
-# Variables used in the main e2guardian.conf configuration file.
-# See `templates/opt/e2g/etc/e2guardian/e2guardian.conf.j2` for
+# These variables are used in the main e2guardian.conf configuration file.
+#
+#  See `templates/opt/e2guardian/etc/e2guardian/e2guardian.conf.j2` for
 #   information on the purpose of each variable.
+#
+# Variables here appear in the same order as they do in e2guardian.conf.
 
-e2g_conf_languagedir: "{{ (e2g_install_dir, 'share', 'e2guardian', 'languages') | path_join }}"
+### QUICK_START section --------------------------------------------------------
+
 e2g_conf_language: ukenglish
 
-# e2g_conf_debuglevel:
-# e2g_conf_debuglevelfile:
+# e2g_conf_dockermode:
+# e2g_conf_transparenthttpsport:
+# e2g_conf_icapport:
+# e2g_conf_proxyip:
+
+e2g_conf_filtergroups: "{{ e2g_filter_groups | length }}"
+# e2g_conf_defaultfiltergroup:
+e2g_conf_enablessl: "on"
+
+### NAMES_PATHS section --------------------------------------------------------
+
+e2g_conf_daemonuser: e2guardian
+e2g_conf_daemongroup: e2guardian
+
+e2g_conf_languagedir: "{{ (e2g_install_dir, 'share', 'e2guardian', 'languages') | path_join }}"
+e2g_conf_preauthstoryboard: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'preauth.story') | path_join }}"
+# e2g_conf_perroomdirectory:
+
+### NETWORK section ------------------------------------------------------------
+
+# e2g_conf_filterip:
+#  - "{{ ansible_default_ipv4.address }}"
+# This must match the number of IPs in e2g_conf_filterip.
+e2g_conf_filterports:
+  - 8080
+# e2g_conf_proxyport:
+
+### MITM section ---------------------------------------------------------------
+
+# e2g_conf_sslcertificatepath:
+e2g_conf_cacertificatepath: "{{ (e2g_install_dir, 'certs', 'e2g-ca-cert.pem') | path_join }}"
+e2g_conf_caprivatekeypath: "{{ (e2g_install_dir, 'certs', 'e2g-ca-cert.key') | path_join }}"
+e2g_conf_certprivatekeypath: "{{ (e2g_install_dir, 'certs', 'generated-certs.key') | path_join }}"
+e2g_conf_generatedcertpath: "{{ (e2g_install_dir, 'certs', 'generated-certs') | path_join }}"
+# e2g_conf_generatedcertstart:
+# e2g_conf_genratedcertend:
+
+### ICAP_SERVICE section -------------------------------------------------------
+
+# e2g_conf_defaulticapfiltergroup:
+
+### TRANSPARENT section --------------------------------------------------------
+
+# e2g_conf_defaulttransparentfiltergroup:
+
+### AUTH section ---------------------------------------------------------------
+
+# e2g_conf_authrequiresuserandgroup:
+e2g_conf_reverseclientiplookups: "off"
+
+### ACCESS_LOG section ---------------------------------------------------------
+
+# e2g_conf_loglocation:
+e2g_conf_logsyslog: "on"
+e2g_conf_nologger: "off"
+# e2g_conf_namesuffix:
+e2g_conf_logfileformat: 2
+# e2g_conf_anonymizelogs:
 e2g_conf_loglevel: 3
 e2g_conf_logexceptionhits: 2
-e2g_conf_logfileformat: 2
-# e2g_conf_logheadervalue:
+e2g_conf_logadblocks: "off"
+e2g_conf_showweightedfound: "on"
+e2g_conf_logclienthostnames: "off"
+e2g_conf_loguseragent: "off"
 # e2g_conf_maxlogitemlength:
-# e2g_conf_anonymizelogs:
-e2g_conf_logsyslog: "on"
-# e2g_conf_namesuffix:
-# e2g_conf_loglocation:
+
+### MONITORING section ---------------------------------------------------------
 
 # e2g_conf_dstatlocation:
 # e2g_conf_dstatinterval:
 # e2g_conf_statshumanreadable:
+# e2g_conf_monitorflagprefix:
 
-# e2g_conf_dockermode:
+### URL_FILTERING section ------------------------------------------------------
 
-# e2g_conf_filterip:
-#  - "{{ ansible_default_ipv4.address }}"
+e2g_conf_reverseaddresslookups: "off"
 
-# This must match the number of IPs in e2g_conf_filterip.
-e2g_conf_filterports:
-  - 8080
+### LIST_SETTINGS section ------------------------------------------------------
 
-# e2g_conf_mapportstoips:
-# e2g_conf_transparenthttpsport:
-# e2g_conf_icapport:
-# e2g_conf_proxyip:
-# e2g_conf_proxyport:
+e2g_conf_searchsitelistforip: "off"
 
-e2g_conf_proxytimeout: 5
-e2g_conf_connecttimeout: 5
-e2g_conf_proxyexchange: 61
-e2g_conf_pcontimeout: 55
+### AV_SCANNERS section --------------------------------------------------------
+
+e2g_conf_contentscannertimeout: 60
+
+### HEADER section -------------------------------------------------------------
+
+e2g_conf_addforwardedfor: "off"
+e2g_conf_usexforwardedfor: "off"
+e2g_conf_maxheaderlines: 250
+
+### BLOCK_PAGE section ---------------------------------------------------------
 
 e2g_conf_usecustombannedimage: "on"
 e2g_conf_custombannedimagefile: "{{ (e2g_install_dir, 'share', 'e2guardian', 'transparent1x1.gif') | path_join }}"
 e2g_conf_usecustombannedflash: "on"
 e2g_conf_custombannedflashfile: "{{ (e2g_install_dir, 'share', 'e2guardian', 'blockedflash.swf') | path_join }}"
 
-e2g_conf_filtergroups: "{{ e2g_filter_groups | length }}"
-e2g_conf_filtergroupslist: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'filtergroupslist') | path_join }}"
-# e2g_conf_defaultfiltergroup:
-# e2g_conf_defaulttransparentfiltergroup:
-# e2g_conf_defaulticapfiltergroup:
-# e2g_conf_authrequiresuserandgroup:
-# e2g_conf_perroomdirectory:
+### DOWNLOAD_MANAGER section ---------------------------------------------------
 
-e2g_conf_showweightedfound: "on"
-e2g_conf_weightedphrasemode: 2
-e2g_conf_phrasefiltermode: 2
-
-e2g_conf_preservecase: 0
-e2g_conf_hexdecodecontent: "off"
-
-e2g_conf_forcequicksearch: "off"
-e2g_conf_reverseaddresslookups: "off"
-e2g_conf_reverseclientiplookups: "off"
-e2g_conf_logclienthostnames: "off"
-
-e2g_conf_maxcontentfiltersize: 1024
-e2g_conf_maxcontentramcachescansize: 2000
-e2g_conf_maxcontentfilecachescansize: 20000
-
+e2g_conf_downloadmanager: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'downloadmanagers', 'default.conf') | path_join }}"
 e2g_conf_filecachedir: /tmp
 e2g_conf_deletedownloadedtempfiles: "on"
-
 e2g_conf_initialtrickledelay: 20
 e2g_conf_trickledelay: 10
 
-e2g_conf_downloadmanager: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'downloadmanagers', 'default.conf') | path_join }}"
-e2g_conf_contentscannertimeout: 60
-e2g_conf_mapauthtoports: "off"
-e2g_conf_recheckreplacedurls: "off"
+### PHRASES section ------------------------------------------------------------
 
-e2g_conf_forwardedfor: "off"
-e2g_conf_usexforwardedfor: "off"
-e2g_conf_logconnectionhandlingerrors: "on"
+e2g_conf_weightedphrasemode: 2
+e2g_conf_phrasefiltermode: 2
+e2g_conf_preservecase: 0
+e2g_conf_hexdecodecontent: "off"
+e2g_conf_forcequicksearch: "off"
+
+### TUNING section -------------------------------------------------------------
 
 e2g_conf_httpworkers: 500
-# e2g_conf_pidfilename:
+e2g_conf_maxcontentfiltersize: 1024
+e2g_conf_maxcontentramcachescansize: 2000
+e2g_conf_maxcontentfilecachescansize: 20000
+e2g_conf_proxytimeout: 5
+e2g_conf_connecttimeout: 5
+e2g_conf_proxyexchange: 61
+e2g_conf_pcontimeout: 55
 
-e2g_conf_nodaemon: "off"
-e2g_conf_nologger: "off"
+### DEBUG section --------------------------------------------------------------
 
-e2g_conf_logadblocks: "off"
-e2g_conf_loguseragent: "off"
-
-e2g_conf_daemonuser: e2guardian
-e2g_conf_daemongroup: e2guardian
-
-e2g_conf_enablessl: "on"
-# e2g_conf_sslcertificatepath:
-e2g_conf_certprivatekeypath: "{{ (e2g_install_dir, 'certs', 'generated-certs.key') | path_join }}"
-e2g_conf_cacertificatepath: "{{ (e2g_install_dir, 'certs', 'e2g-ca-cert.pem') | path_join }}"
-e2g_conf_caprivatekeypath: "{{ (e2g_install_dir, 'certs', 'e2g-ca-cert.key') | path_join }}"
-e2g_conf_generatedcertpath: "{{ (e2g_install_dir, 'certs', 'generated-certs') | path_join }}"
-# e2g_conf_generatedcertstart:
-# e2g_conf_genratedcertend:
-
-# e2g_conf_monitorhelper:
-# e2g_conf_monitorflagprefix:
-
-e2g_conf_preauthstoryboard: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'preauth.story') | path_join }}"
 # e2g_conf_storyboardtrace:
+e2g_conf_logconnectionhandlingerrors: "on"
+# e2g_conf_debuglevel:
+# e2g_conf_debuglevelfile:
 
-e2g_conf_searchsitelistforip: "off"
+### PROCESS section ------------------------------------------------------------
 
-e2g_conf_maxheaderlines: 250
+# e2g_conf_pidfilename:
+e2g_conf_nodaemon: "off"
+
+### OBSOLETE section -----------------------------------------------------------
+
+# e2g_conf_logheadervalue:
+# e2g_conf_mapportstoips:
+e2g_conf_mapauthtoports: "off"
+e2g_conf_recheckreplacedurls: "off"
+# e2g_conf_monitorhelper:
