@@ -2,8 +2,7 @@
 
 - name: HANDLERS | E2Guardian stopped
   ansible.builtin.shell:
-    chdir: "{{ (e2g_install_dir, 'sbin') | path_join }}"
-    cmd: ./e2guardian -q
+    cmd: /usr/bin/e2guardian -c {{ (e2g_install_dir, "etc", "e2guardian", "e2guardian.conf") | path_join }} -q
   listen: restart-e2guardian
 
 - name: HANDLERS | E2Guardian started
