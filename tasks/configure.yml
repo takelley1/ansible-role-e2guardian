@@ -4,7 +4,7 @@
 
 - name: CONFIGURE | Configuration templates deployed
   ansible.builtin.template:
-    src: opt/e2g/etc/e2guardian/{{ item }}.j2
+    src: opt/e2guardian/etc/e2guardian/{{ item }}.j2
     dest: "{{ (e2g_install_dir, 'etc', 'e2guardian', item) | path_join }}"
     owner: root
     group: root
@@ -12,25 +12,25 @@
   loop:
     - e2guardian.conf
     - lists/authplugins/ipgroups
-    - lists/bannedmimetypelist
-    - lists/bannedregexpurllist
-    - lists/bannedsearchlist
-    - lists/bannedsiteiplist
-    - lists/bannedsitelist
-    - lists/bannedurllist
-    - lists/contentregexplist
-    - lists/exceptionphraselist
-    - lists/exceptionregexpurllist
-    - lists/exceptionsitelist
-    - lists/exceptionurllist
-    - lists/greysitelist
-    - lists/weightedphraselist
+    - lists/all.group/bannedmimetypelist
+    - lists/all.group/bannedregexpurllist
+    - lists/all.group/bannedsearchlist
+    - lists/all.group/bannedsiteiplist
+    - lists/all.group/bannedsitelist
+    - lists/all.group/bannedurllist
+    - lists/all.group/contentregexplist
+    - lists/all.group/exceptionphraselist
+    - lists/all.group/exceptionregexpurllist
+    - lists/all.group/exceptionsitelist
+    - lists/all.group/exceptionurllist
+    - lists/all.group/greysitelist
+    - lists/all.group/weightedphraselist
   tags: e2g_config_templates
   notify: restart-e2guardian
 
 - name: CONFIGURE | Web templates deployed
   ansible.builtin.template:
-    src: opt/e2g/share/e2guardian/languages/ukenglish/{{ item }}.j2
+    src: opt/e2guardian/share/e2guardian/languages/ukenglish/{{ item }}.j2
     dest: "{{ (e2g_install_dir, 'share', 'e2guardian', 'languages', 'ukenglish', item) | path_join }}"
     owner: root
     group: root
@@ -38,4 +38,5 @@
   loop:
     - neterr_template.html
     - template.html
+  tags: e2g_config_templates
   notify: restart-e2guardian
