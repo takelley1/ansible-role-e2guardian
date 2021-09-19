@@ -33,12 +33,14 @@
   when: index != "1"
   notify: restart-e2guardian
 
-- name: INSTALL | {{ item.groupname }} | example.group directory symlinked for group1
+# Ensure symlinks are relative.
+- name: INSTALL | {{ item.groupname }} | Example.group symlinked for group1
   ansible.builtin.file:
-    src: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'example.group') | path_join }}"
+    src: example.group
     dest: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'group1') | path_join }}"
     state: link
     force: true
+  tags: e2g_filter
   when: index == "1"
   notify: restart-e2guardian
 
@@ -48,30 +50,22 @@
 # Otherwise E2Guardian won't be able to resolve the paths properly.
 - name: FILTER_GROUPS | {{ item.groupname }} | Filter group symlink created for group1
   ansible.builtin.file:
-    src: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'example.group') | path_join }}"
+    src: example.group
     dest: "{{ ((e2g_list_dir_root, item.groupname) | path_join) + '.group' }}"
     state: link
     force: true
-  when: index == "1"
   tags: e2g_filter
+  when: index == "1"
   notify: restart-e2guardian
 
 - name: FILTER_GROUPS | {{ item.groupname }} | Filter group symlink created
   ansible.builtin.file:
-    src: "{{ ((e2g_list_dir_root, e2g_filter_group_list_dir_name) | path_join) }}"
+    src: "{{ e2g_filter_group_list_dir_name }}"
     dest: "{{ ((e2g_list_dir_root, item.groupname) | path_join) + '.group' }}"
     state: link
     force: true
+  tags: e2g_filter
   when: index != "1"
-  tags: e2g_filter
-  notify: restart-e2guardian
-
-- name: FILTER_GROUPS | {{ item.groupname }} | Story configuration file copied
-  ansible.builtin.copy:
-    src: "{{ ((e2g_install_dir, 'etc', 'e2guardian', 'examplef1.story') | path_join) }}"
-    dest: "{{ ((e2g_install_dir, 'etc', 'e2guardian', e2g_filter_group_story_file_name) | path_join) + '.conf' }}"
-    remote_src: true
-  tags: e2g_filter
   notify: restart-e2guardian
 
 # --------------------------------------------------------------------------------------------------
