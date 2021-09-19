@@ -12,19 +12,30 @@
   loop:
     - e2guardian.conf
     - lists/authplugins/ipgroups
-    - lists/all.group/bannedmimetypelist
-    - lists/all.group/bannedregexpurllist
-    - lists/all.group/bannedsearchlist
-    - lists/all.group/bannedsiteiplist
-    - lists/all.group/bannedsitelist
-    - lists/all.group/bannedurllist
-    - lists/all.group/contentregexplist
-    - lists/all.group/exceptionphraselist
-    - lists/all.group/exceptionregexpurllist
-    - lists/all.group/exceptionsitelist
-    - lists/all.group/exceptionurllist
-    - lists/all.group/greysitelist
-    - lists/all.group/weightedphraselist
+  tags: e2g_config_templates
+  notify: restart-e2guardian
+
+- name: CONFIGURE | Default list templates deployed
+  ansible.builtin.template:
+    src: opt/e2guardian/etc/e2guardian/lists/{{ item }}.j2
+    dest: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'example.group', item) | path_join }}"
+    owner: root
+    group: root
+    mode: "0640"
+  loop:
+    - bannedmimetypelist
+    - bannedregexpurllist
+    - bannedsearchlist
+    - bannedsiteiplist
+    - bannedsitelist
+    - bannedurllist
+    - contentregexplist
+    - exceptionphraselist
+    - exceptionregexpurllist
+    - exceptionsitelist
+    - exceptionurllist
+    - greysitelist
+    - weightedphraselist
   tags: e2g_config_templates
   notify: restart-e2guardian
 
