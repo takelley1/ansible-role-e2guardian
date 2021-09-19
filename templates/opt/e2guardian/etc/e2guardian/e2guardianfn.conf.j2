@@ -73,7 +73,7 @@ storyboard = '{{ item.storyboard | default((e2g_install_dir, "etc", "e2guardian"
 #
 # Storyboard logic for this group
 
-.Define LISTDIR <{{ (e2g_list_dir_root, item.groupname) | path_join }}>
+.Define LISTDIR <{{ (e2g_list_dir_root, item.groupname) | path_join + ".group" }}>
 # The directory path for list files for this group
 # This path replaces __LISTDIR__ wherever it occurs below or in included files.
 # See INFO section for full details
@@ -121,8 +121,8 @@ mitmcheckcert = {{ item.mitmcheckcert | default("off") }}
 # Use with caution!
 # Ignored if mitmcheckcert is 'off'
 #
-sitelist = 'name=nocheckcert,path={{ (e2g_list_dir_root, item.groupname, item.lists.nocheckcert_sitelist.name) | path_join if item.lists.nocheckcert_sitelist.name is defined else "__LISTDIR__/../all.group/nocheckcertsitelist" }}'
-ipsitelist = 'name=nocheckcert,path={{ (e2g_list_dir_root, item.groupname, item.lists.nocheckcert_ipsitelist.name) | path_join if item.lists.nocheckcert_ipsitelist.name is defined else "__LISTDIR__/../all.group/nocheckcertsiteiplist" }}'
+sitelist = 'name=nocheckcert,path=__LISTDIR__/{{ item.lists.nocheckcert_sitelist.name | default("../group1/nocheckcertsitelist") }}'
+ipsitelist = 'name=nocheckcert,path=__LISTDIR__/{{ item.lists.nocheckcert_ipsitelist.name | default("../group1/nocheckcertsiteiplist") }}'
 #
 
 # automitm = on
@@ -135,11 +135,11 @@ ipsitelist = 'name=nocheckcert,path={{ (e2g_list_dir_root, item.groupname, item.
 # greyssl lists only used in onlymitmsslgrey mode to define sites that
 # will be MITM
 
-sitelist = 'name=greyssl,path={{ (e2g_list_dir_root, item.groupname, item.lists.grey_ssl_sitelist.name) | path_join if item.lists.grey_ssl_sitelist.name is defined else "__LISTDIR__/../all.group/greysslsitelist" }}'
-ipsitelist = 'name=greyssl,path={{ (e2g_list_dir_root, item.groupname, item.lists.grey_ssl_ipsitelist.name) | path_join if item.lists.grey_ssl_ipsitelist.name is defined else "__LISTDIR__/../all.group/greysslsiteiplist" }}'
+sitelist = 'name=greyssl,path=__LISTDIR__/{{ item.lists.grey_ssl_sitelist.name | default("../group1/greysslsitelist") }}'
+ipsitelist = 'name=greyssl,path=__LISTDIR__/{{ item.lists.grey_ssl_ipsitelist.name | default("../group1/greysslsiteiplist") }}'
 
-sitelist = 'name=localgreyssl,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_grey_sitelist.name) | path_join if item.lists.local_grey_sitelist.name is defined else "__LISTDIR__/../all.group/localgreysslsitelist" }}'
-# ipsitelist = 'name=localgreyssl,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_grey_ipsitelist.name) | path_join if item.lists.local_grey_ipsitelist.name is defined else "__LISTDIR__/../all.group/localgreysslsiteiplist" }}'
+sitelist = 'name=localgreyssl,path=__LISTDIR__/{{ item.lists.local_grey_sitelist.name | default("../group1/localgreysslsitelist") }}'
+# ipsitelist = 'name=localgreyssl,path=__LISTDIR__/{{ item.lists.local_grey_ipsitelist.name | default("../group1/localgreysslsiteiplist") }}'
 
 ###
 ### END of MITM section
@@ -185,29 +185,29 @@ deepurlanalysis = {{ item.deepurlanalysis | default("off") }}
 
 ## Exception lists
 
-sitelist = 'name=exception,messageno=602,path={{ (e2g_list_dir_root, item.groupname, item.lists.exception_sitelist.name) | path_join if item.lists.exception_sitelist.name is defined else "__LISTDIR__/../all.group/exceptionsitelist" }}'
-ipsitelist = 'name=exception,messageno=602,path={{ (e2g_list_dir_root, item.groupname, item.lists.exception_ipsitelist.name) | path_join if item.lists.exception_ipsitelist.name is defined else "__LISTDIR__/../all.group/exceptionsiteiplist" }}'
-urllist = 'name=exception,messageno=603,path={{ (e2g_list_dir_root, item.groupname, item.lists.exception_urllist.name) | path_join if item.lists.exception_urllist.name is defined else "__LISTDIR__/../all.group/exceptionurllist" }}'
+sitelist = 'name=exception,messageno=602,path=__LISTDIR__/{{ item.lists.exception_sitelist.name | default("../group1/exceptionsitelist") }}'
+ipsitelist = 'name=exception,messageno=602,path=__LISTDIR__/{{ item.lists.exception_ipsitelist.name | default("../group1/exceptionsiteiplist") }}'
+urllist = 'name=exception,messageno=603,path=__LISTDIR__/{{ item.lists.exception_urllist.name | default("../group1/exceptionurllist") }}'
 
-regexpboollist = 'name=exception,messageno=609,path={{ (e2g_list_dir_root, item.groupname, item.lists.exception_regexpboollist.name) | path_join if item.lists.exception_regexpboollist.name is defined else "__LISTDIR__/../all.group/exceptionregexpurllist" }}'
+regexpboollist = 'name=exception,messageno=609,path=__LISTDIR__/{{ item.lists.exception_regexpboollist.name | default("../group1/exceptionregexpurllist") }}'
 
 ## Grey (i.e. content check) lists
 
-sitelist = 'name=grey,path={{ (e2g_list_dir_root, item.groupname, item.lists.grey_sitelist.name) | path_join if item.lists.grey_sitelist.name is defined else "__LISTDIR__/../all.group/greysitelist" }}'
-ipsitelist = 'name=grey,path={{ (e2g_list_dir_root, item.groupname, item.lists.grey_ipsitelist.name) | path_join if item.lists.grey_ipsitelist.name is defined else "__LISTDIR__/../all.group/greysiteiplist" }}'
-urllist = 'name=grey,path={{ (e2g_list_dir_root, item.groupname, item.lists.grey_urllist.name) | path_join if item.lists.grey_urllist.name is defined else "__LISTDIR__/../all.group/greyurllist" }}'
+sitelist = 'name=grey,path=__LISTDIR__/{{ item.lists.grey_sitelist.name | default("../group1/greysitelist") }}'
+ipsitelist = 'name=grey,path=__LISTDIR__/{{ item.lists.grey_ipsitelist.name | default("../group1/greysiteiplist") }}'
+urllist = 'name=grey,path=__LISTDIR__/{{ item.lists.grey_urllist.name | default("../group1/greyurllist") }}'
 
 ## Banned sites/urls
 
-sitelist = 'name=banned,messageno=500,path={{ (e2g_list_dir_root, item.groupname, item.lists.banned_sitelist.name) | path_join if item.lists.banned_sitelist.name is defined else "__LISTDIR__/../all.group/bannedsitelist" }}'
-ipsitelist = 'name=banned,messageno=510,path={{ (e2g_list_dir_root, item.groupname, item.lists.banned_ipsitelist.name) | path_join if item.lists.banned_ipsitelist.name is defined else "__LISTDIR__/../all.group/bannedsiteiplist" }}'
-urllist = 'name=banned,messageno=501,path={{ (e2g_list_dir_root, item.groupname, item.lists.banned_urllist.name) | path_join if item.lists.banned_urllist.name is defined else "__LISTDIR__/../all.group/bannedurllist" }}'
+sitelist = 'name=banned,messageno=500,path=__LISTDIR__/{{ item.lists.banned_sitelist.name | default("../group1/bannedsitelist") }}'
+ipsitelist = 'name=banned,messageno=510,path=__LISTDIR__/{{ item.lists.banned_ipsitelist.name | default("../group1/bannedsiteiplist") }}'
+urllist = 'name=banned,messageno=501,path=__LISTDIR__/{{ item.lists.banned_urllist.name | default("../group1/bannedurllist") }}'
 
-regexpboollist = 'name=banned,messageno=503,path={{ (e2g_list_dir_root, item.groupname, item.lists.banned_regexpboollist.name) | path_join if item.lists.banned_regexpboollist.name is defined else "__LISTDIR__/../all.group/bannedregexpurllist" }}'
+regexpboollist = 'name=banned,messageno=503,path=__LISTDIR__/{{ item.lists.banned_regexpboollist.name | default("../group1/bannedregexpurllist") }}'
 
 # 'bannedssl' lists are not currently used
-# sitelist = 'name=bannedssl,messageno=520,path={{ ((e2g_list_dir_root, item.groupname, item.lists.banned_ssl_sitelist.name) | path_join) | default("__LISTDIR__/../all.group/bannedsslsitelist") }}'
-# ipsitelist = 'name=bannedssl,messageno=520,path={{ ((e2g_list_dir_root, item.groupname, item.lists.banned_ssl_ipsitelist.name) | path_join) | default("__LISTDIR__/../all.group/bannedsslsiteiplist") }} }}'
+# sitelist = 'name=bannedssl,messageno=520,path=__LISTDIR__/{{ item.lists.banned_ssl_sitelist.name | default("../group1/bannedsslsitelist") }}'
+# ipsitelist = 'name=bannedssl,messageno=520,path=__LISTDIR__/{{ item.lists.banned_ssl_ipsitelist.name | default("../group1/bannedsslsiteiplist") }} }}'
 
 ###
 ### END of URL_MAINLISTS section
@@ -223,25 +223,25 @@ regexpboollist = 'name=banned,messageno=503,path={{ (e2g_list_dir_root, item.gro
 
 ## Local Exception lists
 
-sitelist = 'name=localexception,messageno=662,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_exception_sitelist.name) | path_join if item.lists.local_exception_sitelist.name is defined else "__LISTDIR__/../all.group/localexceptionsitelist" }}'
-ipsitelist = 'name=localexception,messageno=662,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_exception_ipsitelist.name) | path_join if item.lists.local_exception_ipsitelist.name is defined else "__LISTDIR__/../all.group/localexceptionsiteiplist" }}'
-urllist = 'name=localexception,messageno=663,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_exception_urllist.name) | path_join if item.lists.local_exception_urllist.name is defined else "__LISTDIR__/../all.group/localexceptionurllist" }}'
+sitelist = 'name=localexception,messageno=662,path=__LISTDIR__/{{ item.lists.local_exception_sitelist.name | default("../group1/localexceptionsitelist") }}'
+ipsitelist = 'name=localexception,messageno=662,path=__LISTDIR__/{{ item.lists.local_exception_ipsitelist.name | default("../group1/localexceptionsiteiplist") }}'
+urllist = 'name=localexception,messageno=663,path=__LISTDIR__/{{ item.lists.local_exception_urllist.name | default("../group1/localexceptionurllist") }}'
 
 ## Local Grey lists
 
-sitelist = 'name=localgrey,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_grey_sitelist.name) | path_join if item.lists.local_grey_sitelist.name is defined else "__LISTDIR__/../all.group/localgreysitelist" }}'
-ipsitelist = 'name=localgrey,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_grey_ipsitelist.name) | path_join if item.lists.local_grey_ipsitelist.name is defined else "__LISTDIR__/../all.group/localgreysiteiplist" }}'
-urllist = 'name=localgrey,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_grey_urllist.name) | path_join if item.lists.local_grey_urllist.name is defined else "__LISTDIR__/../all.group/localgreyurllist" }}'
+sitelist = 'name=localgrey,path=__LISTDIR__/{{ item.lists.local_grey_sitelist.name | default("../group1/localgreysitelist") }}'
+ipsitelist = 'name=localgrey,path=__LISTDIR__/{{ item.lists.local_grey_ipsitelist.name | default("../group1/localgreysiteiplist") }}'
+urllist = 'name=localgrey,path=__LISTDIR__/{{ item.lists.local_grey_urllist.name | default("../group1/localgreyurllist") }}'
 
 ## Local Banned lists
 
-sitelist = 'name=localbanned,messageno=560,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_sitelist.name) | path_join if item.lists.local_sitelist.name is defined else "__LISTDIR__/../all.group/localbannedsitelist" }}'
-ipsitelist = 'name=localbanned,messageno=560,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_ipsitelist.name) | path_join if item.lists.local_ipsitelist.name is defined else "__LISTDIR__/../all.group/localbannedsiteiplist" }}'
-urllist = 'name=localbanned,messageno=561,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_urllist.name) | path_join if item.lists.local_urllist.name is defined else "__LISTDIR__/../all.group/localbannedurllist" }}'
+sitelist = 'name=localbanned,messageno=560,path=__LISTDIR__/{{ item.lists.local_sitelist.name | default("../group1/localbannedsitelist") }}'
+ipsitelist = 'name=localbanned,messageno=560,path=__LISTDIR__/{{ item.lists.local_ipsitelist.name | default("../group1/localbannedsiteiplist") }}'
+urllist = 'name=localbanned,messageno=561,path=__LISTDIR__/{{ item.lists.local_urllist.name | default("../group1/localbannedurllist") }}'
 
 ## Bannedssl lists are not currently used
-# sitelist = 'name=localbannedssl,messageno=580,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_sitelist.name) | path_join if item.lists.local_sitelist.name is defined else "__LISTDIR__/../all.group/localbannedsslsitelist" }}'
-# ipsitelist = 'name=localbannedssl,messageno=580,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_ipsitelist.name) | path_join if item.lists.local_ipsitelist.name is defined else "__LISTDIR__/../all.group/localbannedsslsiteiplist" }}'
+# sitelist = 'name=localbannedssl,messageno=580,path=__LISTDIR__/{{ item.lists.local_sitelist.name | default("../group1/localbannedsslsitelist") }}'
+# ipsitelist = 'name=localbannedssl,messageno=580,path=__LISTDIR__/{{ item.lists.local_ipsitelist.name | default("../group1/localbannedsslsiteiplist") }}'
 
 ###
 ### END of URL_LOCAL_LISTS section
@@ -251,22 +251,22 @@ urllist = 'name=localbanned,messageno=561,path={{ (e2g_list_dir_root, item.group
 
 # Uncomment the two lines below if want to ONLY allow extentions/mime types in these lists
 # You will also need to uncomment the checkfiletype function in site.story to enable this
-#fileextlist = 'name=exceptionextension,path=__LISTDIR__/../all.group/exceptionextensionlist'
-#mimelist = 'name=exceptionmime,path=__LISTDIR__/../all.group/exceptionmimetypelist'
+#fileextlist = 'name=exceptionextension,path=__LISTDIR__/../group1/exceptionextensionlist'
+#mimelist = 'name=exceptionmime,path=__LISTDIR__/../group1/exceptionmimetypelist'
 
 
 # Use the following lists to block specific kinds of file downloads.
 #
-fileextlist = 'name=bannedextension,messageno=900,path={{ (e2g_list_dir_root, item.groupname, item.lists.bannedextension_fileextlist.name) | path_join if item.lists.bannedextension_fileextlist.name is defined else "__LISTDIR__/../all.group/bannedextensionlist" }}'
-mimelist = 'name=bannedmime,messageno=800,path={{ (e2g_list_dir_root, item.groupname, item.lists.bannedmime_mimelist.name) | path_join if item.lists.bannedmime_mimelist.name is defined else "__LISTDIR__/../all.group/bannedmimetypelist" }}'
+fileextlist = 'name=bannedextension,messageno=900,path=__LISTDIR__/{{ item.lists.bannedextension_fileextlist.name | default("../group1/bannedextensionlist") }}'
+mimelist = 'name=bannedmime,messageno=800,path=__LISTDIR__/{{ item.lists.bannedmime_mimelist.name | default("../group1/bannedmimetypelist") }}'
 
 #
 # In either file filtering mode, the following lists can be used to override
 # MIME type & extension blocks for particular domains & URLs (trusted download sites).
 #
-sitelist = 'name=exceptionfile,path={{ (e2g_list_dir_root, item.groupname, item.lists.exception_file_sitelist.name) | path_join if item.lists.exception_file_sitelist.name is defined else "__LISTDIR__/../all.group/exceptionfilesitelist" }}'
-ipsitelist = 'name=exceptionfile,path={{ (e2g_list_dir_root, item.groupname, item.lists.exception_file_ipsitelist.name) | path_join if item.lists.exception_file_ipsitelist.name is defined else "__LISTDIR__/../all.group/exceptionfilesiteiplist" }}'
-urllist = 'name=exceptionfile,path={{ (e2g_list_dir_root, item.groupname, item.lists.exception_file_urllist.name) | path_join if item.lists.exception_file_urllist.name is defined else "__LISTDIR__/../all.group/exceptionfileurllist" }}'
+sitelist = 'name=exceptionfile,path=__LISTDIR__/{{ item.lists.exception_file_sitelist.name | default("../group1/exceptionfilesitelist") }}'
+ipsitelist = 'name=exceptionfile,path=__LISTDIR__/{{ item.lists.exception_file_ipsitelist.name | default("../group1/exceptionfilesiteiplist") }}'
+urllist = 'name=exceptionfile,path=__LISTDIR__/{{ item.lists.exception_file_urllist.name | default("../group1/exceptionfileurllist") }}'
 
 ###
 ### END of FILE_TYPES section
@@ -276,11 +276,11 @@ urllist = 'name=exceptionfile,path={{ (e2g_list_dir_root, item.groupname, item.l
 
 # NEW in v5.4 bannedtimelist - times when no access is allowed
 # To activate a storyboard change is required - see examplef1.story
-#timelist = 'name=bannedtimes,messageno=122,path=__LISTDIR__/../all.group/bannedtimelist'
+#timelist = 'name=bannedtimes,messageno=122,path=__LISTDIR__/../group1/bannedtimelist'
 
 # NEW in v5.4 blankettimelist - times when blanket block is applied
 # To activate a storyboard change is required - see examplef1.story
-#timelist = 'name=blankettimes,messageno=122,path=__LISTDIR__/../all.group/blankettimelist'
+#timelist = 'name=blankettimes,messageno=122,path=__LISTDIR__/../group1/blankettimelist'
 
 ###
 ### END of TIMES section
@@ -290,9 +290,9 @@ urllist = 'name=exceptionfile,path={{ (e2g_list_dir_root, item.groupname, item.l
 ### These lists are useful for allowing/blocking apps or browsers based
 ### on the user-agent
 
-regexpboollist = 'name=banneduseragent,messageno=522,path={{ (e2g_list_dir_root, item.groupname, item.lists.banned_useragent_regexpboollist.name) | path_join if item.lists.banned_useragent_regexpboollist.name is defined else "__LISTDIR__/../all.group/bannedregexpuseragentlist" }}'
+regexpboollist = 'name=banneduseragent,messageno=522,path=__LISTDIR__/{{ item.lists.banned_useragent_regexpboollist.name | default("../group1/bannedregexpuseragentlist") }}'
 
-regexpboollist = 'name=exceptionuseragent,messageno=610,path={{ (e2g_list_dir_root, item.groupname, item.lists.exception_useragent_regexpboollist.name) | path_join if item.lists.exception_useragent_regexpboollist.name is defined else "__LISTDIR__/../all.group/exceptionregexpuseragentlist" }}'
+regexpboollist = 'name=exceptionuseragent,messageno=610,path=__LISTDIR__/{{ item.lists.exception_useragent_regexpboollist.name | default("../group1/exceptionregexpuseragentlist") }}'
 
 ###
 ### END of APPS section
@@ -303,18 +303,18 @@ regexpboollist = 'name=exceptionuseragent,messageno=610,path={{ (e2g_list_dir_ro
 # refererexception lists are used to make a request an exception based on the
 # Referer header.
 
-sitelist = 'name=refererexception,messageno=620,path={{ (e2g_list_dir_root, item.groupname, item.lists.reference_exception_sitelist.name) | path_join if item.lists.reference_exception_sitelist.name is defined else "__LISTDIR__/../all.group/refererexceptionsitelist" }}'
-ipsitelist = 'name=refererexception,messageno=620,path={{ (e2g_list_dir_root, item.groupname, item.lists.reference_exception_ipsitelist.name) | path_join if item.lists.reference_exception_ipsitelist.name is defined else "__LISTDIR__/../all.group/refererexceptionsiteiplist" }}'
-urllist = 'name=refererexception,messageno=620,path={{ (e2g_list_dir_root, item.groupname, item.lists.reference_exception_urllist.name) | path_join if item.lists.reference_exception_urllist.name is defined else "__LISTDIR__/../all.group/refererexceptionurllist" }}'
+sitelist = 'name=refererexception,messageno=620,path=__LISTDIR__/{{ item.lists.reference_exception_sitelist.name | default("../group1/refererexceptionsitelist") }}'
+ipsitelist = 'name=refererexception,messageno=620,path=__LISTDIR__/{{ item.lists.reference_exception_ipsitelist.name | default("../group1/refererexceptionsiteiplist") }}'
+urllist = 'name=refererexception,messageno=620,path=__LISTDIR__/{{ item.lists.reference_exception_urllist.name | default("../group1/refererexceptionurllist") }}'
 
 # Some sites have the referering url in their url. Put these url in these
 # lists and e2g will extract the embeded url and then check this againist
 # the refererexception lists.
 # For best results be as specific as possible
 
-sitelist = 'name=embededreferer,path={{ (e2g_list_dir_root, item.groupname, item.lists.embeded_reference_exception_sitelist.name) | path_join if item.lists.embeded_reference_exception_sitelist.name is defined else "__LISTDIR__/../all.group/embededreferersitelist" }}'
-ipsitelist = 'name=embededreferer,path={{ (e2g_list_dir_root, item.groupname, item.lists.embeded_reference_exception_ipsitelist.name) | path_join if item.lists.embeded_reference_exception_ipsitelist.name is defined else "__LISTDIR__/../all.group/embededreferersiteiplist" }}'
-urllist = 'name=embededreferer,path={{ (e2g_list_dir_root, item.groupname, item.lists.embeded_reference_exception_urllist.name) | path_join if item.lists.embeded_reference_exception_urllist.name is defined else "__LISTDIR__/../all.group/embededrefererurllist" }}'
+sitelist = 'name=embededreferer,path=__LISTDIR__/{{ item.lists.embeded_reference_exception_sitelist.name | default("../common/embededreferersitelist") }}'
+ipsitelist = 'name=embededreferer,path=__LISTDIR__/{{ item.lists.embeded_reference_exception_ipsitelist.name | default("../common/embededreferersiteiplist") }}'
+urllist = 'name=embededreferer,path=__LISTDIR__/{{ item.lists.embeded_reference_exception_urllist.name | default("../common/embededrefererurllist") }}'
 
 
 ###
@@ -326,13 +326,13 @@ urllist = 'name=embededreferer,path={{ (e2g_list_dir_root, item.groupname, item.
 # change list is used to modify url on the fly
 # use to enforce safe search etc.
 # Do not try and change target site - use redirect for this.
-regexpreplacelist = 'name=change,path={{ (e2g_list_dir_root, item.groupname, item.lists.modification_regexpreplacelist.name) | path_join if item.lists.modification_regexpreplacelist.name is defined else "__LISTDIR__/../all.group/urlregexplist" }}'
+regexpreplacelist = 'name=change,path=__LISTDIR__/{{ item.lists.modification_regexpreplacelist.name | default("../group1/urlregexplist") }}'
 
 # Replace target connection site for a ssl connection request
 # Note: this does not change the url in any way. It just changes
 # where the request is sent upstream and the new target must accept
 # the original url.
-regexpreplacelist = 'name=sslreplace,path={{ (e2g_list_dir_root, item.groupname, item.lists.modification_ssl_regexpreplacelist.name) | path_join if item.lists.modification_ssl_regexpreplacelist.name is defined else "__LISTDIR__/../all.group/sslsiteregexplist" }}'
+regexpreplacelist = 'name=sslreplace,path=__LISTDIR__/{{ item.lists.modification_ssl_regexpreplacelist.name | default("../group1/sslsiteregexplist") }}'
 
 ###
 ### END of URL_MOD section
@@ -342,7 +342,7 @@ regexpreplacelist = 'name=sslreplace,path={{ (e2g_list_dir_root, item.groupname,
 ###
 
 # Used to redirect browser to different site and or url
-regexpreplacelist = 'name=redirect,path={{ (e2g_list_dir_root, item.groupname, item.lists.redirect_regexpreplacelist.name) | path_join if item.lists.redirect_regexpreplacelist.name is defined else "__LISTDIR__/../all.group/urlredirectregexplist" }}'
+regexpreplacelist = 'name=redirect,path=__LISTDIR__/{{ item.lists.redirect_regexpreplacelist.name | default("../group1/urlredirectregexplist") }}'
 
 ###
 ### END of REDIRECT section
@@ -393,11 +393,11 @@ maxuploadsize = {{ item.maxuploadsize | default("-1") }}
 # Do not log sites/urls/ext
 # Useful to prevent requests not made by user directly being logged
 # Makes logs more readable
-sitelist = 'name=nolog,path=__LISTDIR__/../all.group/../common/nologsitelist'
-ipsitelist = 'name=nolog,path=__LISTDIR__/../all.group/../common/nologsiteiplist'
-urllist = 'name=nolog,path=__LISTDIR__/../all.group/../common/nologurllist'
-regexpboollist = 'name=nolog,path=__LISTDIR__/../all.group/../common/nologregexpurllist'
-fileextlist = 'name=nolog,path=__LISTDIR__/../all.group/../common/nologextensionlist'
+sitelist = 'name=nolog,path=__LISTDIR__/../group1/../common/nologsitelist'
+ipsitelist = 'name=nolog,path=__LISTDIR__/../group1/../common/nologsiteiplist'
+urllist = 'name=nolog,path=__LISTDIR__/../group1/../common/nologurllist'
+regexpboollist = 'name=nolog,path=__LISTDIR__/../group1/../common/nologregexpurllist'
+fileextlist = 'name=nolog,path=__LISTDIR__/../group1/../common/nologextensionlist'
 
 ###
 ### END of ACCESS_LOG section
@@ -436,14 +436,14 @@ categorydisplaythreshold = {{ item.categorydisplaythreshold }}
 # > 0 = minimum score for a category to be displayed
 
 
-bannedphraselist = '{{ (e2g_list_dir_root, item.groupname, item.lists.banned_phraselist.name) | path_join if item.lists.banned_phraselist.name is defined else "__LISTDIR__/../all.group/bannedphraselist" }}'
-weightedphraselist = '{{ (e2g_list_dir_root, item.groupname, item.lists.weighted_phraselist.name) | path_join if item.lists.weighted_phraselist.name is defined else "__LISTDIR__/../all.group/weightedphraselist" }}'
-exceptionphraselist = '{{ (e2g_list_dir_root, item.groupname, item.lists.exception_phraselist.name) | path_join if item.lists.exception_phraselist.name is defined else "__LISTDIR__/../all.group/exceptionphraselist" }}'
+bannedphraselist = '__LISTDIR__/{{ item.lists.banned_phraselist.name | default("../group1/bannedphraselist") }}'
+weightedphraselist = '__LISTDIR__/{{ item.lists.weighted_phraselist.name | default("../group1/weightedphraselist") }}'
+exceptionphraselist = '__LISTDIR__/{{ item.lists.exception_phraselist.name | default("../group1/exceptionphraselist") }}'
 ## To use oldphraselists comment out last 3 lines and
 ## uncomment the follwing 3 lines
-#bannedphraselist = '__LISTDIR__/../all.group/oldbannedphraselist'
-#weightedphraselist = '__LISTDIR__/../all.group/oldweightedphraselist'
-#exceptionphraselist = '__LISTDIR__/../all.group/oldexceptionphraselist'
+#bannedphraselist = '__LISTDIR__/../group1/oldbannedphraselist'
+#weightedphraselist = '__LISTDIR__/../group1/oldweightedphraselist'
+#exceptionphraselist = '__LISTDIR__/../group1/oldexceptionphraselist'
 
 ###
 ### END of PHRASES section
@@ -477,17 +477,17 @@ exceptionphraselist = '{{ (e2g_list_dir_root, item.groupname, item.lists.excepti
 # List of regular expressions for matching search engine URLs.  It is assumed
 # that the search terms themselves will be contained in the
 # of output of each expression.
-regexpreplacelist = 'name=searchterms,path={{ (e2g_list_dir_root, item.groupname, item.lists.search_regexpreplacelist.name) | path_join if item.lists.search_regexpreplacelist.name is defined else "__LISTDIR__/../all.group/../common/searchregexplist" }}'
+regexpreplacelist = 'name=searchterms,path=__LISTDIR__/{{ item.lists.search_regexpreplacelist.name | default("../group1/../common/searchregexplist") }}'
 # search engine regexp exception (overide) list
 # Used to prevent urls such os completetion suggestion requests from being detected
 # as search requests
-regexpboollist = 'name=searchtermexceptions, path=__LISTDIR__/../all.group/../common/searchexceptionregexplist'
+regexpboollist = 'name=searchtermexceptions, path=__LISTDIR__/../group1/../common/searchexceptionregexplist'
 
 # Search Term list(s) for option 1
-searchlist = 'name=banned,path={{ (e2g_list_dir_root, item.groupname, item.lists.banned_searchlist.name) | path_join if item.lists.banned_searchlist.name is defined else "__LISTDIR__/../all.group/bannedsearchlist" }}'
-searchlist = 'name=override,path={{ (e2g_list_dir_root, item.groupname, item.lists.override_searchlist.name) | path_join if item.lists.override_searchlist.name is defined else "__LISTDIR__/../all.group/bannedsearchoveridelist" }}'
+searchlist = 'name=banned,path=__LISTDIR__/{{ item.lists.banned_searchlist.name | default("../group1/bannedsearchlist") }}'
+searchlist = 'name=override,path=__LISTDIR__/{{ item.lists.override_searchlist.name | default("../group1/bannedsearchoveridelist") }}'
 
-searchlist = 'name=localbanned,messageno=581,path={{ (e2g_list_dir_root, item.groupname, item.lists.local_searchlist.name) | path_join if item.lists.local_searchlist.name is defined else "__LISTDIR__/../all.group/localbannedsearchlist" }}'
+searchlist = 'name=localbanned,messageno=581,path=__LISTDIR__/{{ item.lists.local_searchlist.name | default("../group1/localbannedsearchlist") }}'
 
 #searchtermlimit = 0
 #
@@ -510,9 +510,9 @@ searchlist = 'name=localbanned,messageno=581,path={{ (e2g_list_dir_root, item.gr
 # Please note that all or none of the below should be uncommented, not a
 # mixture.
 # NOTE: these are phrase lists and still use the old style defines
-#bannedsearchtermlist = '__LISTDIR__/../all.group/bannedsearchtermlist'
-#weightedsearchtermlist = '__LISTDIR__/../all.group/weightedsearchtermlist'
-#exceptionsearchtermlist = '__LISTDIR__/../all.group/exceptionsearchtermlist'
+#bannedsearchtermlist = '__LISTDIR__/../group1/bannedsearchtermlist'
+#weightedsearchtermlist = '__LISTDIR__/../group1/weightedsearchtermlist'
+#exceptionsearchtermlist = '__LISTDIR__/../group1/exceptionsearchtermlist'
 
 ###
 ### END of SEARCH section
@@ -557,11 +557,11 @@ contentscanexceptions = {{ item.contentscanexceptions }}
 
 #Virus checking exceptions - matched urls will not be virus checked
 #Note that you also need to amend site.story in order for this to work.
-#mimelist = 'name=exceptionvirus,path=__LISTDIR__/../all.group/../contentscanners/exceptionvirusmimetypelist'
-#fileextlist = 'name=exceptionvirus,path=__LISTDIR__/../all.group/../contentscanners/exceptionvirusextensionlist'
-#sitelist = 'name=exceptionvirus,path=__LISTDIR__/../all.group/../contentscanners/exceptionvirussitelist'
-#ipsitelist = 'name=exceptionvirus,path=__LISTDIR__/../all.group/../contentscanners/exceptionvirussiteiplist'
-#urllist = 'name=exceptionvirus,path=__LISTDIR__/../all.group/../contentscanners/exceptionvirusurllist'
+#mimelist = 'name=exceptionvirus,path=__LISTDIR__/../group1/../contentscanners/exceptionvirusmimetypelist'
+#fileextlist = 'name=exceptionvirus,path=__LISTDIR__/../group1/../contentscanners/exceptionvirusextensionlist'
+#sitelist = 'name=exceptionvirus,path=__LISTDIR__/../group1/../contentscanners/exceptionvirussitelist'
+#ipsitelist = 'name=exceptionvirus,path=__LISTDIR__/../group1/../contentscanners/exceptionvirussiteiplist'
+#urllist = 'name=exceptionvirus,path=__LISTDIR__/../group1/../contentscanners/exceptionvirusurllist'
 
 ###
 ### END of AV_SCANNERS section
@@ -579,11 +579,11 @@ contentscanexceptions = {{ item.contentscanexceptions }}
 # Headers are matched/replaced on a line-by-line basis, not as a contiguous
 # block.
 # Use for example, to remove cookies or prevent certain user-agents.
-regexpreplacelist = 'name=headermods,path={{ (e2g_list_dir_root, item.groupname, item.lists.header_regexpreplacelist.name) | path_join if item.lists.header_regexpreplacelist.name is defined else "__LISTDIR__/../all.group/headerregexplist" }}'
-regexpboollist = 'name=bannedheader,path={{ (e2g_list_dir_root, item.groupname, item.lists.banned_header_regexpboollist.name) | path_join if item.lists.banned_header_regexpboollist.name is defined else "__LISTDIR__/../all.group/bannedregexpheaderlist" }}'
-regexpboollist = 'name=exceptionheader,path={{ (e2g_list_dir_root, item.groupname, item.lists.exception_header_regexpboollist.name) | path_join if item.lists.exception_header_regexpboollist.name is defined else "__LISTDIR__/../all.group/exceptionregexpheaderlist" }}'
+regexpreplacelist = 'name=headermods,path=__LISTDIR__/{{ item.lists.header_regexpreplacelist.name | default("../group1/headerregexplist") }}'
+regexpboollist = 'name=bannedheader,path=__LISTDIR__/{{ item.lists.banned_header_regexpboollist.name | default("../group1/bannedregexpheaderlist") }}'
+regexpboollist = 'name=exceptionheader,path=__LISTDIR__/{{ item.lists.exception_header_regexpboollist.name | default("../group1/exceptionregexpheaderlist") }}'
 # add cookies etc
-regexpreplacelist = 'name=addheader,path={{ (e2g_list_dir_root, item.groupname, item.lists.add_header_regexpreplacelist.name) | path_join if item.lists.add_header_regexpreplacelist.name is defined else "__LISTDIR__/../all.group/addheaderregexplist" }}'
+regexpreplacelist = 'name=addheader,path=__LISTDIR__/{{ item.lists.add_header_regexpreplacelist.name | default("../group1/addheaderregexplist") }}'
 
 # Response HTTP header rules:
 # Lists for modification or removal of HTTP response headers.
@@ -592,7 +592,7 @@ regexpreplacelist = 'name=addheader,path={{ (e2g_list_dir_root, item.groupname, 
 # Headers are matched/replaced on a line-by-line basis, not as a contiguous
 # block.
 # Use for example, to remove protocol upgrade requests.
-regexpreplacelist = 'name=reponseheadermods,path=__LISTDIR__/../all.group/responseheaderregexplist'
+regexpreplacelist = 'name=reponseheadermods,path=__LISTDIR__/../group1/responseheaderregexplist'
 
 ###
 ### END of HEADER section
@@ -720,9 +720,9 @@ cgikey = 'you must change this text in order to be secure'
 
 
 # Users will not be able to bypass sites/urls in these lists
-sitelist = 'name=bannedbypass,messageno=500,path=__LISTDIR__/../all.group/domainsnobypass'
-#ipsitelist = 'name=bannedbypass,messageno=500,path=__LISTDIR__/../all.group/ipnobypass'
-#urllist = 'name=bannedbypass,messageno=501,path=__LISTDIR__/../all.group/urlnobypass'
+sitelist = 'name=bannedbypass,messageno=500,path=__LISTDIR__/../group1/domainsnobypass'
+#ipsitelist = 'name=bannedbypass,messageno=500,path=__LISTDIR__/../group1/ipnobypass'
+#urllist = 'name=bannedbypass,messageno=501,path=__LISTDIR__/../group1/urlnobypass'
 
 #infectionbypass = 0
 {% if item.infectionbypass is defined and item.infectionbypass !="" -%}
@@ -887,7 +887,7 @@ embeddedurlweight = {{ item.embeddedurlweight }}
 # SSL sites not matching greysslsitelist will be treat as if sslmitm is off.
 # The option is replaced by storyboard logic
 
-# contentregexplist = '{{ ((e2g_list_dir_root, item.groupname, item.lists.redirect_contentregexplist.name) | path_join) | default("__LISTDIR__/../all.group/contentregexplist") }}'
+# contentregexplist = '__LISTDIR__/{{ item.lists.redirect_contentregexplist.name | default("../group1/contentregexplist") }}'
 #
 # not yet implemented in v5
 
