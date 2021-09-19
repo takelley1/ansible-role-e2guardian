@@ -5,7 +5,7 @@ e2g_repo_branch: v5.3  # v5.4 has issues right now.
 
 e2g_install_dir: /opt/e2guardian
 e2g_repo_dir: "{{ (e2g_install_dir, 'git') | path_join }}"
-e2g_filter_groups_dir: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists') | path_join }}"
+e2g_list_dir_root: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists') | path_join }}"
 
 # Whether to clone, configure, and build E2Guardian.
 e2g_build_package: true
@@ -15,13 +15,13 @@ e2g_uninstall_role: false
 e2g_remove_build_dependencies: false
 
 # Compiler options' affect on binary size (branch v5.3).
+# See https://wiki.gentoo.org/wiki/GCC_optimization for more info on CXXFLAGS.
   # No CXXFLAGS                        = 28748
   # CXXFLAGS="-march=native"           = 2032
   # CXXFLAGS=                  "-pipe" = 2020
   # CXXFLAGS="-march=native -O2 -pipe" = 1468
   # CXXFLAGS=              "-O2 -pipe" = 1460
   # CXXFLAGS=              "-O2"       = 1460
-# See https://wiki.gentoo.org/wiki/GCC_optimization for more info on CXXFLAGS.
 
 build_options: >
   --quiet
