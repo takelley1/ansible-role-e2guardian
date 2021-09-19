@@ -761,9 +761,10 @@ maxlogitemlength = {{ e2g_conf_maxlogitemlength }}
 ### MONITORING section
 ###
 
-dstatlocation = '@E2LOGLOCATION@/dstats.log'
 {% if e2g_conf_dstatlocation is defined and e2g_conf_dstatlocation !="" -%}
 dstatlocation = {{ e2g_conf_dstatlocation }}
+{% else %}
+dstatlocation = /dev/null
 {% endif %}
 # Dymamic statistics log file location
 #
