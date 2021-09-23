@@ -464,7 +464,7 @@ defaulttransparentfiltergroup = {{ e2g_conf_defaulttransparentfiltergroup }}
 ## 'Native' plugins - these do not require use of a proxy
 #
 {% if e2g_conf_authplugin is defined and e2g_conf_authplugin !="" -%}
-authplugin = {{ (e2g_conf_authplugin }}
+authplugin = {{ e2g_conf_authplugin }}
 {% endif %}
 
 #authplugin = '@E2CONFDIR@/authplugins/ident.conf'
