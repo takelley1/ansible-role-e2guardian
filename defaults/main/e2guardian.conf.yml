@@ -58,6 +58,8 @@ e2g_conf_generatedcertpath: "{{ (e2g_install_dir, 'certs', 'generated-certs') | 
 
 ### AUTH section ---------------------------------------------------------------
 
+# Filepath to the authplugin file
+e2g_conf_authplugin: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'authplugins', 'ip.conf') | path_join }}"
 # e2g_conf_authrequiresuserandgroup:
 e2g_conf_reverseclientiplookups: "off"
 
