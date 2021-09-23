@@ -1,7 +1,7 @@
 ---
 
 e2g_repo_url: https://github.com/e2guardian/e2guardian.git
-e2g_repo_branch: v5.3  # v5.4 has issues right now.
+e2g_repo_branch: v5.3
 
 e2g_install_dir: /opt/e2guardian
 e2g_repo_dir: "{{ (e2g_install_dir, 'git') | path_join }}"
