@@ -23,6 +23,7 @@
     group: root
     mode: "0640"
   loop:
+    - bannedextensionlist
     - bannedmimetypelist
     - bannedregexpurllist
     - bannedsearchlist
