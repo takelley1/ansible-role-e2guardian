@@ -12,6 +12,7 @@
   loop:
     - e2guardian.conf
     - lists/authplugins/ipgroups
+    - lists/bannedextensionlist
     - lists/bannedmimetypelist
     - lists/bannedregexpurllist
     - lists/bannedsearchlist
