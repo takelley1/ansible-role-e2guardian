@@ -16,19 +16,37 @@
     - "{{ e2g_conf_caprivatekeypath | dirname }}"
     - "{{ e2g_conf_generatedcertpath }}"
 
-- name: CERTS | Private keys generated
+- name: CERTS | Check for cert private key
+  ansible.builtin.stat:
+    path: "{{ e2g_conf_certprivatekeypath }}"
+  register: cert_private_key_path
+
+- name: CERTS | Cert private key generated
   community.crypto.openssl_privatekey:
-    path: "{{ item }}"
+    path: "{{ e2g_conf_caprivatekeypath }}"
     size: "{{ e2g_cert_key_size }}"
     type: "{{ e2g_cert_type }}"
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
-  when: item is defined
+  when: cert_private_key_path.stat.readable is not defined
   notify: restart-e2guardian
-  loop:
-    - "{{ e2g_conf_caprivatekeypath }}"
-    - "{{ e2g_conf_certprivatekeypath }}"
+
+- name: CERTS | Check for CA private key
+  ansible.builtin.stat:
+    path: "{{ e2g_conf_caprivatekeypath }}"
+  register: ca_private_key_path
+
+- name: CERTS | CA private key generated
+  community.crypto.openssl_privatekey:
+    path: "{{ e2g_conf_caprivatekeypath }}"
+    size: "{{ e2g_cert_key_size }}"
+    type: "{{ e2g_cert_type }}"
+    owner: "{{ e2g_conf_daemonuser }}"
+    group: "{{ e2g_conf_daemongroup }}"
+    mode: "0400"
+  when: ca_private_key_path.stat.readable is not defined
+  notify: restart-e2guardian
 
 - name: CERTS | Check for CA cert
   ansible.builtin.stat:
@@ -49,9 +67,9 @@
 - name: CERTS | Check for CSR
   ansible.builtin.stat:
     path: "{{ e2g_conf_cacertificatepath }}.csr"
-  register: ca_csr_path
+  register: csr_path
 
-- name: CERTS | CSR created for CA cert
+- name: CERTS | CSR generated
   community.crypto.openssl_csr:
     path: "{{ e2g_conf_cacertificatepath }}.csr"
     privatekey_path: "{{ e2g_conf_caprivatekeypath }}"
@@ -60,7 +78,7 @@
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
   register: csr_created
-  when: ca_csr_path.stat.readable is not defined
+  when: csr_path.stat.readable is not defined
   notify: restart-e2guardian
 
 - name: CERTS | CA cert signed using CSR
