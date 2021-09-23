@@ -3,11 +3,13 @@
 # Example dictionary:
 # e2g_misc_files:
 #   - name: bannedregexpurllist_include_01
+#     groupname: eris_group
 #     content:
 #       - "#time: 15 00 23 59 0123456"
 #       - youtube\.com
 #       - youtu\.be
-#   - name: bannedregexpurllist_include_02
+#   - filename: bannedregexpurllist_include_02
+#     groupname: eris_group
 #     content:
 #       - "#time: 00 00 11 00 0123456"
 #       - youtube\.com
@@ -15,7 +17,7 @@
 
 - name: MISC_FILES | Misc files created for filter groups
   ansible.builtin.copy:
-    dest: "{{ (e2g_filter_groups_dir, item.name) | path_join }}"
+    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.name) | path_join }}"
     content: |
       {%- for line in item.content %}
       {{ line }}
@@ -26,6 +28,6 @@
     - e2g_misc_files is defined
     - e2g_misc_files != ""
   loop_control:
-    label: "{{ item.name }}"
+    label: "{{ item.groupname }} --> {{ item.name }}"
   loop: "{{ e2g_misc_files }}"
   notify: restart-e2guardian

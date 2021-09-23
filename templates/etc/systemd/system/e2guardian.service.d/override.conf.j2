@@ -3,6 +3,14 @@
 
 [Service]
 
+# v5.4 has a bug that requires specifying the path to the config file.
+# See https://github.com/e2guardian/e2guardian/issues/673
+#   and https://github.com/bedag/docker-e2g/issues/9
+ExecStart=
+ExecReload=
+ExecStart=/usr/bin/e2guardian -c {{ (e2g_install_dir, "etc", "e2guardian", "e2guardian.conf") | path_join }}
+ExecReload=/usr/bin/e2guardian -r -c {{ (e2g_install_dir, "etc", "e2guardian", "e2guardian.conf") | path_join }}
+
 # See systemd.exec(5) and systemd.resource-control(5) for details.
 
 # IO

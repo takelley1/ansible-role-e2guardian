@@ -1,5 +1,10 @@
 ---
 
+galaxy_info:
+  role_name: e2guardian
+  description: Install and configure E2Guardian
+  namespace: takelley1
+
 collections:
   - community.general
   - community.crypto

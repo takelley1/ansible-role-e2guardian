@@ -4,7 +4,7 @@
 
 - name: CONFIGURE | Configuration templates deployed
   ansible.builtin.template:
-    src: opt/e2g/etc/e2guardian/{{ item }}.j2
+    src: opt/e2guardian/etc/e2guardian/{{ item }}.j2
     dest: "{{ (e2g_install_dir, 'etc', 'e2guardian', item) | path_join }}"
     owner: root
     group: root
@@ -12,26 +12,37 @@
   loop:
     - e2guardian.conf
     - lists/authplugins/ipgroups
-    - lists/bannedextensionlist
-    - lists/bannedmimetypelist
-    - lists/bannedregexpurllist
-    - lists/bannedsearchlist
-    - lists/bannedsiteiplist
-    - lists/bannedsitelist
-    - lists/bannedurllist
-    - lists/contentregexplist
-    - lists/exceptionphraselist
-    - lists/exceptionregexpurllist
-    - lists/exceptionsitelist
-    - lists/exceptionurllist
-    - lists/greysitelist
-    - lists/weightedphraselist
+  tags: e2g_config_templates
+  notify: restart-e2guardian
+
+- name: CONFIGURE | Default list templates deployed
+  ansible.builtin.template:
+    src: opt/e2guardian/etc/e2guardian/lists/{{ item }}.j2
+    dest: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'example.group', item) | path_join }}"
+    owner: root
+    group: root
+    mode: "0640"
+  loop:
+    - bannedextensionlist
+    - bannedmimetypelist
+    - bannedregexpurllist
+    - bannedsearchlist
+    - bannedsiteiplist
+    - bannedsitelist
+    - bannedurllist
+    - contentregexplist
+    - exceptionphraselist
+    - exceptionregexpurllist
+    - exceptionsitelist
+    - exceptionurllist
+    - greysitelist
+    - weightedphraselist
   tags: e2g_config_templates
   notify: restart-e2guardian
 
 - name: CONFIGURE | Web templates deployed
   ansible.builtin.template:
-    src: opt/e2g/share/e2guardian/languages/ukenglish/{{ item }}.j2
+    src: opt/e2guardian/share/e2guardian/languages/ukenglish/{{ item }}.j2
     dest: "{{ (e2g_install_dir, 'share', 'e2guardian', 'languages', 'ukenglish', item) | path_join }}"
     owner: root
     group: root
@@ -39,4 +50,5 @@
   loop:
     - neterr_template.html
     - template.html
+  tags: e2g_config_templates
   notify: restart-e2guardian

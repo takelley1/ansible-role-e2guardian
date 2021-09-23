@@ -1,0 +1,7 @@
+---
+
+# This list matches host IPs to filter groups.
+e2g_ipgroups:
+  - 10.0.0.0/24 = filter1
+  - 10.0.0.2 = filter2
+  - 10.0.0.3 = filter3
