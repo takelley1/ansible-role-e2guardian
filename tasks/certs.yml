@@ -23,7 +23,7 @@
 
 - name: CERTS | Cert private key generated
   community.crypto.openssl_privatekey:
-    path: "{{ e2g_conf_caprivatekeypath }}"
+    path: "{{ e2g_conf_certprivatekeypath }}"
     size: "{{ e2g_cert_key_size }}"
     type: "{{ e2g_cert_type }}"
     owner: "{{ e2g_conf_daemonuser }}"
