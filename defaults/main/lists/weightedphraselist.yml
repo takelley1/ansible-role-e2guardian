@@ -1,7 +1,7 @@
 ---
 
 e2g_weightedphraselist:
-  - # Pornography
+  - "# Pornography"
   - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "danish",     "pornography", "weighted") | path_join }}>
   - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "dutch",      "pornography", "weighted") | path_join }}>
   - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "french",     "pornography", "weighted") | path_join }}>
