@@ -1,9 +1,14 @@
 ---
 
 galaxy_info:
+  author: takelley
+  description: Installs and configures E2Guardian
   role_name: e2guardian
-  description: Install and configure E2Guardian
   namespace: takelley1
+  license: MIT
+  min_ansible_version: 2.10
+  platforms:
+    - name: Ubuntu Server
 
 collections:
   - community.general
