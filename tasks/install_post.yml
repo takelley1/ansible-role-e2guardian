@@ -42,9 +42,9 @@
     value: "{{ item.value }}"
   loop:
     - option: Storage
-      value: "{{ journald_conf_Storage }}"
+      value: "{{ journald_conf_storage }}"
     - option: RuntimeMaxUse
-      value: "{{ journald_conf_RuntimeMaxUse }}"
+      value: "{{ journald_conf_runtimemaxuse }}"
   loop_control:
     label: "journald.conf -- {{ item.option }}: {{ item.value }}"
   when: item is defined and item != ""
