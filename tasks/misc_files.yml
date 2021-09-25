@@ -22,6 +22,7 @@
       {%- for line in item.content %}
       {{ line }}
       {% endfor -%}
+    mode: "0640"
   when:
     - item.name is defined
     - item.name != ""

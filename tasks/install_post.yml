@@ -37,6 +37,7 @@
 - name: INSTALL_POST | Systemd journal configured
   community.general.ini_file:
     path: /etc/systemd/journald.conf
+    mode: "0644"
     section: Journal
     option: "{{ item.option }}"
     value: "{{ item.value }}"

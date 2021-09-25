@@ -22,6 +22,7 @@
   ansible.builtin.template:
     src: opt/e2guardian/etc/e2guardian/e2guardianfn.conf.j2
     dest: "{{ ((e2g_install_dir, 'etc', 'e2guardian', e2g_filter_group_config_file_name) | path_join) + '.conf' }}"
+    mode: "0640"
   tags: e2g_filter
   notify: restart-e2guardian
 
@@ -29,6 +30,7 @@
   ansible.builtin.file:
     path: "{{ ((e2g_list_dir_root, e2g_filter_group_list_dir_name) | path_join) }}"
     state: directory
+    mode: "0750"
   tags: e2g_filter
   when: index != "1"
   notify: restart-e2guardian
@@ -44,9 +46,10 @@
   when: index == "1"
   notify: restart-e2guardian
 
-# For the first group, we must have the symlink point to
+# For the first group, the symlink path must be:
 #   item.groupname -> example.group
-#   instead of item.groupname -> group1 -> example.group
+#   instead of:
+#   item.groupname -> group1 -> example.group
 # Otherwise E2Guardian won't be able to resolve the paths properly.
 - name: FILTER_GROUPS | {{ item.groupname }} | Filter group symlink created for group1
   ansible.builtin.file:
@@ -70,552 +73,513 @@
 
 # --------------------------------------------------------------------------------------------------
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_phraselist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_phraselist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_phraselist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_phraselist.name is defined and item.lists.banned_phraselist.name != ""
-  notify: restart-e2guardian
+- name: FILTER_GROUPS | Configue filter-group-specific files
 
-- name: FILTER_GROUPS | {{ item.groupname }} | weighted_phraselist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.weighted_phraselist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.weighted_phraselist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.weighted_phraselist.name is defined and item.lists.weighted_phraselist.name != ""
-  notify: restart-e2guardian
+  module_defaults:
+    ansible.builtin.copy:
+      owner: root
+      group: root
+      mode: "0640"
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_phraselist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_phraselist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_phraselist.content %}
-      {{ site }}
-      {% endfor -%}
   tags: e2g_filter
-  when: item.lists.exception_phraselist.name is defined and item.lists.exception_phraselist.name != ""
-  notify: restart-e2guardian
+  block:
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_sitelist.name is defined and item.lists.banned_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_phraselist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_phraselist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_phraselist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_phraselist.name is defined and item.lists.banned_phraselist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_ipsitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_ipsitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_ipsitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_ipsitelist.name is defined and item.lists.banned_ipsitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | weighted_phraselist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.weighted_phraselist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.weighted_phraselist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.weighted_phraselist.name is defined and item.lists.weighted_phraselist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_urllist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_urllist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_urllist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_urllist.name is defined and item.lists.banned_urllist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_phraselist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_phraselist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_phraselist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_phraselist.name is defined and item.lists.exception_phraselist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_regexpboollist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_regexpboollist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_regexpboollist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_regexpboollist.name is defined and item.lists.banned_regexpboollist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_sitelist.name is defined and item.lists.banned_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_useragent_regexpboollist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_useragent_regexpboollist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_useragent_regexpboollist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_useragent_regexpboollist.name is defined and item.lists.banned_useragent_regexpboollist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_ipsitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_ipsitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_ipsitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_ipsitelist.name is defined and item.lists.banned_ipsitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_ssl_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_ssl_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_ssl_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_ssl_sitelist.name is defined and item.lists.banned_ssl_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_urllist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_urllist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_urllist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_urllist.name is defined and item.lists.banned_urllist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_ssl_ipsitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_ssl_ipsitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_ssl_ipsitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_ssl_ipsitelist.name is defined and item.lists.banned_ssl_ipsitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_regexpboollist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_regexpboollist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_regexpboollist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_regexpboollist.name is defined and item.lists.banned_regexpboollist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | grey_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.grey_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.grey_sitelist.name is defined and item.lists.grey_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_useragent_regexpboollist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_useragent_regexpboollist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_useragent_regexpboollist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_useragent_regexpboollist.name is defined and item.lists.banned_useragent_regexpboollist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | grey_ipsitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_ipsitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.grey_ipsitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.grey_ipsitelist.name is defined and item.lists.grey_ipsitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_ssl_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_ssl_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_ssl_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_ssl_sitelist.name is defined and item.lists.banned_ssl_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | grey_urllist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_urllist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.grey_urllist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.grey_urllist.name is defined and item.lists.grey_urllist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_ssl_ipsitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_ssl_ipsitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_ssl_ipsitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_ssl_ipsitelist.name is defined and item.lists.banned_ssl_ipsitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | grey_ssl_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_ssl_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.grey_ssl_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.grey_ssl_sitelist.name is defined and item.lists.grey_ssl_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | grey_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.grey_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.grey_sitelist.name is defined and item.lists.grey_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | grey_ssl_ipsitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_ssl_ipsitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.grey_ssl_ipsitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.grey_ssl_ipsitelist.name is defined and item.lists.grey_ssl_ipsitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | grey_ipsitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_ipsitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.grey_ipsitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.grey_ipsitelist.name is defined and item.lists.grey_ipsitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.exception_sitelist.name is defined and item.lists.exception_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | grey_urllist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_urllist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.grey_urllist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.grey_urllist.name is defined and item.lists.grey_urllist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_ipsitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_ipsitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_ipsitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.exception_ipsitelist.name is defined and item.lists.exception_ipsitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | grey_ssl_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_ssl_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.grey_ssl_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.grey_ssl_sitelist.name is defined and item.lists.grey_ssl_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_urllist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_urllist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_urllist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.exception_urllist.name is defined and item.lists.exception_urllist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | grey_ssl_ipsitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.grey_ssl_ipsitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.grey_ssl_ipsitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.grey_ssl_ipsitelist.name is defined and item.lists.grey_ssl_ipsitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_regexpboollist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_regexpboollist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_regexpboollist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.exception_regexpboollist.name is defined and item.lists.exception_regexpboollist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_sitelist.name is defined and item.lists.exception_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_useragent_regexpboollist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_useragent_regexpboollist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_useragent_regexpboollist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.exception_useragent_regexpboollist.name is defined and item.lists.exception_useragent_regexpboollist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_ipsitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_ipsitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_ipsitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_ipsitelist.name is defined and item.lists.exception_ipsitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | reference_exception_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.reference_exception_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.reference_exception_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.reference_exception_sitelist.name is defined and item.lists.reference_exception_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_urllist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_urllist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_urllist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_urllist.name is defined and item.lists.exception_urllist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | reference_exception_ipsitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.reference_exception_ipsitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.reference_exception_ipsitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.reference_exception_ipsitelist.name is defined and item.lists.reference_exception_ipsitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_regexpboollist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_regexpboollist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_regexpboollist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_regexpboollist.name is defined and item.lists.exception_regexpboollist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | reference_exception_urllist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.reference_exception_urllist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.reference_exception_urllist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.reference_exception_urllist.name is defined and item.lists.reference_exception_urllist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_useragent_regexpboollist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_useragent_regexpboollist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_useragent_regexpboollist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_useragent_regexpboollist.name is defined and item.lists.exception_useragent_regexpboollist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | embeded_reference_exception_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.embeded_reference_exception_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.embeded_reference_exception_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.embeded_reference_exception_sitelist.name is defined and item.lists.embeded_reference_exception_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | reference_exception_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.reference_exception_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.reference_exception_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.reference_exception_sitelist.name is defined and item.lists.reference_exception_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | embeded_reference_exception_ipsitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.embeded_reference_exception_ipsitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.embeded_reference_exception_ipsitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.embeded_reference_exception_ipsitelist.name is defined and item.lists.embeded_reference_exception_ipsitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | reference_exception_ipsitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.reference_exception_ipsitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.reference_exception_ipsitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.reference_exception_ipsitelist.name is defined and item.lists.reference_exception_ipsitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | embeded_reference_exception_urllist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.embeded_reference_exception_urllist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.embeded_reference_exception_urllist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.embeded_reference_exception_urllist.name is defined and item.lists.embeded_reference_exception_urllist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | reference_exception_urllist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.reference_exception_urllist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.reference_exception_urllist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.reference_exception_urllist.name is defined and item.lists.reference_exception_urllist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | modification_regexpreplacelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.modification_regexpreplacelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.modification_regexpreplacelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.modification_regexpreplacelist.name is defined and item.lists.modification_regexpreplacelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | embeded_reference_exception_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.embeded_reference_exception_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.embeded_reference_exception_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.embeded_reference_exception_sitelist.name is defined and item.lists.embeded_reference_exception_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | modification_ssl_regexpreplacelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.modification_ssl_regexpreplacelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.modification_ssl_regexpreplacelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.modification_ssl_regexpreplacelist.name is defined and item.lists.modification_ssl_regexpreplacelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | embeded_reference_exception_ipsitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.embeded_reference_exception_ipsitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.embeded_reference_exception_ipsitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.embeded_reference_exception_ipsitelist.name is defined and item.lists.embeded_reference_exception_ipsitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | redirect_regexpreplacelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.redirect_regexpreplacelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.redirect_regexpreplacelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.redirect_regexpreplacelist.name is defined and item.lists.redirect_regexpreplacelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | embeded_reference_exception_urllist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.embeded_reference_exception_urllist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.embeded_reference_exception_urllist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.embeded_reference_exception_urllist.name is defined and item.lists.embeded_reference_exception_urllist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | redirect_contentregexplist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.redirect_contentregexplist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.redirect_contentregexplist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.redirect_contentregexplist.name is defined and item.lists.redirect_contentregexplist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | modification_regexpreplacelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.modification_regexpreplacelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.modification_regexpreplacelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.modification_regexpreplacelist.name is defined and item.lists.modification_regexpreplacelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | local_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.local_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.local_sitelist.name is defined and item.lists.local_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | modification_ssl_regexpreplacelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.modification_ssl_regexpreplacelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.modification_ssl_regexpreplacelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.modification_ssl_regexpreplacelist.name is defined and item.lists.modification_ssl_regexpreplacelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | local_searchlist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_searchlist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.local_searchlist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.local_searchlist.name is defined and item.lists.local_searchlist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | redirect_regexpreplacelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.redirect_regexpreplacelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.redirect_regexpreplacelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.redirect_regexpreplacelist.name is defined and item.lists.redirect_regexpreplacelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | local_grey_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_grey_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.local_grey_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.local_grey_sitelist.name is defined and item.lists.local_grey_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | redirect_contentregexplist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.redirect_contentregexplist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.redirect_contentregexplist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.redirect_contentregexplist.name is defined and item.lists.redirect_contentregexplist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | local_grey_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_grey_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.local_grey_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.local_grey_sitelist.name is defined and item.lists.local_grey_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | local_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.local_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.local_sitelist.name is defined and item.lists.local_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | local_exception_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_exception_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.local_exception_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.local_exception_sitelist.name is defined and item.lists.local_exception_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | local_searchlist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_searchlist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.local_searchlist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.local_searchlist.name is defined and item.lists.local_searchlist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | bannedextension_fileextlist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.bannedextension_fileextlist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.bannedextension_fileextlist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.bannedextension_fileextlist.name is defined and item.lists.bannedextension_fileextlist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | local_grey_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_grey_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.local_grey_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.local_grey_sitelist.name is defined and item.lists.local_grey_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | bannedmime_mimelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.bannedmime_mimelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.bannedmime_mimelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.bannedmime_mimelist.name is defined and item.lists.bannedmime_mimelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | local_grey_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_grey_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.local_grey_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.local_grey_sitelist.name is defined and item.lists.local_grey_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_file_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_file_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_file_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.exception_file_sitelist.name is defined and item.lists.exception_file_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | local_exception_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.local_exception_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.local_exception_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.local_exception_sitelist.name is defined and item.lists.local_exception_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_file_ipsitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_file_ipsitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_file_ipsitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.exception_file_ipsitelist.name is defined and item.lists.exception_file_ipsitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | bannedextension_fileextlist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.bannedextension_fileextlist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.bannedextension_fileextlist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.bannedextension_fileextlist.name is defined and item.lists.bannedextension_fileextlist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_file_urllist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_file_urllist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_file_urllist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.exception_file_urllist.name is defined and item.lists.exception_file_urllist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | bannedmime_mimelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.bannedmime_mimelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.bannedmime_mimelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.bannedmime_mimelist.name is defined and item.lists.bannedmime_mimelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | header_regexpreplacelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.header_regexpreplacelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.header_regexpreplacelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.header_regexpreplacelist.name is defined and item.lists.header_regexpreplacelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_file_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_file_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_file_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_file_sitelist.name is defined and item.lists.exception_file_sitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_header_regexpboollist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_header_regexpboollist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_header_regexpboollist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_header_regexpboollist.name is defined and item.lists.banned_header_regexpboollist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_file_ipsitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_file_ipsitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_file_ipsitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_file_ipsitelist.name is defined and item.lists.exception_file_ipsitelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | exception_header_regexpboollist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_header_regexpboollist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.exception_header_regexpboollist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.exception_header_regexpboollist.name is defined and item.lists.exception_header_regexpboollist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_file_urllist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_file_urllist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_file_urllist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_file_urllist.name is defined and item.lists.exception_file_urllist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | add_header_regexpreplacelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.add_header_regexpreplacelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.add_header_regexpreplacelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.add_header_regexpreplacelist.name is defined and item.lists.add_header_regexpreplacelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | header_regexpreplacelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.header_regexpreplacelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.header_regexpreplacelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.header_regexpreplacelist.name is defined and item.lists.header_regexpreplacelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | search_regexpreplacelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.search_regexpreplacelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.search_regexpreplacelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.search_regexpreplacelist.name is defined and item.lists.search_regexpreplacelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_header_regexpboollist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_header_regexpboollist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_header_regexpboollist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_header_regexpboollist.name is defined and item.lists.banned_header_regexpboollist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_searchlist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_searchlist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_searchlist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_searchlist.name is defined and item.lists.banned_searchlist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | exception_header_regexpboollist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.exception_header_regexpboollist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.exception_header_regexpboollist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.exception_header_regexpboollist.name is defined and item.lists.exception_header_regexpboollist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | override_searchlist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.override_searchlist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.override_searchlist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.override_searchlist.name is defined and item.lists.override_searchlist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | add_header_regexpreplacelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.add_header_regexpreplacelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.add_header_regexpreplacelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.add_header_regexpreplacelist.name is defined and item.lists.add_header_regexpreplacelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | banned_bypass_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_bypass_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.banned_bypass_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.banned_bypass_sitelist.name is defined and item.lists.banned_bypass_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | search_regexpreplacelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.search_regexpreplacelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.search_regexpreplacelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.search_regexpreplacelist.name is defined and item.lists.search_regexpreplacelist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | nocheckcert_sitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.nocheckcert_sitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.nocheckcert_sitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.nocheckcert_sitelist.name is defined and item.lists.nocheckcert_sitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_searchlist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_searchlist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_searchlist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_searchlist.name is defined and item.lists.banned_searchlist.name | length > 0
+      notify: restart-e2guardian
 
-- name: FILTER_GROUPS | {{ item.groupname }} | nocheckcert_ipsitelist filter group file created
-  ansible.builtin.copy:
-    dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.nocheckcert_ipsitelist.name) | path_join }}"
-    content: |
-      {%- for site in item.lists.nocheckcert_ipsitelist.content %}
-      {{ site }}
-      {% endfor -%}
-  tags: e2g_filter
-  when: item.lists.nocheckcert_ipsitelist.name is defined and item.lists.nocheckcert_ipsitelist.name != ""
-  notify: restart-e2guardian
+    - name: FILTER_GROUPS | {{ item.groupname }} | override_searchlist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.override_searchlist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.override_searchlist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.override_searchlist.name is defined and item.lists.override_searchlist.name | length > 0
+      notify: restart-e2guardian
+
+    - name: FILTER_GROUPS | {{ item.groupname }} | banned_bypass_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_bypass_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.banned_bypass_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.banned_bypass_sitelist.name is defined and item.lists.banned_bypass_sitelist.name | length > 0
+      notify: restart-e2guardian
+
+    - name: FILTER_GROUPS | {{ item.groupname }} | nocheckcert_sitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.nocheckcert_sitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.nocheckcert_sitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.nocheckcert_sitelist.name is defined and item.lists.nocheckcert_sitelist.name | length > 0
+      notify: restart-e2guardian
+
+    - name: FILTER_GROUPS | {{ item.groupname }} | nocheckcert_ipsitelist filter group file created  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.nocheckcert_ipsitelist.name) | path_join }}"
+        content: |
+          {%- for site in item.lists.nocheckcert_ipsitelist.content %}
+          {{ site }}
+          {% endfor -%}
+      when: item.lists.nocheckcert_ipsitelist.name is defined and item.lists.nocheckcert_ipsitelist.name | length > 0
+      notify: restart-e2guardian
