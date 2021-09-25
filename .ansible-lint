@@ -1,0 +1,7 @@
+---
+
+skip_list:
+  - no-handler
+  - command-instead-of-shell
+
+# vim: ft=yaml
