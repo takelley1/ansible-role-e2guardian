@@ -25,9 +25,9 @@
     mode: "0640"
   when:
     - item.name is defined
-    - item.name != ""
+    - item.name | length > 0
     - e2g_misc_files is defined
-    - e2g_misc_files != ""
+    - e2g_misc_files | length > 0
   loop_control:
     label: "{{ item.groupname }} --> {{ item.name }}"
   loop: "{{ e2g_misc_files }}"

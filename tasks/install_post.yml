@@ -48,7 +48,7 @@
       value: "{{ journald_conf_runtimemaxuse }}"
   loop_control:
     label: "journald.conf -- {{ item.option }}: {{ item.value }}"
-  when: item is defined and item != ""
+  when: item is defined and item | length > 0
   notify: restart-journald
 
 - name: INSTALL_POST | E2Guardian allowed through UFW
