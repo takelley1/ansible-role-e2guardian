@@ -14,22 +14,22 @@ ExecReload=/usr/bin/e2guardian -r -c {{ (e2g_install_dir, "etc", "e2guardian", "
 # See systemd.exec(5) and systemd.resource-control(5) for details.
 
 # IO
-IOWeight={{ e2g_service_IOWeight }}
-StartupIOWeight={{ e2g_service_StartupIOWeight }}
+IOWeight={{ e2g_service_ioweight }}
+StartupIOWeight={{ e2g_service_startupioweight }}
 # See ioprio_set(2) for details.
-IOSchedulingClass={{ e2g_service_IOSchedulingClass }}
-IOSchedulingPriority={{ e2g_service_IOSchedulingPriority }}
+IOSchedulingClass={{ e2g_service_ioschedulingclass }}
+IOSchedulingPriority={{ e2g_service_ioschedulingpriority }}
 
 # CPU
 CPUAccounting=yes
-CPUWeight={{ e2g_service_CPUWeight }}
-StartupCPUWeight={{ e2g_service_StartupCPUWeight }}
+CPUWeight={{ e2g_service_cpuweight }}
+StartupCPUWeight={{ e2g_service_startupcpuweight }}
 
-Nice={{ e2g_service_Nice }}
+Nice={{ e2g_service_nice }}
 
 # RAM
 # Protect the service from getting killed from low-memory.
 MemoryAccounting=yes
-MemoryMin={{ e2g_service_MemoryMin }}
+MemoryMin={{ e2g_service_memorymin }}
 
 IPAccounting=yes
