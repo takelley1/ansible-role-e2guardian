@@ -57,7 +57,7 @@
         dest: "{{ e2g_repo_dir }}"
         version: "{{ e2g_repo_branch }}"
         accept_hostkey: true
-        single_branch: true
+        depth: 1
         force: true
       register: e2g_repo
 
