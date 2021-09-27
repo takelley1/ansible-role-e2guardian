@@ -32,4 +32,4 @@ jobs:
           path: "${{ github.repository }}"
 
       - name: Run molecule
-        uses: gofrolist/molecule-action@v2
+        uses: MonolithProjects/action-molecule@v1.4.4
