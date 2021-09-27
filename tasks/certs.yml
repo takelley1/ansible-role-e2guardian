@@ -1,7 +1,13 @@
 ---
 
 # Generate certificates for E2Guardian's SSL man-in-the-middle mode.
-# Certs are only generated if they don't already exist in order to maintain idempotence.
+# Certs are only generated if they don't already exist in order to maintain
+#   idempotence.
+
+- name: CERTS | Module dependencies present
+  ansible.builtin.apt:
+    name: python3-cryptography
+    update_cache: true
 
 - name: CERTS | Cert paths exist
   ansible.builtin.file:
