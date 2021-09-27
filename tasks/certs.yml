@@ -110,11 +110,11 @@
 - name: CERTS | Check for webserver dir
   ansible.builtin.stat:
     path: /var/www/e2guardian
-  register: dir
+  register: webserver_dir
 
 - name: CERTS | CA cert configured in webserver dir
   block:
-    - name: CERTS | CA cert copied to webserver dir
+    - name: CERTS | WEB | CA cert copied to webserver dir
       ansible.builtin.copy:
         src: "{{ e2g_conf_cacertificatepath }}"
         dest: /var/www/e2guardian/cert.pem
@@ -123,7 +123,7 @@
         group: www-data
         mode: "0400"
 
-    - name: CERTS | Symlinks created for CA cert
+    - name: CERTS | WEB | Symlinks created for CA cert
       ansible.builtin.file:
         src: /var/www/e2guardian/cert.pem
         dest: "{{ item }}"
@@ -135,5 +135,5 @@
         - /var/www/e2guardian/e2g-ca-cert.pem
         - /var/www/e2guardian/e2g-ca-cert.crt
   when:
-    - dir.stat.isdir is defined
-    - dir.stat.isdir
+    - webserver_dir.stat.isdir is defined
+    - webserver_dir.stat.isdir
