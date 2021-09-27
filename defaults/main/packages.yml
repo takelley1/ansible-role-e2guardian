@@ -4,6 +4,7 @@ e2g_build_dependencies:
   - autoconf
   - automake
   - g++
+  - git
   - make
   - pkg-config
 
