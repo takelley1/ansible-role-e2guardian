@@ -35,7 +35,9 @@
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
-  when: cert_private_key_path.stat.readable is not defined
+  when: >
+    cert_private_key_path.stat.readable is not defined or
+    not cert_private_key_path.stat.readable
   notify: restart-e2guardian
 
 - name: CERTS | Check for CA private key
@@ -51,7 +53,9 @@
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
-  when: ca_private_key_path.stat.readable is not defined
+  when: >
+    ca_private_key_path.stat.readable is not defined or
+    not ca_private_key_path.stat.readable
   notify: restart-e2guardian
 
 - name: CERTS | Check for CA cert
@@ -67,7 +71,9 @@
     owner: "{{ e2g_conf_daemonuser }}"
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
-  when: ca_path.stat.readable is not defined
+  when: >
+    ca_path.stat.readable is not defined or
+    not ca_path.stat.readable
   notify: restart-e2guardian
 
 - name: CERTS | Check for CSR
@@ -84,7 +90,9 @@
     group: "{{ e2g_conf_daemongroup }}"
     mode: "0400"
   register: csr_created
-  when: csr_path.stat.readable is not defined
+  when: >
+    csr_path.stat.readable is not defined or
+    not csr_path.stat.readable
   notify: restart-e2guardian
 
 - name: CERTS | CA cert signed using CSR
