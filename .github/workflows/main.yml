@@ -1,0 +1,35 @@
+---
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  ansible_lint:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint-action@master
+        with:
+          targets: |
+            tasks
+            handlers
+            defaults
+          args: ""
+
+  # https://github.com/marketplace/actions/ansible-molecule
+  molecule:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+
+      - name: Run molecule
+        uses: gofrolist/molecule-action@v2
