@@ -23,6 +23,8 @@
       {{ line }}
       {% endfor -%}
     mode: "0640"
+    owner: root
+    group: root
   when:
     - item.name is defined
     - item.name | length > 0
