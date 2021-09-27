@@ -74,7 +74,7 @@
     - name: INSTALL | BUILD | E2Guardian binary built
       community.general.make:
         chdir: "{{ e2g_repo_dir }}"
-        jobs: "{{ ansible_processor_vcpus | int + 1 }}"
+        jobs: "{{ ansible_facts.processor_vcpus | int + 1 }}"
       when: e2g_repo.changed
 
     - name: INSTALL | BUILD | E2Guardian binary installed
