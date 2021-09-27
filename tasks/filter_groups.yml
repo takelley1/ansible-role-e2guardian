@@ -1,17 +1,17 @@
 ---
 
-# Deploy customized filter lists based on the groups defined in the
+# Deploys customized filter lists based on the groups defined in the
 #   e2g_filter_groups variable.
 
-# This is done because item_index starts at 0 and the e2g_filter_group_config_file_name index
-#   must start at 1.
-- name: FILTER_GROUPS | {{ item.groupname }} | Set facts
+# This is done because item_index starts at 0 and the
+#   e2g_filter_group_config_file_name index must start at 1.
+- name: FILTER_GROUPS | {{ item.groupname }} | Set index fact
   ansible.builtin.set_fact:
     index: "{{ (item_index + 1) | string }}"
   tags: e2g_filter
 
-# Setting a fact that depends on another fact must be defined separately.
-- name: FILTER_GROUPS | {{ item.groupname }} | Set more facts
+# Setting facts that depend on another fact must be done in a separate task.
+- name: FILTER_GROUPS | {{ item.groupname }} | Set dependent facts
   ansible.builtin.set_fact:
     e2g_filter_group_config_file_name: "{{ 'e2guardianf' + index }}"
     e2g_filter_group_story_file_name: "{{ item.groupname + 'f' + index + '.story' }}"
@@ -73,7 +73,7 @@
 
 # --------------------------------------------------------------------------------------------------
 
-- name: FILTER_GROUPS | Configue filter-group-specific files
+- name: FILTER_GROUPS | {{ item.groupname }} | Configue filter-group-specific files
 
   module_defaults:
     ansible.builtin.copy:
@@ -84,6 +84,8 @@
   tags: e2g_filter
   block:
 
+    # Ansible-lint doesn't recognize module_defaults, so we must ignore
+    #   risky-file-permissions individually on each task.
     - name: FILTER_GROUPS | {{ item.groupname }} | banned_phraselist filter group file created  # noqa risky-file-permissions
       ansible.builtin.copy:
         dest: "{{ (e2g_list_dir_root, (item.groupname + '.group'), item.lists.banned_phraselist.name) | path_join }}"

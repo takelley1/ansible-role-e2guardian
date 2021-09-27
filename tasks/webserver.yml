@@ -10,7 +10,7 @@
     name: nginx
   notify: restart-webserver
 
-- name: WEBSERVER | Nginx site configured
+- name: WEBSERVER | Nginx E2Guardian site path present
   ansible.builtin.file:
     path: /var/www/e2guardian
     state: directory
@@ -19,7 +19,7 @@
     mode: "0750"
   notify: restart-webserver
 
-- name: WEBSERVER | Nginx template deployed
+- name: WEBSERVER | Nginx E2Guardian template deployed
   ansible.builtin.template:
     src: etc/nginx/sites-available/e2guardian.j2
     dest: /etc/nginx/sites-available/e2guardian

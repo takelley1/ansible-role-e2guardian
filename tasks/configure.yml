@@ -1,6 +1,6 @@
 ---
 
-# Deploy E2Guardian's main filter lists.
+# Deploys E2Guardian's main filter lists.
 
 - name: CONFIGURE | Configuration templates deployed
   ansible.builtin.template:
