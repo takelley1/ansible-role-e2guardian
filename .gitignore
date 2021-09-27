@@ -6,5 +6,5 @@
 *.key
 *.pem
 *.srl
-/molecule/default
+/molecule/local
 public

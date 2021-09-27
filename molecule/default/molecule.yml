@@ -1,0 +1,34 @@
+---
+
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+
+  # - name: centos8
+  #   image: jrei/systemd-centos:8
+  #   command: ""
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   privileged: true
+  #   pre_build_image: true
+  #   pull: true
+
+  - name: ubuntu2004
+    image: jrei/systemd-ubuntu:20.04
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    pull: true
+
+provisioner:
+  name: ansible
+  inventory:
+    links:
+      group_vars: ./group_vars/
+
+verifier:
+  name: ansible

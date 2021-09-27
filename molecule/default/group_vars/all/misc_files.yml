@@ -1,0 +1,9 @@
+---
+
+e2g_misc_files:
+  - name: exceptionregexpurllist
+    groupname: foo
+    content:
+      - "#time: 10 30 17 00 0123456"
+      - site1\.com
+      - site2\.com

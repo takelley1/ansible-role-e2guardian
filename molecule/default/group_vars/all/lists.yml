@@ -1,0 +1,48 @@
+---
+
+e2g_bannedsitelist:
+  - site1.com
+  - site2.be
+  - site3.ch
+
+e2g_bannedregexurllist:
+  - site1
+  - site2
+  - site3
+
+e2g_bannedsiteiplist:
+  - 1.1.1.1
+  - 1.2.3.4
+
+e2g_bannedurllist:
+  - reddit.com/r/
+  - amazon.com/Amazon-Video/
+
+e2g_exceptionregexpurllist:
+  - amazon
+  - ubuntu
+  - update
+  - upgrade
+
+e2g_exceptionsitelist:
+  - gateway.reddit.com
+
+e2g_exceptionurllist:
+  - reddit.com/login
+
+e2g_greysitelist:
+  - accounts.google.com
+  - meet.google.com
+  - play.google.com
+
+e2g_weightedphraseslist:
+  - <노><80>
+  - <르><80>
+  - <포><80>
+
+e2g_exceptionphraselist:
+  - <nux><-50>
+  - <ology><-40>
+  - <socio><-40>
+  - <tech><-40>
+  - <wiki><-100>

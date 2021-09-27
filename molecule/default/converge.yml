@@ -3,8 +3,9 @@
 - name: Converge
   hosts: all
   become: true
-  vars:
-    e2g_build_package: true
+  # environment:
+  #   http_proxy: "{{ proxy_url }}"
+  #   https_proxy: "{{ proxy_url }}"
   tasks:
     - name: Include e2guardian
       ansible.builtin.include_role:

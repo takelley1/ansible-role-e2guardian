@@ -1,0 +1,24 @@
+---
+
+e2g_filter_groups:
+  - groupname: all
+  - groupname: foo
+    lists:
+      exception_regexpboollist:
+        name: exceptionregexpurllist
+        content:
+          - site1
+          - site2
+          - site3
+      bannedmime_mimelist:
+        name: bannedmimetypelist
+        content:
+          - "# Allow all mimetypes"
+  - groupname: bar
+    lists:
+      banned_sitelist:
+        name: bannedsitelist
+        content:
+          - site2
+          - site3
+          - site4
