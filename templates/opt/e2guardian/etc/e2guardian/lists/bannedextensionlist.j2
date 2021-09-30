@@ -8,7 +8,7 @@
 # This means they can potentially carry a virus to infect your computer.
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_bannedextensionlist is defined and e2g_bannedextensionlist !="" -%}
+{% if e2g_bannedextensionlist is defined and e2g_bannedextensionlist | length > 0 -%}
 {%- for item in e2g_bannedextensionlist %}
 {{ item }}
 {% endfor -%}

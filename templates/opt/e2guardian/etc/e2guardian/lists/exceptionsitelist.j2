@@ -23,7 +23,7 @@
 # WARNING: Old style Blanket blocks in this file will be silently ignored
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_exceptionsitelist is defined and e2g_exceptionsitelist !="" -%}
+{% if e2g_exceptionsitelist is defined and e2g_exceptionsitelist | length > 0 -%}
 {%- for item in e2g_exceptionsitelist %}
 {{ item }}
 {% endfor -%}

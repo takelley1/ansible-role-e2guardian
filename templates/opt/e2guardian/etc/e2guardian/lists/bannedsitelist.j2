@@ -49,7 +49,7 @@
 # .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "ads", "domains") | path_join }}>
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_bannedsitelist is defined and e2g_bannedsitelist !="" -%}
+{% if e2g_bannedsitelist is defined and e2g_bannedsitelist | length > 0 -%}
 {%- for item in e2g_bannedsitelist %}
 {{ item }}
 {% endfor -%}

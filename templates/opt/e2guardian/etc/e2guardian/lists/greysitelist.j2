@@ -59,7 +59,7 @@
 #
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_greysitelist is defined and e2g_greysitelist !="" -%}
+{% if e2g_greysitelist is defined and e2g_greysitelist | length > 0 -%}
 {%- for item in e2g_greysitelist %}
 {{ item }}
 {% endfor -%}

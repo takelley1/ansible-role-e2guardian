@@ -16,7 +16,7 @@
 # See the bannedphraselist for more examples.
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_exceptionphraselist is defined and e2g_exceptionphraselist !="" -%}
+{% if e2g_exceptionphraselist is defined and e2g_exceptionphraselist | length > 0 -%}
 {%- for item in e2g_exceptionphraselist %}
 {{ item }}
 {% endfor -%}

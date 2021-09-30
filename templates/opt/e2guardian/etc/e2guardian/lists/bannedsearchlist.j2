@@ -9,7 +9,7 @@
 #     will block  naughty+girl as well as girl+naughty
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_bannedsearchlist is defined and e2g_bannedsearchlist !="" -%}
+{% if e2g_bannedsearchlist is defined and e2g_bannedsearchlist | length > 0 -%}
 {%- for item in e2g_bannedsearchlist %}
 {{ item }}
 {% endfor -%}

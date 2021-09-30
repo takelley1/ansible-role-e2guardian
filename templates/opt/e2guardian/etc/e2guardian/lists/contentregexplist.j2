@@ -19,7 +19,7 @@
 # Some of these are based on regular expressions from Privoxy.
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_contentregexplist is defined and e2g_contentregexplist !="" -%}
+{% if e2g_contentregexplist is defined and e2g_contentregexplist | length > 0 -%}
 {%- for item in e2g_contentregexplist %}
 {{ item }}
 {% endfor -%}

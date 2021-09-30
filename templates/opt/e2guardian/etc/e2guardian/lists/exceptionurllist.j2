@@ -17,7 +17,7 @@
 #generallybadsite.tld/partthatsok/
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_exceptionurllist is defined and e2g_exceptionurllist !="" -%}
+{% if e2g_exceptionurllist is defined and e2g_exceptionurllist | length > 0 -%}
 {%- for item in e2g_exceptionurllist %}
 {{ item }}
 {% endfor -%}
