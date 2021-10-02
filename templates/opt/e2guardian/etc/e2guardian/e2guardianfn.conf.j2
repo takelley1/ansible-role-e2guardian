@@ -407,7 +407,7 @@ fileextlist = 'name=nolog,path=__LISTDIR__/../group1/../common/nologextensionlis
 ###
 
 #weightedphrasemode = 0
-{% if item.weightedphrasemode is defined and item.weightedphrasemode !="" -%}
+{% if item.weightedphrasemode is defined and item.weightedphrasemode | length > 0 -%}
 weightedphrasemode = {{ item.weightedphrasemode }}
 {% endif %}
 # Weighted phrase mode
@@ -420,7 +420,7 @@ weightedphrasemode = {{ item.weightedphrasemode }}
 # Phrase filter additional mime types (by default just text/*)
 
 # categorydisplaythreshold = 0
-{% if item.categorydisplaythreshold is defined and item.categorydisplaythreshold !="" -%}
+{% if item.categorydisplaythreshold is defined and item.categorydisplaythreshold | length > 0 -%}
 categorydisplaythreshold = {{ item.categorydisplaythreshold }}
 {% endif %}
 #
@@ -522,7 +522,7 @@ searchlist = 'name=localbanned,messageno=581,path=__LISTDIR__/{{ item.lists.loca
 ###
 
 #disablecontentscan = off
-{% if item.disablecontentscan is defined and item.disablecontentscan !="" -%}
+{% if item.disablecontentscan is defined and item.disablecontentscan | length > 0 -%}
 disablecontentscan = {{ item.disablecontentscan }}
 {% endif %}
 #
@@ -533,7 +533,7 @@ disablecontentscan = {{ item.disablecontentscan }}
 # (on|off) default = off.
 
 #disablecontentscanerror = off
-{% if item.disablecontentscanerror is defined and item.disablecontentscanerror !="" -%}
+{% if item.disablecontentscanerror is defined and item.disablecontentscanerror | length > 0 -%}
 disablecontentscanerror = {{ item.disablecontentscanerror }}
 {% endif %}
 #
@@ -545,7 +545,7 @@ disablecontentscanerror = {{ item.disablecontentscanerror }}
 # (on|off) default = off. (default and highly recommended)
 
 #contentscanexceptions = off
-{% if item.contentscanexceptions is defined and item.contentscanexceptions !="" -%}
+{% if item.contentscanexceptions is defined and item.contentscanexceptions | length > 0 -%}
 contentscanexceptions = {{ item.contentscanexceptions }}
 {% endif %}
 #
@@ -602,7 +602,7 @@ regexpreplacelist = 'name=reponseheadermods,path=__LISTDIR__/../group1/responseh
 ###
 
 #reportinglevel = 3
-{% if item.reportinglevel is defined and item.reportinglevel !="" -%}
+{% if item.reportinglevel is defined and item.reportinglevel | length > 0 -%}
 reportinglevel = {{ item.reportinglevel }}
 {% endif %}
 #
@@ -617,7 +617,7 @@ reportinglevel = {{ item.reportinglevel }}
 # members of this filter group.
 
 #accessdeniedaddress = 'http://YOURSERVER.YOURDOMAIN/cgi-bin/e2guardian.pl'
-{% if item.accessdeniedaddress is defined and item.accessdeniedaddress !="" -%}
+{% if item.accessdeniedaddress is defined and item.accessdeniedaddress | length > 0 -%}
 accessdeniedaddress = '{{ item.accessdeniedaddress }}'
 {% endif %}
 #
@@ -644,7 +644,7 @@ accessdeniedaddress = '{{ item.accessdeniedaddress }}'
 # Default is enabled, but to go back to the standard mode, disable it.
 
 #htmltemplate = 'custom.html'
-{% if item.htmltemplate is defined and item.htmltemplate !="" -%}
+{% if item.htmltemplate is defined and item.htmltemplate | length > 0 -%}
 htmltemplate = '{{ item.htmltemplate }}'
 {% endif %}
 #
@@ -662,7 +662,7 @@ htmltemplate = '{{ item.htmltemplate }}'
 # e.g. @E2DATADIR@/languages/ukenglish/custom.html
 
 #neterrtemplate = 'custom_neterr_template.html'
-{% if item.neterrtemplate is defined and item.neterrtemplate !="" -%}
+{% if item.neterrtemplate is defined and item.neterrtemplate | length > 0 -%}
 neterrtemplate = '{{ item.neterrtemplate }}'
 {% endif %}
 #
@@ -725,7 +725,7 @@ sitelist = 'name=bannedbypass,messageno=500,path=__LISTDIR__/../group1/domainsno
 #urllist = 'name=bannedbypass,messageno=501,path=__LISTDIR__/../group1/urlnobypass'
 
 #infectionbypass = 0
-{% if item.infectionbypass is defined and item.infectionbypass !="" -%}
+{% if item.infectionbypass is defined and item.infectionbypass | length > 0 -%}
 infectionbypass = {{ item.infectionbypass }}
 {% endif %}
 #
@@ -749,7 +749,7 @@ infectionbypass = {{ item.infectionbypass }}
 # Same as the 'bypasskey' option, but used for infection bypass mode.
 
 #infectionbypasserrorsonly = on
-{% if item.infectionbypasserrorsonly is defined and item.infectionbypasserrorsonly !="" -%}
+{% if item.infectionbypasserrorsonly is defined and item.infectionbypasserrorsonly | length > 0 -%}
 infectionbypasserrorsonly = {{ item.infectionbypasserrorsonly }}
 {% endif %}
 #
@@ -861,7 +861,7 @@ infectionbypasserrorsonly = {{ item.infectionbypasserrorsonly }}
 # option is replaced by storyboard logic
 
 #embeddedurlweight = 0
-{% if item.embeddedurlweight is defined and item.embeddedurlweight !="" -%}
+{% if item.embeddedurlweight is defined and item.embeddedurlweight | length > 0 -%}
 embeddedurlweight = {{ item.embeddedurlweight }}
 {% endif %}
 #  - NOT implimented in v5
