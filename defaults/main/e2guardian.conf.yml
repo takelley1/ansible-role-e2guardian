@@ -6,12 +6,16 @@
 #   information on the purpose of each variable.
 #
 # Variables here appear in the same order as they do in e2guardian.conf.
+# NOTE: ALL BOOLEANS SHOULD BE STRINGS!
 
 ### QUICK_START section --------------------------------------------------------
 
 e2g_conf_language: ukenglish
 
 # e2g_conf_dockermode:
+# e2g_conf_checkip:
+#   - 127.0.0.1
+# e2g_conf_extracheckports:
 # e2g_conf_transparenthttpsport:
 # e2g_conf_icapport:
 # e2g_conf_proxyip:
@@ -32,7 +36,7 @@ e2g_conf_preauthstoryboard: "{{ (e2g_install_dir, 'etc', 'e2guardian', 'preauth.
 ### NETWORK section ------------------------------------------------------------
 
 # e2g_conf_filterip:
-#  - "{{ ansible_default_ipv4.address }}"
+#  - "{{ ansible_facts.default_ipv4.address }}"
 # This must match the number of IPs in e2g_conf_filterip.
 e2g_conf_filterports:
   - 8080
@@ -47,14 +51,20 @@ e2g_conf_certprivatekeypath: "{{ (e2g_install_dir, 'certs', 'generated-certs.key
 e2g_conf_generatedcertpath: "{{ (e2g_install_dir, 'certs', 'generated-certs') | path_join }}"
 # e2g_conf_generatedcertstart:
 # e2g_conf_genratedcertend:
+# e2g_conf_useopensslconf:
+# e2g_conf_useopensslconffile:
+# e2g_conf_setcipherlist:
 
 ### ICAP_SERVICE section -------------------------------------------------------
 
 # e2g_conf_defaulticapfiltergroup:
+# e2g_conf_icapreqmodurl:
+# e2g_conf_icapresmodurl:
 
 ### TRANSPARENT section --------------------------------------------------------
 
 # e2g_conf_defaulttransparentfiltergroup:
+# e2g_conf_useoriginalip:
 
 ### AUTH section ---------------------------------------------------------------
 
@@ -75,8 +85,13 @@ e2g_conf_loglevel: 3
 e2g_conf_logexceptionhits: 2
 e2g_conf_logadblocks: "off"
 e2g_conf_showweightedfound: "on"
+# e2g_conf_showallweightedfound:
 e2g_conf_logclienthostnames: "off"
 e2g_conf_loguseragent: "off"
+# e2g_conf_logclientnameandip:
+# e2g_conf_dnsuserloggingdomain:
+# e2g_conf_usedashforblank:
+# e2g_conf_logtimestamp:
 # e2g_conf_maxlogitemlength:
 
 ### MONITORING section ---------------------------------------------------------
@@ -92,6 +107,7 @@ e2g_conf_reverseaddresslookups: "off"
 
 ### LIST_SETTINGS section ------------------------------------------------------
 
+# e2g_conf_abortiflistmissing:
 e2g_conf_searchsitelistforip: "off"
 
 ### AV_SCANNERS section --------------------------------------------------------
@@ -102,10 +118,12 @@ e2g_conf_contentscannertimeout: 60
 
 e2g_conf_addforwardedfor: "off"
 e2g_conf_usexforwardedfor: "off"
+# e2g_conf_xforwardedforfilterip:
 e2g_conf_maxheaderlines: 250
 
 ### BLOCK_PAGE section ---------------------------------------------------------
 
+# e2g_conf_reportinglevel:
 e2g_conf_usecustombannedimage: "on"
 e2g_conf_custombannedimagefile: "{{ (e2g_install_dir, 'share', 'e2guardian', 'transparent1x1.gif') | path_join }}"
 e2g_conf_usecustombannedflash: "on"
@@ -135,13 +153,16 @@ e2g_conf_maxcontentramcachescansize: 2000
 e2g_conf_maxcontentfilecachescansize: 20000
 e2g_conf_proxytimeout: 5
 e2g_conf_connecttimeout: 5
+# e2g_conf_connectretries:
 e2g_conf_proxyexchange: 61
 e2g_conf_pcontimeout: 55
 
 ### DEBUG section --------------------------------------------------------------
 
 # e2g_conf_storyboardtrace:
-e2g_conf_logconnectionhandlingerrors: "on"
+# e2g_conf_logsslerrors:
+e2g_conf_logconnectionhandlingerrors: "off"
+# e2g_conf_rqloglocation:
 # e2g_conf_debuglevel:
 # e2g_conf_debuglevelfile:
 
@@ -152,8 +173,9 @@ e2g_conf_nodaemon: "off"
 
 ### OBSOLETE section -----------------------------------------------------------
 
-# e2g_conf_logheadervalue:
+# e2g_conf_contentscanexceptions:
 # e2g_conf_mapportstoips:
 e2g_conf_mapauthtoports: "off"
+# e2g_conf_logheadervalue:
 e2g_conf_recheckreplacedurls: "off"
 # e2g_conf_monitorhelper:
