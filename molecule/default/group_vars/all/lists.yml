@@ -1,6 +1,7 @@
 ---
 
 e2g_bannedsitelist:
+  - google.com
   - site1.com
   - site2.be
   - site3.ch
