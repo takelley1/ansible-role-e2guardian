@@ -2,7 +2,7 @@
 
 # Uninstall E2Guardian.
 
-- name: UNINSTALL | Service stopped
+- name: UNINSTALL | Service stopped  # noqa ignore-errors
   ansible.builtin.systemd:
     name: e2guardian
     enabled: false
@@ -35,7 +35,6 @@
     - "{{ e2g_install_dir }}"
     - /etc/nginx/sites-available/e2guardian
     - /etc/nginx/sites-enabled/e2guardian
-    - /etc/profile.d/e2g-path.sh
     - /etc/systemd/system/e2guardian.service
     - /etc/systemd/system/e2guardian.service.d
     - /var/log/e2guardian
