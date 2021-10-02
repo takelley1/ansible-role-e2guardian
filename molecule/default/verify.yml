@@ -16,8 +16,8 @@
         duckduckgo.com |
         grep -q DuckDuckGo
       environment:
-        HTTP_PROXY: http://localhost:{{ e2g_conf_filterports[0] }}
-        HTTPS_PROXY: http://localhost:{{ e2g_conf_filterports[0] }}
+        HTTP_PROXY: http://localhost:8080
+        HTTPS_PROXY: http://localhost:8080
 
     - name: MOLECULE | VERIFY | Test blocked page
       ansible.builtin.shell: >
@@ -29,5 +29,5 @@
         google.com |
         grep -q -i E2Guardian
       environment:
-        HTTP_PROXY: http://localhost:{{ e2g_conf_filterports[0] }}
-        HTTPS_PROXY: http://localhost:{{ e2g_conf_filterports[0] }}
+        HTTP_PROXY: http://localhost:8080
+        HTTPS_PROXY: http://localhost:8080
