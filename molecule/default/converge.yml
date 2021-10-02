@@ -5,9 +5,6 @@
   become: true
   become_method: su
   gather_facts: true
-  # environment:
-  #   http_proxy: "{{ proxy_url }}"
-  #   https_proxy: "{{ proxy_url }}"
   tasks:
     - name: Include e2guardian
       ansible.builtin.include_role:
