@@ -14,43 +14,31 @@
         --silent
         --insecure
         https://duckduckgo.com |
-        grep -q DuckDuckGo
+        grep -q "DuckDuckGo"
       changed_when: false
-      register: allowed_test
       environment:
         HTTP_PROXY: http://localhost:8080
         HTTPS_PROXY: http://localhost:8080
 
-    - name: MOLECULE | VERIFY | Test allowed page (assert)
-      ansible.builtin.assert:
-        that: allowed_test.rc == 0
-
-    # - name: MOLECULE | VERIFY | Test blocked page
-    #   ansible.builtin.shell: >
-    #     curl
-    #     -L
-    #     --silent
-    #     --insecure
-    #     --connect-timeout 120
-    #     google.com |
-    #     grep -q -i e2guardian
-    #   changed_when: false
-    #   failed_when: false
-    #   environment:
-    #     HTTP_PROXY: http://localhost:8080
-    #     HTTPS_PROXY: http://localhost:8080
-
-    # - name: MOLECULE | VERIFY | Debug
-    #   debug:
-    #     var: allowed_cmd
-
-    - name: MOLECULE | VERIFY | Print log
+    - name: MOLECULE | VERIFY | Confirm allowed page in log
       ansible.builtin.shell: >
-        journalctl -u e2guardian --no-pager
-      register: log_cmd
+        journalctl -u e2guardian --no-pager | grep "duckduckgo" | grep "TRUSTED"
       changed_when: false
-      failed_when: false
 
-    - name: MOLECULE | VERIFY | Debug
-      ansible.builtin.debug:
-        var: log_cmd.stdout
+    - name: MOLECULE | VERIFY | Test blocked page
+      ansible.builtin.shell: >
+        curl
+        -L
+        --silent
+        --insecure
+        https://google.com |
+        grep -q "Blocked site"
+      changed_when: false
+      environment:
+        HTTP_PROXY: http://localhost:8080
+        HTTPS_PROXY: http://localhost:8080
+
+    - name: MOLECULE | VERIFY | Confirm blocked page in log
+      ansible.builtin.shell: >
+        journalctl -u e2guardian --no-pager | grep "google" | grep "DENIED"
+      changed_when: false

@@ -21,11 +21,13 @@ e2g_bannedurllist:
 
 e2g_exceptionregexpurllist:
   - amazon
+  - duckduckgo
   - ubuntu
   - update
   - upgrade
 
 e2g_exceptionsitelist:
+  - duckduckgo.com
   - gateway.reddit.com
 
 e2g_exceptionurllist:
