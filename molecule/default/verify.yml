@@ -6,28 +6,51 @@
   become_method: su
   gather_facts: true
   tasks:
+
     - name: MOLECULE | VERIFY | Test allowed page
       ansible.builtin.shell: >
         curl
         -L
         --silent
         --insecure
-        --connect-timeout 120
-        duckduckgo.com |
+        https://duckduckgo.com |
         grep -q DuckDuckGo
+      changed_when: false
+      register: allowed_test
       environment:
         HTTP_PROXY: http://localhost:8080
         HTTPS_PROXY: http://localhost:8080
 
-    - name: MOLECULE | VERIFY | Test blocked page
+    - name: MOLECULE | VERIFY | Test allowed page (assert)
+      ansible.builtin.assert:
+        that: allowed_test.rc == 0
+
+    # - name: MOLECULE | VERIFY | Test blocked page
+    #   ansible.builtin.shell: >
+    #     curl
+    #     -L
+    #     --silent
+    #     --insecure
+    #     --connect-timeout 120
+    #     google.com |
+    #     grep -q -i e2guardian
+    #   changed_when: false
+    #   failed_when: false
+    #   environment:
+    #     HTTP_PROXY: http://localhost:8080
+    #     HTTPS_PROXY: http://localhost:8080
+
+    # - name: MOLECULE | VERIFY | Debug
+    #   debug:
+    #     var: allowed_cmd
+
+    - name: MOLECULE | VERIFY | Print log
       ansible.builtin.shell: >
-        curl
-        -L
-        --silent
-        --insecure
-        --connect-timeout 120
-        google.com |
-        grep -q -i E2Guardian
-      environment:
-        HTTP_PROXY: http://localhost:8080
-        HTTPS_PROXY: http://localhost:8080
+        journalctl -u e2guardian --no-pager
+      register: log_cmd
+      changed_when: false
+      failed_when: false
+
+    - name: MOLECULE | VERIFY | Debug
+      ansible.builtin.debug:
+        var: log_cmd.stdout
