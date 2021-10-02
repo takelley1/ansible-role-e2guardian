@@ -1,10 +1,33 @@
 ---
-# This is an example playbook to execute Ansible tests.
 
 - name: Verify
   hosts: all
-  gather_facts: false
+  become: true
+  become_method: su
+  gather_facts: true
   tasks:
-    - name: Example assertion
-      assert:
-        that: true
+    - name: MOLECULE | VERIFY | Test allowed page
+      ansible.builtin.shell: >
+        curl
+        -L
+        --silent
+        --insecure
+        --connect-timeout 120
+        duckduckgo.com |
+        grep -q DuckDuckGo
+      environment:
+        HTTP_PROXY: http://localhost:{{ e2g_conf_filterports[0] }}
+        HTTPS_PROXY: http://localhost:{{ e2g_conf_filterports[0] }}
+
+    - name: MOLECULE | VERIFY | Test blocked page
+      ansible.builtin.shell: >
+        curl
+        -L
+        --silent
+        --insecure
+        --connect-timeout 120
+        google.com |
+        grep -q -i E2Guardian
+      environment:
+        HTTP_PROXY: http://localhost:{{ e2g_conf_filterports[0] }}
+        HTTPS_PROXY: http://localhost:{{ e2g_conf_filterports[0] }}
