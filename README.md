@@ -16,24 +16,24 @@ Example playbook:
       - groupname: group1
         lists:
           banned_siteiplist:
-            name: bannedsiteiplist_group1
+            name: bannedsiteiplist
             content:
               - 1.2.3.4
               - 5.6.7.8
       - groupname: group2
         lists:
           banned_sitelist:
-            name: bannedsitelist_group2
+            name: bannedsitelist
             content: "{{ e2g_bannedsitelist }}"
       - groupname: group3
         lists:
           banned_urllist:
-            name: bannedurllist_group3
+            name: bannedurllist
             content:
               - site1.com/url
               - site2.com/url
     e2g_ipgroups:
-      - 10.0.0.1 = filter1
+      # All other hosts are placed into filter1 by default.
       - 10.0.0.2 = filter2
       - 10.0.0.3 = filter3
     e2g_bannedsitelist:

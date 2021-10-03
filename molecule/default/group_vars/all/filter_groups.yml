@@ -5,7 +5,7 @@ e2g_filter_groups:
   - groupname: foo
     lists:
       exception_regexpboollist:
-        name: exceptionregexpboollist_foo
+        name: exceptionregexpboollist
         content:
           - site1
           - site2
