@@ -132,7 +132,7 @@ sitelist = 'name=greyssl,path=__LISTDIR__/{{ item.lists.grey_ssl_sitelist.name |
 ipsitelist = 'name=greyssl,path=__LISTDIR__/{{ item.lists.grey_ssl_ipsitelist.name | default("../group1/greysslsiteiplist") | string }}'
 
 sitelist = 'name=localgreyssl,path=__LISTDIR__/{{ item.lists.local_grey_sitelist.name | default("../group1/localgreysslsitelist") | string }}'
-if {% item.lists.local_grey_ipsitelist.name is defined and item.lists.local_grey_ipsitelist.name | string | length > 0 -%}
+{% if item.lists.local_grey_ipsitelist.name is defined and item.lists.local_grey_ipsitelist.name | string | length > 0 -%}
 ipsitelist = 'name=localgreyssl,path=__LISTDIR__/{{ item.lists.local_grey_ipsitelist.name | string }}'
 {% endif %}
 
