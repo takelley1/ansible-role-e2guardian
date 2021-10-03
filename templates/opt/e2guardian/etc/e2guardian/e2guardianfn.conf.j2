@@ -26,7 +26,6 @@
 ### HEADER........... HTTP Header handling
 ### BLOCK_PAGE....... Block Page formats and handling
 ### BYPASS........... Bypass settings and lists
-### EMAILER.......... Emailer settings (experimental)
 ### OBSOLETE......... Obsolete settings
 ###
 
@@ -61,7 +60,6 @@
 
 #groupname = 'my_name_for_group'
 groupname = '{{ item.groupname | string }}'
-#
 # Filter group name
 # Used to fill in the -FILTERGROUP -placeholder in the HTML template file, and to
 # name the group in the access logs
@@ -117,7 +115,6 @@ mitmcheckcert = {{ item.mitmcheckcert | default("off") | string }}
 #
 sitelist = 'name=nocheckcert,path=__LISTDIR__/{{ item.lists.nocheckcert_sitelist.name | default("../group1/nocheckcertsitelist") | string }}'
 ipsitelist = 'name=nocheckcert,path=__LISTDIR__/{{ item.lists.nocheckcert_ipsitelist.name | default("../group1/nocheckcertsiteiplist") | string }}'
-#
 
 #automitm = on
 {% if item.automitm is defined and item.automitm | string | length > 0 -%}
@@ -135,7 +132,9 @@ sitelist = 'name=greyssl,path=__LISTDIR__/{{ item.lists.grey_ssl_sitelist.name |
 ipsitelist = 'name=greyssl,path=__LISTDIR__/{{ item.lists.grey_ssl_ipsitelist.name | default("../group1/greysslsiteiplist") | string }}'
 
 sitelist = 'name=localgreyssl,path=__LISTDIR__/{{ item.lists.local_grey_sitelist.name | default("../group1/localgreysslsitelist") | string }}'
-# ipsitelist = 'name=localgreyssl,path=__LISTDIR__/{{ item.lists.local_grey_ipsitelist.name | default("../group1/localgreysslsiteiplist") | string }}'
+if {% item.lists.local_grey_ipsitelist.name is defined and item.lists.local_grey_ipsitelist.name | string | length > 0 -%}
+ipsitelist = 'name=localgreyssl,path=__LISTDIR__/{{ item.lists.local_grey_ipsitelist.name | string }}'
+{% endif %}
 
 ###
 ### END of MITM section
@@ -202,8 +201,12 @@ urllist = 'name=banned,messageno=501,path=__LISTDIR__/{{ item.lists.banned_urlli
 regexpboollist = 'name=banned,messageno=503,path=__LISTDIR__/{{ item.lists.banned_regexpboollist.name | default("../group1/bannedregexpurllist") | string }}'
 
 # 'bannedssl' lists are not currently used
-# sitelist = 'name=bannedssl,messageno=520,path=__LISTDIR__/{{ item.lists.banned_ssl_sitelist.name | default("../group1/bannedsslsitelist") | string }}'
-# ipsitelist = 'name=bannedssl,messageno=520,path=__LISTDIR__/{{ item.lists.banned_ssl_ipsitelist.name | default("../group1/bannedsslsiteiplist") | string }} | string }}'
+{% if item.lists.banned_ssl_sitelist.name is defined and item.lists.banned_ssl_sitelist.name | string | length > 0 -%}
+sitelist = 'name=bannedssl,messageno=520,path=__LISTDIR__/{{ item.lists.banned_ssl_sitelist.name | string }}'
+{% endif %}
+{% if item.lists.banned_ssl_ipsitelist.name is defined and item.lists.banned_ssl_ipsitelist.name | string | length > 0 -%}
+ipsitelist = 'name=bannedssl,messageno=520,path=__LISTDIR__/{{ item.lists.banned_ssl_ipsitelist.name | string }} | string }}'
+{% endif %}
 
 ###
 ### END of URL_MAINLISTS section
@@ -215,7 +218,6 @@ regexpboollist = 'name=banned,messageno=503,path=__LISTDIR__/{{ item.lists.banne
 ### then comment out (or remove) all the list entries in this section and
 ### make adjustments to site.story
 ###
-
 
 ## Local Exception lists
 
@@ -235,9 +237,13 @@ sitelist = 'name=localbanned,messageno=560,path=__LISTDIR__/{{ item.lists.local_
 ipsitelist = 'name=localbanned,messageno=560,path=__LISTDIR__/{{ item.lists.local_ipsitelist.name | default("../group1/localbannedsiteiplist") | string }}'
 urllist = 'name=localbanned,messageno=561,path=__LISTDIR__/{{ item.lists.local_urllist.name | default("../group1/localbannedurllist") | string }}'
 
-## Bannedssl lists are not currently used
-# sitelist = 'name=localbannedssl,messageno=580,path=__LISTDIR__/{{ item.lists.local_sitelist.name | default("../group1/localbannedsslsitelist") | string }}'
-# ipsitelist = 'name=localbannedssl,messageno=580,path=__LISTDIR__/{{ item.lists.local_ipsitelist.name | default("../group1/localbannedsslsiteiplist") | string }}'
+# 'bannedssl' lists are not currently used
+{% if item.lists.local_sitelist.name is defined and item.lists.local_sitelist.name | string | length > 0 -%}
+sitelist = 'name=localbannedssl,messageno=580,path=__LISTDIR__/{{ item.lists.local_sitelist.name | string }}'
+{% endif %}
+{% if item.lists.local_ipsitelist.name is defined and item.lists.local_ipsitelist.name | string | length > 0 -%}
+ipsitelist = 'name=localbannedssl,messageno=580,path=__LISTDIR__/{{ item.lists.local_ipsitelist.name | string }}'
+{% endif %}
 
 ###
 ### END of URL_LOCAL_LISTS section
@@ -249,7 +255,6 @@ urllist = 'name=localbanned,messageno=561,path=__LISTDIR__/{{ item.lists.local_u
 # You will also need to uncomment the checkfiletype function in site.story to enable this
 #fileextlist = 'name=exceptionextension,path=__LISTDIR__/../group1/exceptionextensionlist'
 #mimelist = 'name=exceptionmime,path=__LISTDIR__/../group1/exceptionmimetypelist'
-
 
 # Use the following lists to block specific kinds of file downloads.
 #
@@ -287,7 +292,6 @@ urllist = 'name=exceptionfile,path=__LISTDIR__/{{ item.lists.exception_file_urll
 ### on the user-agent
 
 regexpboollist = 'name=banneduseragent,messageno=522,path=__LISTDIR__/{{ item.lists.banned_useragent_regexpboollist.name | default("../group1/bannedregexpuseragentlist") | string }}'
-
 regexpboollist = 'name=exceptionuseragent,messageno=610,path=__LISTDIR__/{{ item.lists.exception_useragent_regexpboollist.name | default("../group1/exceptionregexpuseragentlist") | string }}'
 
 ###
@@ -311,7 +315,6 @@ urllist = 'name=refererexception,messageno=620,path=__LISTDIR__/{{ item.lists.re
 sitelist = 'name=embededreferer,path=__LISTDIR__/{{ item.lists.embeded_reference_exception_sitelist.name | default("../common/embededreferersitelist") | string }}'
 ipsitelist = 'name=embededreferer,path=__LISTDIR__/{{ item.lists.embeded_reference_exception_ipsitelist.name | default("../common/embededreferersiteiplist") | string }}'
 urllist = 'name=embededreferer,path=__LISTDIR__/{{ item.lists.embeded_reference_exception_urllist.name | default("../common/embededrefererurllist") | string }}'
-
 
 ###
 ### END of REFERER section
@@ -352,10 +355,10 @@ regexpreplacelist = 'name=redirect,path=__LISTDIR__/{{ item.lists.redirect_regex
 # Supply categorised lists here and the category string shall be logged against
 # matching requests, but matching these lists does not perform any filtering
 # action.
-# sitelist = 'name=log,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "logsitelist") | path_join | string }}'
-# ipsitelist = 'name=log,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "logsiteiplist") | path_join | string }}'
-# urllist = 'name=log,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "logurllist") | path_join | string }}'
-# regexpboollist = 'name=log,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "logregexpurllist") | path_join | string }}'
+#sitelist = 'name=log,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "logsitelist") | path_join | string }}'
+#ipsitelist = 'name=log,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "logsiteiplist") | path_join | string }}'
+#urllist = 'name=log,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "logurllist") | path_join | string }}'
+#regexpboollist = 'name=log,path={{ (e2g_install_dir, "etc", "e2guardian", "lists", "logregexpurllist") | path_join | string }}'
 
 ###
 ### END of LOG_ONLY section
@@ -417,7 +420,6 @@ weightedphrasemode = {{ item.weightedphrasemode | string }}
 {% if item.categorydisplaythreshold is defined and item.categorydisplaythreshold | string | length > 0 -%}
 categorydisplaythreshold = {{ item.categorydisplaythreshold | string }}
 {% endif %}
-#
 # Category display threshold
 # This option only applies to pages blocked by weighted phrase filtering.
 # Defines the minimum score that must be accumulated within a particular
@@ -428,7 +430,6 @@ categorydisplaythreshold = {{ item.categorydisplaythreshold | string }}
 # -1 = display only the highest scoring category
 # 0 = display all categories (default)
 # > 0 = minimum score for a category to be displayed
-
 
 bannedphraselist = '__LISTDIR__/{{ item.lists.banned_phraselist.name | default("../group1/bannedphraselist") | string }}'
 weightedphraselist = '__LISTDIR__/{{ item.lists.weighted_phraselist.name | default("../group1/weightedphraselist") | string }}'
@@ -464,17 +465,14 @@ exceptionphraselist = '__LISTDIR__/{{ item.lists.exception_phraselist.name | def
 # Method 2 is uses the
 # bannedphraselist, weightedphraselist and exceptionphraselist, with a separate
 # threshold for blocking than that used for normal page content.
-# To do this, the searchregexplist must be enabled and searchtermlimit
-# must be greater than 0.
+# To do this, the searchregexplist must be enabled and searchtermlimit must be greater than 0.
 
 # Search engine regular expression list (need for both options)
 # List of regular expressions for matching search engine URLs.  It is assumed
-# that the search terms themselves will be contained in the
-# of output of each expression.
+# that the search terms themselves will be contained in the of output of each expression.
 regexpreplacelist = 'name=searchterms,path=__LISTDIR__/{{ item.lists.search_regexpreplacelist.name | default("../group1/../common/searchregexplist") | string }}'
 # search engine regexp exception (overide) list
-# Used to prevent urls such os completetion suggestion requests from being detected
-# as search requests
+# Used to prevent urls such os completetion suggestion requests from being detected as search requests
 regexpboollist = 'name=searchtermexceptions, path=__LISTDIR__/../group1/../common/searchexceptionregexplist'
 
 # Search Term list(s) for option 1
@@ -580,10 +578,8 @@ regexpreplacelist = 'name=addheader,path=__LISTDIR__/{{ item.lists.add_header_re
 
 # Response HTTP header rules:
 # Lists for modification or removal of HTTP response headers.
-# Format for reponseheaderregexplist is one rule per line, similar to
-# content/URL modifications.
-# Headers are matched/replaced on a line-by-line basis, not as a contiguous
-# block.
+# Format for reponseheaderregexplist is one rule per line, similar to content/URL modifications.
+# Headers are matched/replaced on a line-by-line basis, not as a contiguous block.
 # Use for example, to remove protocol upgrade requests.
 regexpreplacelist = 'name=reponseheadermods,path=__LISTDIR__/../group1/responseheaderregexplist'
 
@@ -598,7 +594,6 @@ regexpreplacelist = 'name=reponseheadermods,path=__LISTDIR__/../group1/responseh
 {% if item.reportinglevel is defined and item.reportinglevel | string | length > 0 -%}
 reportinglevel = {{ item.reportinglevel | string }}
 {% endif %}
-#
 # -1 = log, but do not block - Stealth mode
 #  0 = just say 'Access Denied'
 #  1 = report why but not what denied phrase
@@ -612,7 +607,6 @@ reportinglevel = {{ item.reportinglevel | string }}
 {% if item.accessdeniedaddress is defined and item.accessdeniedaddress | string | length > 0 -%}
 accessdeniedaddress = '{{ item.accessdeniedaddress | string }}'
 {% endif %}
-#
 # accessdeniedaddress is the address of your web server to which the cgi
 # e2guardian reporting script was copied. Only used in reporting levels
 # 1 and 2.
@@ -633,8 +627,7 @@ nonstandarddelimiter = {{ item.nonstandarddelimiter | string }}
 # To help preserve the full banned URL, including parameters, the variables
 # passed into the access denied CGI are separated using non-standard
 # delimiters. This can be useful to ensure correct operation of the filter
-# bypass modes. Parameters are split using "::" in place of "&", and "==" in
-# place of "=".
+# bypass modes. Parameters are split using "::" in place of "&", and "==" in place of "=".
 # Default is enabled, but to go back to the standard mode, disable it.
 
 #htmltemplate = 'custom.html'
@@ -647,11 +640,9 @@ htmltemplate = '{{ item.htmltemplate | string }}'
 # only used in reporting level 3.
 #
 # The default template file path is <languagedir>/<language>/template.html
-# e.g. @E2DATADIR@/languages/ukenglish/template.html when using 'ukenglish'
-# language.
+# e.g. @E2DATADIR@/languages/ukenglish/template.html when using 'ukenglish' language.
 #
-# This option generates a file path of the form:
-# <languagedir>/<language>/<htmltemplate>
+# This option generates a file path of the form: <languagedir>/<language>/<htmltemplate>
 # e.g. @E2DATADIR@/languages/ukenglish/custom.html
 
 #neterrtemplate = 'custom_neterr_template.html'
@@ -662,8 +653,6 @@ neterrtemplate = '{{ item.neterrtemplate | string }}'
 # The default template file path is <languagedir>/<language>/neterr_template.html
 # e.g. @E2DATADIR@/languages/ukenglish/neterr_template.html when using
 # 'ukenglish' language.
-
-
 
 ###
 ### END of BLOCK_PAGE section
@@ -686,12 +675,9 @@ bypass = {{ item.bypass | string }}
 # 0 = disable ( defaults to 0 )
 # -1 - depreciated - for backward compatability enables cgibypass with bypassversion 1
 
-bypassversion = 2
-#
+bypassversion = {{ item.bypassversion | default("2") | string }}
 # Byapss version 2 provides a secure cgi communication (see notes/cgi_bypass documentation)
-#
-# Bypass version
-# can be 1 or 2
+# Bypass version can be 1 or 2
 # Always use v2 unless you have old style cgi hash generation in use
 # Default is 1
 
@@ -712,15 +698,18 @@ bypasskey = {{ item.bypasskey | string }}
 # 'Mary had a little lamb.' = an example
 # '76b42abc1cd0fdcaf6e943dcbc93b826' = an example
 
-cgikey = 'you must change this text in order to be secure'
+cgikey = {{ item.cgikey | default("''") | string }}
 # magic key for cgi bypass v2 - used to sign communications between e2g and cgi
 # default is blank
 
-
 # Users will not be able to bypass sites/urls in these lists
-sitelist = 'name=bannedbypass,messageno=500,path=__LISTDIR__/../group1/domainsnobypass'
-#ipsitelist = 'name=bannedbypass,messageno=500,path=__LISTDIR__/../group1/ipnobypass'
-#urllist = 'name=bannedbypass,messageno=501,path=__LISTDIR__/../group1/urlnobypass'
+sitelist = 'name=bannedbypass,messageno=500,path=__LISTDIR__/{{ item.lists.bannedbypass_sitelist.name | default("../group1/domainsnobypass") | string }}'
+{% if item.lists.bannedbypass_iplist.name is defined and item.lists.bannedbypass_iplist.name | string | length > 0 -%}
+ipsitelist = 'name=bannedbypass,messageno=500,path=__LISTDIR__/{{ item.lists.bannedbypass_iplist.name | string }}'
+{% endif %}
+{% if item.lists.bannedbypass_urllist.name is defined and item.lists.bannedbypass_urllist.name | string | length > 0 -%}
+urllist = 'name=bannedbypass,messageno=501,path=__LISTDIR__/{{ item.lists.bannedbypass_urllist.name | string }}'
+{% endif %}
 
 #infectionbypass = 0
 {% if item.infectionbypass is defined and item.infectionbypass | string | length > 0 -%}
@@ -759,106 +748,18 @@ infectionbypasserrorsonly = {{ item.infectionbypasserrorsonly | string }}
 # on = enable (default and highly recommended)
 # off = disable
 
-
 ###
 ### END of BYPASS section
 
 
-### EMAILER section
-###
-### Note this is experimental in v5 - not supported by maintainers
-
-# Email reporting - original patch by J. Gauthier
-
-#@EMAILSUPPORT@usesmtp = off   #NOT YET TESTED
-#
-# If on, will enable system wide events to be reported by email.
-# need to configure mail program (see 'mailer' in global config)
-# and email recipients
-# default usesmtp = off
-
-#@EMAILSUPPORT@mailfrom = ''
-#
-# who the email would come from
-# example: mailfrom = 'e2guardian@mycompany.com'
-
-#@EMAILSUPPORT@avadmin = ''
-#
-# who the virus emails go to (if notify av is on)
-# example: avadmin = 'admin@mycompany.com'
-
-#@EMAILSUPPORT@contentadmin = ''
-#
-# who the content emails go to (when thresholds are exceeded)
-# and contentnotify is on
-# example: contentadmin = 'admin@mycompany.com'
-
-#@EMAILSUPPORT@avsubject = 'e2guardian virus block'
-#
-# Subject of the email sent when a virus is caught.
-# only applicable if notifyav is on
-# default avsubject = 'e2guardian virus block'
-
-#@EMAILSUPPORT@contentsubject = 'e2guardian violation'
-#
-# Subject of the email sent when violation thresholds are exceeded
-# default contentsubject = 'e2guardian violation'
-
-#@EMAILSUPPORT@notifyav = off
-#
-# This will send a notification, if usesmtp/notifyav is on, any time an
-# infection is found.
-# Important: If this option is off, viruses will still be recorded like a
-# content infraction.
-
-#@EMAILSUPPORT@notifycontent = off
-#
-# This will send a notification, if usesmtp is on, based on thresholds
-# below
-
-#@EMAILSUPPORT@thresholdbyuser = off
-#
-# results are only predictable with user authenticated configs
-# if enabled the violation/threshold count is kept track of by the user
-
-#@EMAILSUPPORT@violations = 0
-#
-# number of violations before notification
-# setting to 0 will never trigger a notification
-
-#@EMAILSUPPORT@threshold = 0
-#
-# this is in seconds. If 'violations' occur in 'threshold' seconds, then
-# a notification is made.
-# if this is set to 0, then whenever the set number of violations are made a
-# notifaction will be sent.
-
-###
-### END of EMAILER section
-
-
 ### OBSOLETE section
 ###
-
-# groupmode = 1 #DISABLED
-# Filter group mode IS NOT LONGER SUPPORTED
-# Unauthenticated users are treated as being in the default filter group.
-
-# ssllegacylogic = off
-# Enable legacy (E2) ssl logic
-# The option is replaced by storyboard logic
 
 #sslcertcheck = off - NOT implimented in V5 yet
 #SSL certificate checking
 # Check that ssl certificates for servers on https connections are valid
 # and signed by a ca in the configured path
 # ONLY for connections that are NOT MITM
-
-# bannedregexwithblanketblock = off
-# option is replaced by storyboard logic
-
-#blockdownloads = off
-# option is replaced by storyboard logic
 
 #embeddedurlweight = 0
 {% if item.embeddedurlweight is defined and item.embeddedurlweight | string | length > 0 -%}
@@ -887,9 +788,10 @@ embeddedurlweight = {{ item.embeddedurlweight | string }}
 # SSL sites not matching greysslsitelist will be treat as if sslmitm is off.
 # The option is replaced by storyboard logic
 
-# contentregexplist = '__LISTDIR__/{{ item.lists.redirect_contentregexplist.name | default("../group1/contentregexplist") | string }}'
-#
 # not yet implemented in v5
+{% if item.lists.redirect_contentregexplist.name is defined and item.lists.redirect_contentregexplist.name | string | length > 0 -%}
+contentregexplist = '__LISTDIR__/{{ item.lists.redirect_contentregexplist.name | string }}'
+{% endif %}
 
 ###
 ### END of OBSOLETE section
