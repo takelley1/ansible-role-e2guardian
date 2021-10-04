@@ -7,6 +7,19 @@
   gather_facts: true
   tasks:
 
+    - name: MOLECULE | VERIFY | Test webserver
+      ansible.builtin.shell: >
+        curl
+        -L
+        --silent
+        --insecure
+        http://localhost/cert.pem |
+        grep -A 10 "CERTIFICATE"
+      changed_when: false
+      environment:
+        HTTP_PROXY: http://localhost:8080
+        HTTPS_PROXY: http://localhost:8080
+
     - name: MOLECULE | VERIFY | Test allowed page
       ansible.builtin.shell: >
         curl
