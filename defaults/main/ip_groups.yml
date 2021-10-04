@@ -2,6 +2,7 @@
 
 # This list matches host IPs to filter groups.
 e2g_ipgroups:
-  - 10.0.0.0/24 = filter1
-  - 10.0.0.2 = filter2
-  - 10.0.0.3 = filter3
+  # filter1 doesn't have to be defined since it's always the default.
+  - 192.0.2.1 = filter2
+  - 192.0.2.2 = filter3
+  - 192.0.2.3 = filter4

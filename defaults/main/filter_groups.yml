@@ -11,8 +11,8 @@ e2g_filter_groups:
   # All lists that AREN'T defined for groups >1 will default to using the
   #   list defined for group 1.
   # For example, group `foo` doesn't have the `contentregexplist` defined,
-  #   therefore it will default to using the `contentregexplist` variable
-  #   defined for group 1.
+  #   therefore it will default to using the `e2g_contentregexplist` variable
+  #   defined for group 1 in defaults/main/lists/contentregexplist.yml.
   - groupname: all
 
   - groupname: foo
@@ -28,14 +28,13 @@ e2g_filter_groups:
     lists:
       banned_sitelist:
         name: bannedsitelist
-        content: "{{ e2g_bannedsitelist }}"
+        content:
+          - site3.com
+          - site4.com
 
   - groupname: baz
     naughtyness_limit: 150
     lists:
-      banned_sitelist:
-        name: bannedsitelist
-        content: "{{ e2g_bannedsitelist }}"
       banned_urllist:
         name: bannedurllist
         content:
