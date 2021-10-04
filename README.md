@@ -1,7 +1,8 @@
-Ansible role for provisioning an E2Guardian filtering proxy.
+Ansible role for installing and configuring the E2Guardian proxy
 
-- for Ubuntu Server.
-- Includes Nginx server for distributing SSL man-in-the-middle certificate.
+- Tested on Ubuntu 20.04
+- Includes Nginx server for providing E2Guardian's SSL man-in-the-middle
+  certificate (See `tasks/certs.yml`)
 
 Example playbook:
 ```yaml
@@ -9,51 +10,43 @@ Example playbook:
   become: true
   gather_facts: true
   vars:
-    e2g_build_package: true
-    e2g_remove_build_dependencies: false
+    # See defaults/main/main.yml
+    e2g_install_dir: /opt/e2guardian
+
+    # See defaults/main/filter_groups.yml
     e2g_filter_groups:
-      - groupname: all_group
-      - groupname: group1
+      - groupname: all
+      - groupname: foo
         lists:
           banned_siteiplist:
             name: bannedsiteiplist
             content:
               - 1.2.3.4
-              - 5.6.7.8
-      - groupname: group2
-        lists:
-          banned_sitelist:
-            name: bannedsitelist
-            content: "{{ e2g_bannedsitelist }}"
-      - groupname: group3
+              - 10.0.0.10
+      - groupname: bar
         lists:
           banned_urllist:
             name: bannedurllist
             content:
               - site1.com/url
               - site2.com/url
+
+    # See defaults/main/ip_groups.yml
     e2g_ipgroups:
-      # All other hosts are placed into filter1 by default.
       - 10.0.0.2 = filter2
       - 10.0.0.3 = filter3
+
+    # See defaults/lists/
     e2g_bannedsitelist:
       - site1.com
       - site2.com
-    e2g_bannedregexurllist:
-      - regex1
-      - regex2
     e2g_bannedsiteiplist:
-      - 1.2.3.4
-      - 4.5.6.7
+      - 10.10.10.10
     e2g_bannedurllist:
       - site.com/search
-    e2g_exceptionregexpurllist:
-      - site4
-      - site5
     e2g_exceptionsitelist:
       - gateway.reddit.com
     e2g_exceptionurllist:
-      - reddit.com/login
       - reddit.com/r/ansible
     e2g_greysitelist:
       - accounts.google.com
@@ -61,6 +54,8 @@ Example playbook:
       - < NSFW ><30>
     e2g_exceptionphraselist:
       - < news ><-50>
+
   roles:
     - ansible-role-e2guardian
+
 ```
