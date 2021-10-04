@@ -1,6 +1,6 @@
 Ansible role for installing and configuring the E2Guardian proxy
 
-- Tested on Ubuntu 20.04
+- Written for Ubuntu, tested on Ubuntu 20.04
 - Includes Nginx server for providing E2Guardian's SSL man-in-the-middle
   certificate (See `tasks/certs.yml`)
 
