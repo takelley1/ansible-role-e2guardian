@@ -22,6 +22,7 @@ e2g_conf_language: ukenglish
 
 e2g_conf_filtergroups: "{{ e2g_filter_groups | length }}"
 # e2g_conf_defaultfiltergroup:
+# Enabling this will also cause Nginx to be installed and certs generated.
 e2g_conf_enablessl: "on"
 
 ### NAMES_PATHS section --------------------------------------------------------
