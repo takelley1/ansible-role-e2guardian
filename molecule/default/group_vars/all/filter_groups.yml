@@ -1,7 +1,9 @@
 ---
 
 e2g_filter_groups:
+
   - groupname: all
+
   - groupname: foo
     lists:
       exception_regexpboollist:
@@ -14,6 +16,7 @@ e2g_filter_groups:
         name: bannedmimetypelist
         content:
           - "# Allow all mimetypes"
+
   - groupname: bar
     lists:
       banned_sitelist:
