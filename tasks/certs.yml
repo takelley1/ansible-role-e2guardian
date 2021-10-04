@@ -2,6 +2,13 @@
 
 # Generates certificates for E2Guardian's SSL man-in-the-middle mode.
 #
+# Certs are made available at multiple URLs:
+#  http://localhost/
+#    cert
+#    cert.pem
+#    e2g-ca-cert.pem
+#    e2g-ca-cert.crt
+#
 # Certs are only generated if they don't already exist in order to maintain
 #   idempotence.
 #
