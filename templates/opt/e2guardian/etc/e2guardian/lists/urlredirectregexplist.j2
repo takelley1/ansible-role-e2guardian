@@ -1,0 +1,15 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+
+# redirect browser to different url
+#
+# 'regexp_pattern'->'url_to_redirect_to'
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_urlredirectregexplist is defined and e2g_urlredirectregexplist | string | length > 0 -%}
+{%- for item in e2g_urlredirectregexplist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

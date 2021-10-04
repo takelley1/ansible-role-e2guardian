@@ -1,0 +1,17 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+
+# Exception file extension list
+# Use as a filter group's "exceptionvirusextensionlist",
+#
+# Default list:
+# Unblock web pages & graphics
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_exceptionvirusextensionlist is defined and e2g_exceptionvirusextensionlist | string | length > 0 -%}
+{%- for item in e2g_exceptionvirusextensionlist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

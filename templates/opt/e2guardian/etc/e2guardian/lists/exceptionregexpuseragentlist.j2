@@ -1,0 +1,19 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+# Exception User-Agent based on regular expressions
+#
+# E.g. ' .*MSIE' would allow several versions of Internet Explorer
+# (assuming the user-agent is not being spoofed by the client)
+# Usefull for allowing 'apps' to work
+# E.g. 'Kindle' would make kindle app an exception
+
+# listcategory: "user-agent"
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_exceptionregexpuseragentlist is defined and e2g_exceptionregexpuseragentlist | string | length > 0 -%}
+{%- for item in e2g_exceptionregexpuseragentlist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

@@ -1,0 +1,26 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+
+# Exception file site ip list
+# Use this list to define ip sites from which files can be downloaded,
+# overriding a blanket download block (blockdownloads = on) or the
+# banned MIME type and extension lists (blockdownloads = off).
+#
+# DOES NOT override content/virus scanning or site/URL bans.
+
+# IP site addresses
+#
+# Single IPs, ranges and subnets can be used,
+# e.g.
+# 192.168.0.1
+# 10.0.0.1-10.0.0.3
+# 10.0.0.0/24
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_exceptionfilesiteiplist is defined and e2g_exceptionfilesiteiplist | string | length > 0 -%}
+{%- for item in e2g_exceptionfilesiteiplist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

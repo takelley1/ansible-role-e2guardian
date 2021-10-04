@@ -1,0 +1,28 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+# User are not allowed to bypass domains in this list
+
+# Don't bother with the www. or the http://
+# NOTE: Sites using just IP should be put into bannedsiteiplistwithbypass
+
+# You can include
+# .tld so for example you can match .gov for example
+
+# .Include</opt/e2guardian/etc/e2guardian/anotherbannedurllist>
+
+# You can have multiple .Includes.
+# WARNING: Old style Blanket blocks in this file will be silently ignored
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_domainsnobypass is defined and e2g_domainsnobypass | string | length > 0 -%}
+{%- for item in e2g_domainsnobypass %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------
+
+# .Include</opt/e2guardian/etc/e2guardian/lists/blacklists/ads/domains>
+
+# Remove the # from the following and edit as needed to use a stock
+# squidGuard/urlblacklists collection.

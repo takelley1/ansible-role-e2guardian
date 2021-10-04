@@ -1,5 +1,4 @@
 ---
 
 e2g_bannedsiteiplist:
-  # This is a non-routable IP and is only here as an example.
-  - 198.51.100.0
+  - '#'

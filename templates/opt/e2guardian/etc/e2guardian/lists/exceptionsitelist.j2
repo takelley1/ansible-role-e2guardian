@@ -1,21 +1,22 @@
-#jinja2: lstrip_blocks: "True"
+# jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
-#Sites in exception list
-#Don't bother with the www. or
-#the http://
+# vim: ft=conf
+# Sites in exception list
+# Don't bother with the www. or
+# the http://
 #
-#These are specifically domains and are not URLs.
-#For example 'foo.bar/porn/' is no good, you need
-#to just have 'foo.bar'.
+# These are specifically domains and are not URLs.
+# For example 'foo.bar/porn/' is no good, you need
+# to just have 'foo.bar'.
 #
 # IP must be put in exceptionsiteiplist
 #
-#.tld so for example you can match .gov for example
+# .tld so for example you can match .gov for example
 #
 # Time limiting syntax:
-# #time: <start hour> <start minute> <end hour> <end minute> <days>
+# # time: <start hour> <start minute> <end hour> <end minute> <days>
 # Example:
-##time: 9 0 17 0 01234
+# #time: 9 0 17 0 01234
 # Remove the first # from the line above to enable this list only from
 # 9am to 5pm, Monday to Friday.
 #
@@ -23,7 +24,7 @@
 # WARNING: Old style Blanket blocks in this file will be silently ignored
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_exceptionsitelist is defined and e2g_exceptionsitelist | length > 0 -%}
+{% if e2g_exceptionsitelist is defined and e2g_exceptionsitelist | string | length > 0 -%}
 {%- for item in e2g_exceptionsitelist %}
 {{ item }}
 {% endfor -%}

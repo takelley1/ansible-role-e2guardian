@@ -1,9 +1,4 @@
 ---
 
 e2g_bannedregexurllist:
-  - "#(naked|nude|oral|topp?les|sex)+.*(babe|bharath|boob|breast|busen|busty|clit|cum|cunt|dick|fetish|fuck|girl|hooter|lez|lust|naked|nude|orgy|penis|porn|porno|pupper|pussy|shit|smutpump|tit|topp?les|xxx)s?"
-  - "#(babe|bharath|boob|breast|busen|busty|clit|cum|cunt|fuck|hooter|lez|lust|naked|nude|orgy|porn|porno|pussy|smutpump|tit|topp?les|xxx)+.*(naked|nude|oral|topp?les|sex)+"
-  - "#(adultsight|adultsite|adultsonly|adultweb|blowjob|bondage|centerfold|cumshot|hardcoret)"
-  - "#(bangbros|pussylip|playmate|pornstar|sexdream|showgirl|softcore|striptease)"
-  - '#(sex|fuck|boob|cunt|fetish|tits|shemale|porn|xxx|busty|knockers|slut|nude|naked|pussy)+.*(\.jpg|\.wmv|\.mpg|\.mpeg|\.gif|\.mov)'
-  - '#(girls|babes|bikini|model)+.*(\.jpg|\.wmv|\.mpg|\.mpeg|\.gif|\.mov)'
+  - '#'

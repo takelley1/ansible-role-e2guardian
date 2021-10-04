@@ -23,19 +23,58 @@
     group: root
     mode: "0640"
   loop:
+    - addheaderregexplist
     - bannedextensionlist
     - bannedmimetypelist
+    - bannedphraselist
+    - bannedregexpheaderlist
     - bannedregexpurllist
+    - bannedregexpuseragentlist
     - bannedsearchlist
     - bannedsiteiplist
     - bannedsitelist
+    - bannedsslsiteiplist
+    - bannedsslsitelist
+    - bannedtimelist
     - bannedurllist
+    - blankettimelist
     - contentregexplist
+    - domainsnobypass
+    - exceptionextensionlist
+    - exceptionfilesiteiplist
+    - exceptionfilesitelist
+    - exceptionfileurllist
+    - exceptionmimetypelist
     - exceptionphraselist
+    - exceptionregexpheaderlist
     - exceptionregexpurllist
+    - exceptionregexpuseragentlist
+    - exceptionsiteiplist
     - exceptionsitelist
     - exceptionurllist
+    - exceptionvirusextensionlist
+    - exceptionvirussiteiplist
+    - greysiteiplist
     - greysitelist
+    - greysslsiteiplist
+    - greysslsitelist
+    - greyurllist
+    - headerregexplist
+    - ipnobypass
+    - logregexpurllist
+    - logsiteiplist
+    - logsitelist
+    - logurllist
+    - nocheckcertsiteiplist
+    - nocheckcertsitelist
+    - refererexceptionsiteiplist
+    - refererexceptionsitelist
+    - refererexceptionurllist
+    - responseheaderregexplist
+    - sslsiteregexplist
+    - urlnobypass
+    - urlredirectregexplist
+    - urlregexplist
     - weightedphraselist
   tags: e2g_config_templates
   notify: restart-e2guardian

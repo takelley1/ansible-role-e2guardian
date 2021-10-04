@@ -1,0 +1,27 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+
+# User are not allowed to bypass url sites in this list
+
+# Don't bother with the www. or the http://
+# NOTE: Sites using just IP should be put into bannedsiteiplistwithbypass
+# You can have multiple .Includes.
+
+# WARNING: Old style Blanket blocks in this file will be silently ignored
+
+# To include additional files in this list use this example:
+# .Include</opt/e2guardian/etc/e2guardian/anotherbannedurllist>
+
+# You can have multiple .Includes.
+# listcategory: "Banned URLs"
+# List other URLs to block:
+# members.home.net/uporn
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_urlnobypass is defined and e2g_urlnobypass | string | length > 0 -%}
+{%- for item in e2g_urlnobypass %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

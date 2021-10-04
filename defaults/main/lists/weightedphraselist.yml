@@ -1,16 +1,4 @@
 ---
 
 e2g_weightedphraselist:
-  - "# Pornography"
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "danish",     "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "dutch",      "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "french",     "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "german",     "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "italian",    "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "malay",      "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "norwegian",  "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "polish",     "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "portuguese", "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "spanish",    "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "swedish",    "pornography", "weighted") | path_join }}>
-  - .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "phraselists", "ukenglish",  "pornography", "weighted") | path_join }}>
+  - '#'

@@ -1,23 +1,24 @@
-#jinja2: lstrip_blocks: "True"
+# jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
-#URLs in exception list
-#Don't bother with the www. or
-#the http://
+# vim: ft=conf
+# URLs in exception list
+# Don't bother with the www. or
+# the http://
 #
-#These are parts of sites that filtering should
-#be switched off for.
+# These are parts of sites that filtering should
+# be switched off for.
 #
-#These should not be domains, i.e. entire sites,
-#they should be a domain with a path.
+# These should not be domains, i.e. entire sites,
+# they should be a domain with a path.
 #
-#For example 'foo.bar' is no good, you need
-#to just have 'foo.bar/porn/'.
+# For example 'foo.bar' is no good, you need
+# to just have 'foo.bar/porn/'.
 #
-#Another example:
-#generallybadsite.tld/partthatsok/
+# Another example:
+# generallybadsite.tld/partthatsok/
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_exceptionurllist is defined and e2g_exceptionurllist | length > 0 -%}
+{% if e2g_exceptionurllist is defined and e2g_exceptionurllist | string | length > 0 -%}
 {%- for item in e2g_exceptionurllist %}
 {{ item }}
 {% endfor -%}

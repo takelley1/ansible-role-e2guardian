@@ -1,0 +1,13 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+
+# Referer URLs - Sites refered to by these URLs will be made exception
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_refererexceptionurllist is defined and e2g_refererexceptionurllist | string | length > 0 -%}
+{%- for item in e2g_refererexceptionurllist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

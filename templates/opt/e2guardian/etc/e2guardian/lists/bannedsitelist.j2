@@ -1,45 +1,45 @@
-#jinja2: lstrip_blocks: "True"
+# jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
-#domains in banned list
-#Don't bother with the www. or the http://
+# vim: ft=conf
+
+# Domains in banned list
+# Don't bother with the www. or the http://
+
+# The bannedurllist is for blocking PART of a site
+# The bannedsitelist is for blocking ALL of a site
+
+# NOTE: Sites using just IP should be put into bannedsiteiplist
+# You can include
+# .tld so for example you can match .gov for example
+# The 'grey' lists override the 'banned' lists.
+# The 'exception' lists override the 'banned' lists also.
+# The difference is that the 'exception' lists completely switch
+# off *all* other filtering for the match.  'grey' lists only
+# stop the URL filtering and allow the normal filtering to work.
 #
-#The bannedurllist is for blocking PART of a site
-#The bannedsitelist is for blocking ALL of a site
+# An example of grey list use is when in Blanket Block (whitelist)
+# mode and you want to allow some sites but still filter as normal
+# on their content
 #
-#NOTE: Sites using just IP should be put into bannedsiteiplist
+# Another example of grey list use is when you ban a site but want
+# to allow part of it.
 #
-#You can include
-#.tld so for example you can match .gov for example
+# To include additional files in this list use this example:
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "anotherbannedurllist") | path_join }}>
 #
-#The 'grey' lists override the 'banned' lists.
-#The 'exception' lists override the 'banned' lists also.
-#The difference is that the 'exception' lists completely switch
-#off *all* other filtering for the match.  'grey' lists only
-#stop the URL filtering and allow the normal filtering to work.
-#
-#An example of grey list use is when in Blanket Block (whitelist)
-#mode and you want to allow some sites but still filter as normal
-#on their content
-#
-#Another example of grey list use is when you ban a site but want
-#to allow part of it.
-#
-#To include additional files in this list use this example:
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "anotherbannedurllist") | path_join }}>
-#
-#You can have multiple .Includes.
+# You can have multiple .Includes.
 #
 # Time limiting syntax:
-# #time: <start hour> <start minute> <end hour> <end minute> <days>
+# # time: <start hour> <start minute> <end hour> <end minute> <days>
 # Example:
-##time: 9 0 17 0 01234
+# #time: 9 0 17 0 01234
 # Remove the first # from the line above to enable this list only from
 # 9am to 5pm, Monday to Friday.
 #
 # List categorisation
-#listcategory: "Banned Sites"
+# listcategory: "Banned Sites"
 #
-#List other sites to block:
+# List other sites to block:
 # NOTE: From v5 Blanket blocks are now implimented using Storyboarding
 # WARNING: Old style Blanket blocks in this file will be silently ignored
 #
@@ -49,51 +49,51 @@
 # .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "ads", "domains") | path_join }}>
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_bannedsitelist is defined and e2g_bannedsitelist | length > 0 -%}
+{% if e2g_bannedsitelist is defined and e2g_bannedsitelist | string | length > 0 -%}
 {%- for item in e2g_bannedsitelist %}
 {{ item }}
 {% endfor -%}
 {%- endif -%}
 # ---- END ANSIBLE BLOCK ------------------------------------------------------
 
-#Remove the # from the following and edit as needed to use a stock
-#squidGuard/urlblacklists collection.
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "aggressive", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "artnudes", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "audio-video", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "beerliquorinfo", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "beerliquorsale", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "chat", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "childcare", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "clothing", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "culinary", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "dialers", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "drugs", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "entertainment", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "forums", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "frencheducation", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "gambling", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "government", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "hacking", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "homerepair", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "hygiene", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "jewelry", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "jobsearch", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "kidstimewasting", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "mail", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "news", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "onlineauctions", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "onlinegames", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "onlinepayment", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "personalfinance", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "pets", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "proxy", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "publicite", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "redirector", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "ringtones", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "sportnews", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "sports", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "vacation", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "violence", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "virusinfected", "domains") | path_join }}>
-#.Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "warez", "domains") | path_join }}>
+# Remove the # from the following and edit as needed to use a stock
+# squidGuard/urlblacklists collection.
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "aggressive", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "artnudes", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "audio-video", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "beerliquorinfo", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "beerliquorsale", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "chat", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "childcare", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "clothing", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "culinary", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "dialers", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "drugs", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "entertainment", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "forums", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "frencheducation", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "gambling", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "government", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "hacking", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "homerepair", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "hygiene", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "jewelry", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "jobsearch", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "kidstimewasting", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "mail", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "news", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "onlineauctions", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "onlinegames", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "onlinepayment", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "personalfinance", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "pets", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "proxy", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "publicite", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "redirector", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "ringtones", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "sportnews", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "sports", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "vacation", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "violence", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "virusinfected", "domains") | path_join }}>
+# .Include<{{ (e2g_install_dir, "etc", "e2guardian", "lists", "blacklists", "warez", "domains") | path_join }}>

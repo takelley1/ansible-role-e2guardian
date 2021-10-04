@@ -1,6 +1,4 @@
 ---
 
 e2g_exceptionphraselist:
-  - .Include<{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'phraselists', 'goodphrases', 'exception') | path_join }}>
-  - .Include<{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'phraselists', 'goodphrases', 'weighted_general') | path_join }}>
-  - .Include<{{ (e2g_install_dir, 'etc', 'e2guardian', 'lists', 'phraselists', 'goodphrases', 'exception_email') | path_join }}>
+  - '#'

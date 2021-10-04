@@ -1,21 +1,22 @@
-#jinja2: lstrip_blocks: "True"
+# jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
-#Exception URLs based on Regular Expressions
+# vim: ft=conf
+# Exception URLs based on Regular Expressions
 #
 # E.g. 'news' would unblock news.bbc.com etc
 #
 # Example
-#news
+# news
 #
 # Prevent content scanning of CSS and/or JavaScript files
-#^[^?]*\.css($|\?)
-#^[^?]*\.jsp?($|\?)
+# ^[^?]*\.css($|\?)
+# ^[^?]*\.jsp?($|\?)
 #
 # Allow Facebook plugin applications like
 # http://apps.facebook.com/neighborhoods/Setup.aspx and others.
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_exceptionregexpurllist is defined and e2g_exceptionregexpurllist | length > 0 -%}
+{% if e2g_exceptionregexpurllist is defined and e2g_exceptionregexpurllist | string | length > 0 -%}
 {%- for item in e2g_exceptionregexpurllist %}
 {{ item }}
 {% endfor -%}

@@ -1,0 +1,12 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+# Add header where url matches
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_addheaderregexplist is defined and e2g_addheaderregexplist | string | length > 0 -%}
+{%- for item in e2g_addheaderregexplist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

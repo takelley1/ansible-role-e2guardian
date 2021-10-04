@@ -1,0 +1,22 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+
+# Exception referer IP sites
+#  sites which are refered to by these sites will be made exceptions
+
+# IP site addresses
+#
+# Single IPs, ranges and subnets can be used,
+# e.g.
+# 192.168.0.1
+# 10.0.0.1-10.0.0.3
+# 10.0.0.0/24
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_refererexceptionsiteiplist is defined and e2g_refererexceptionsiteiplist | string | length > 0 -%}
+{%- for item in e2g_refererexceptionsiteiplist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

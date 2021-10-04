@@ -1,5 +1,6 @@
-#jinja2: lstrip_blocks: "True"
+# jinja2: lstrip_blocks: "True"
 {{ ansible_managed | comment }}
+# vim: ft=conf
 # EXCEPTIONPHRASELIST - INSTRUCTIONS FOR USE
 #
 # If any of the phrases listed below appear in a web page
@@ -11,12 +12,12 @@
 # Unblock the page if the following phrases are found on the same page.
 # Each line is a new combination.
 # eg
-#<education>,<biology>,<medical>
+# <education>,<biology>,<medical>
 #
 # See the bannedphraselist for more examples.
 
 # ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
-{% if e2g_exceptionphraselist is defined and e2g_exceptionphraselist | length > 0 -%}
+{% if e2g_exceptionphraselist is defined and e2g_exceptionphraselist | string | length > 0 -%}
 {%- for item in e2g_exceptionphraselist %}
 {{ item }}
 {% endfor -%}

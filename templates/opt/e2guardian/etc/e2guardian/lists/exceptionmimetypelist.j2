@@ -1,0 +1,20 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+
+# Exception MIME type list
+# Use as a filter group's "exceptionmimetypelist",
+# to override a blanket download block.
+# (blockdownloads = on)
+#
+# DOES NOT override content/virus scanning or site/URL bans.
+# Default list:
+# Unblock web pages & graphics
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_exceptionmimetypelist is defined and e2g_exceptionmimetypelist | string | length > 0 -%}
+{%- for item in e2g_exceptionmimetypelist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

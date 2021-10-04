@@ -1,0 +1,16 @@
+# jinja2: lstrip_blocks: "True"
+{{ ansible_managed | comment }}
+# vim: ft=conf
+
+# domains in SSL grey list
+# Don't bother with the www. or the https://
+
+# This 'grey' lists override the 'banned' lists for SSL only.
+
+# ---- BEGIN ANSIBLE BLOCK ----------------------------------------------------
+{% if e2g_greysslsitelist is defined and e2g_greysslsitelist | string | length > 0 -%}
+{%- for item in e2g_greysslsitelist %}
+{{ item }}
+{% endfor -%}
+{%- endif -%}
+# ---- END ANSIBLE BLOCK ------------------------------------------------------

@@ -1,7 +1,7 @@
 ---
 
 e2g_bannedmimetypelist:
-  - application/example-mime-type
+  - '#'
   # - audio/mpeg
   # - audio/x-mpeg
   # - audio/x-pn-realaudio
