@@ -5,6 +5,12 @@
     cmd: /usr/bin/e2guardian -c {{ (e2g_install_dir, "etc", "e2guardian", "e2guardian.conf") | path_join }} -q
   listen: restart-e2guardian
 
+- name: HANDLERS | E2Guardian PID removed
+  ansible.builtin.file:
+    path: "{{ (e2g_install_dir, 'var', 'run', 'e2guardian.pid') | path_join }}"
+    state: absent
+  listen: restart-e2guardian
+
 - name: HANDLERS | E2Guardian started
   ansible.builtin.systemd:
     name: e2guardian
