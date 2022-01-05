@@ -36,5 +36,5 @@ jobs:
 
       - name: Run molecule
         uses: MonolithProjects/action-molecule@v1.4.4
-        # with:
-          # molecule_command: converge
+        with:
+          molecule_command: converge
