@@ -11,7 +11,7 @@
         remote_src: true
         owner: root
         group: root
-        mode: "0640"
+        mode: "0644"
       notify: restart-e2guardian
 
     - name: INSTALL_POST | UNIT FILE | Unit file override path exists
@@ -20,7 +20,7 @@
         state: directory
         owner: root
         group: root
-        mode: "0700"
+        mode: "0750"
       notify: restart-e2guardian
 
     - name: INSTALL_POST | UNIT FILE | Unit file override deployed
@@ -29,7 +29,7 @@
         dest: /etc/systemd/system/e2guardian.service.d/override.conf
         owner: root
         group: root
-        mode: "0400"
+        mode: "0644"
       notify: restart-e2guardian
 
 # This is done to make it easier to view the E2Guardian logs remotely
