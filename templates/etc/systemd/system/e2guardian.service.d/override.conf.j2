@@ -1,6 +1,12 @@
 {{ ansible_managed | comment }}
 # vim: ft=systemd
 
+[Unit]
+
+# Give up after attempting to restart 5 times within 60 seconds.
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
 [Service]
 
 # v5.4 has a bug that requires specifying the path to the config file.
@@ -10,6 +16,10 @@ ExecStart=
 ExecReload=
 ExecStart=/usr/bin/e2guardian -c {{ (e2g_install_dir, "etc", "e2guardian", "e2guardian.conf") | path_join }}
 ExecReload=/usr/bin/e2guardian -r -c {{ (e2g_install_dir, "etc", "e2guardian", "e2guardian.conf") | path_join }}
+
+# If failed, try restarting every 10 seconds.
+Restart=on-failure
+RestartSec=10
 
 # See systemd.exec(5) and systemd.resource-control(5) for details.
 
